@@ -11,6 +11,7 @@ namespace BehaviorDesigner.Runtime.Tasks
 
         public override void OnStart()
         {
+            agent.enabled = true;
             agent.isStopped = false;
             agent.destination = targetPostion.Value.position;
         }
