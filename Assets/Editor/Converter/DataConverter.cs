@@ -219,10 +219,27 @@ public class DataConverter
                 // T가 클래스인 경우
                 var obj = Activator.CreateInstance<T>(); // T에 대해 객체 생성
 
+                
                 foreach (var fieldInfo in fieldInfos)
                 {
-                    var value = table.Rows[i].ItemArray[columnTypeDic[fieldInfo.Name]].ToString();
-                    fieldInfo.SetValue(obj, Convert.ChangeType(value, fieldInfo.FieldType));
+                    Type type = fieldInfo.FieldType;
+                    if (type.IsEnum)
+                    {
+                        var value = table.Rows[i].ItemArray[columnTypeDic[fieldInfo.Name]].ToString();
+                        fieldInfo.SetValue(obj, Enum.Parse(type, value));
+                    }
+                    else if (type == typeof(string))
+                    {
+                        var value = table.Rows[i].ItemArray[columnTypeDic[fieldInfo.Name]].ToString();
+                        fieldInfo.SetValue(obj, Convert.ChangeType(value, type));
+                    }
+                    else if (type.IsPrimitive)
+                    {
+                        var value = table.Rows[i].ItemArray[columnTypeDic[fieldInfo.Name]].ToString();
+                        if (value == "-")
+                            value = "0";
+                        fieldInfo.SetValue(obj, Convert.ChangeType(value, type));
+                    }
                 }
 
                 string key = table.Rows[i][0].ToString();

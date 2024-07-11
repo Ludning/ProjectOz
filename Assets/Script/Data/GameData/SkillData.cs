@@ -7,9 +7,9 @@ public class SkillData
     public string skillSet;
     public string description;
     public string skillRangeType;
-    public string skillPowerRate;
-    public string skillCooltime;
-    public string value1;
-    public string value2;
+    public float skillPowerRate;
+    public float skillCooltime;
+    public float value1;
+    public float value2;
     public string projectileID;
 }

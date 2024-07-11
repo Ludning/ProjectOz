@@ -7,7 +7,7 @@ public class MovesetData
     public string moveSet;
     public string description;
     public string moveDirectionType;
-    public string value1;
-    public string value2;
-    public string value3;
+    public float value1;
+    public float value2;
+    public float value3;
 }

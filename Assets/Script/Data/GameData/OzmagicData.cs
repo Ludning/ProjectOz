@@ -8,12 +8,12 @@ public class OzmagicData
     public string description;
     public string ozMagicType;
     public string projectileID;
-    public string gageGainOz;
-    public string ozSkillPercentage;
-    public string ozPowerRate;
-    public string value1;
-    public string value2;
-    public string value3;
+    public float gageGainOz;
+    public float ozSkillPercentage;
+    public float ozPowerRate;
+    public float value1;
+    public float value2;
+    public float value3;
     public string chainProjectileID;
-    public string chainPowerRate;
+    public float chainPowerRate;
     }

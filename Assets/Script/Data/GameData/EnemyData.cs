@@ -7,10 +7,10 @@ public class EnemyData
     public string description;
     public string enemyMoveType;
     public string enemyAttackType;
-    public string enemyHp;
-    public string enemyBasePower;
-    public string enemyMoveSpeed;
+    public float enemyHp;
+    public float enemyBasePower;
+    public float enemyMoveSpeed;
     public string moveSet;
     public string skillSet;
-    public string enemyColDamage;
+    public float enemyColDamage;
 }
