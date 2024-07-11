@@ -17,10 +17,10 @@ public class DataPostprocessor : AssetPostprocessor
         {
             Debug.Log("추가된 에셋: " + str);
             
-            //if (str == dataXlsxPath)
-            //    DataConverter.LoadExcel<GameData>(dataXlsxPath, dataAssetPath);
-            //if (str == addressXlsxPath)
-            //    DataConverter.LoadExcel<AssetAddressData>(addressXlsxPath, addressAssetPath);
+            if (str == dataXlsxPath)
+                DataConverter.LoadExcel<GameData>(dataXlsxPath, dataAssetPath);
+            if (str == addressXlsxPath)
+                DataConverter.LoadExcel<AssetAddressData>(addressXlsxPath, addressAssetPath);
             
             /*string jsonPath = "Assets/Resource/Json/data.json";
             if (str == xlsxPath)

@@ -13,7 +13,7 @@ using UnityEngine;
 
 public class DataConverter
 {
-    public static void LoadExcel<T>(string xlsxPath, string assetPath) where T : ScriptableObject
+    public static void LoadExcel<T>(string xlsxPath, string assetPath)
     {
         Debug.Log("ReadExcel");
 
@@ -23,12 +23,12 @@ public class DataConverter
 
         //엑셀파일로 부터 테이블 데이터 로드
         var tables = GetTableFromXlsx(xlsxPath);
-        var asset = GetScriptableAsset<T>(assetPath);
+        //var asset = GetScriptableAsset<T>(assetPath);
 
         //데이터를 스크립터블로 파싱
-        ParseTableToScriptable<T>(asset, tables);
+        //ParseTableToScriptable<T>(asset, tables);
         
-        EditorUtility.SetDirty(asset);
+        //EditorUtility.SetDirty(asset);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
