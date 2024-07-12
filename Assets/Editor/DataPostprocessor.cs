@@ -6,9 +6,9 @@ using UnityEngine;
 public class DataPostprocessor : AssetPostprocessor
 {
     const string dataXlsxPath = "Assets/Resource/Xlsx/GameData.xlsx";
+    const string dataJsonPath = "Assets/Resource/Data/GameData.json";
     const string addressXlsxPath = "Assets/Resource/Xlsx/AssetAddress.xlsx";
-    const string dataAssetPath = "Assets/Resource/Data/GameData.asset";
-    const string addressAssetPath = "Assets/Resource/Data/AssetAddress.asset";
+    const string addressJsonPath = "Assets/Resource/Data/AssetAddress.json";
     
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
     {
@@ -17,20 +17,10 @@ public class DataPostprocessor : AssetPostprocessor
         {
             Debug.Log("추가된 에셋: " + str);
             
-            //if (str == dataXlsxPath)
-            //    DataConverter.LoadExcel<GameData>(dataXlsxPath, dataAssetPath);
-            //if (str == addressXlsxPath)
-            //    DataConverter.LoadExcel<AssetAddressData>(addressXlsxPath, addressAssetPath);
-            
-            /*string jsonPath = "Assets/Resource/Json/data.json";
-            if (str == xlsxPath)
-                DataConverter.ReadExcel(xlsxPath);
-            if (str == jsonPath)
-                DataConverter.ReadJson(jsonPath);*/
-            /*
-            var languageXlsxPath = "Assets/Resource/Xlsx/languageData.xlsx";
-            if (str == languageXlsxPath)
-                DataConverter.ReadLanguageExcel();*/
+            if (str == dataXlsxPath)
+                DataConverter.LoadExcel<GameData>(dataXlsxPath, dataJsonPath, typeof(GameDataType));
+            if (str == addressXlsxPath)
+                DataConverter.LoadExcel<AssetAddressData>(addressXlsxPath, addressJsonPath, typeof(AssetAddressType));
         }
         foreach (string str in deletedAssets)
         {
