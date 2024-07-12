@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class ResourceData
+public class ResourceData : IDataRepository
 {
     public string ID;
     public string description;

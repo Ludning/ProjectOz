@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class OzmagicData
+public class OzmagicData : IDataRepository
 {
     public string ozMagicSet;
     public string ozMagicID;

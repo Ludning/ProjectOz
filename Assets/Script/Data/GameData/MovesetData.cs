@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class MovesetData
+public class MovesetData : IDataRepository
 {
     public string ID;
     public string moveSet;
