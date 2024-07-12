@@ -7,6 +7,11 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour, IKnockbackAble
 {
+    [SerializeField] string _enemyId;
+    [SerializeField] private EnemyData _enemyData;
+
+    float _currentHp;
+
     private Rigidbody _rigidbody;
     private NavMeshAgent _navMeshAgent;
 
@@ -19,6 +24,8 @@ public class Enemy : MonoBehaviour, IKnockbackAble
     public event Action OnKnockbackEnd;
     private void Awake()
     {
+        _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
+        _currentHp = _enemyData.enemyHp;
         _rigidbody = GetComponent<Rigidbody>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
@@ -98,6 +105,11 @@ public class Enemy : MonoBehaviour, IKnockbackAble
         {
             rigidbody.AddForce(dir * force, ForceMode.VelocityChange);
         }
+    }
+
+    public void TakeDamage(float damage, Vector3 attcakerPos)
+    {
+        _currentHp -= damage;
     }
 
     public void TakeHit()
