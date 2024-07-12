@@ -9,7 +9,7 @@ public class ProjectileData
     public string projectileSpeedRate;
     public float projectileLifeTime;
     public string projectileRemoveLandSet;
-    public string projectileBounceCount;
+    public float projectileBounceCount;
     public string projectileRemoveTrigger2;
     public string projectileRemoveTrigger3;
     public string projectileTarget;
