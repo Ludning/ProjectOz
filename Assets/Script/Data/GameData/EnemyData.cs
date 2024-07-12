@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class EnemyData
+public class EnemyData : IDataRepository
 {
     public string ID;
     public string description;
