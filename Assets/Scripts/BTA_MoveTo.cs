@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.AI;
 
 namespace BehaviorDesigner.Runtime.Tasks
@@ -18,6 +17,11 @@ namespace BehaviorDesigner.Runtime.Tasks
 
         public override TaskStatus OnUpdate()
         {
+            if (agent.pathPending == true)
+            {
+                return TaskStatus.Running;
+            }
+
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
                 return TaskStatus.Success;
