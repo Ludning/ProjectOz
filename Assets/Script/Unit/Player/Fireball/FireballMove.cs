@@ -29,10 +29,8 @@ public class FireballMove : BallMove
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Ground"))
+        if(other.gameObject.CompareTag("Ground")||other.gameObject.CompareTag("Platform")||other.gameObject.CompareTag("Wall"))
         {
-            Debug.Log("À¸¾Ç");
-
             _bounceCount++;
 
             if ( _bounceCount == _maxBounceCount )
@@ -40,7 +38,10 @@ public class FireballMove : BallMove
                 DestroyBall();
             }
 
-            _rb.velocity = new Vector3(_rb.velocity.x, 10.0f, _rb.velocity.z);
+            if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform"))
+                _rb.velocity = new Vector3(_rb.velocity.x, 8.0f + _gravityValue, _rb.velocity.z) + _gravity;
+            else
+                _rb.velocity = new Vector3(-_rb.velocity.x, _rb.velocity.y, -_rb.velocity.z);
         }
     }
 }
