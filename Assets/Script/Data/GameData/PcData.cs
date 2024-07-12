@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class PcData
+public class PcData : IDataRepository
 {
     public string ID;
     public string description;

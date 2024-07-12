@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class ProjectileData
+public class ProjectileData : IDataRepository
 {
     public string projectileID;
     public string description;

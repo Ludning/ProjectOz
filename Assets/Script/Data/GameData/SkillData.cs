@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class SkillData
+public class SkillData : IDataRepository
 {
     public string ID;
     public string skillSet;
