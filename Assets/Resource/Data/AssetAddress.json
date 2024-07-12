@@ -1,8 +1,8 @@
 {
   "AssetAddressDatas": {
-    "Cube": "Assets/Cube.prefab",
-    "124": "1235",
-    "125": "1236",
+    "Cube": "Assets/Resource/Cube.prefab",
+    "sword": "Assets/Resource/sword.png",
+    "broom": "Assets/Resource/broom.png",
     "126": "1237",
     "127": "1238",
     "128": "1239",

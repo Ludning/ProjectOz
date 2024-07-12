@@ -27,6 +27,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae87465b25d9c8e418496ca0e602f987
+    m_Address: Assets/Resource/sword.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d214ff0923e4c24a9a36be48846ecbe
+    m_Address: Assets/Resource/Cube.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7ab3dfdd4aee7142a15e2d67e074008
+    m_Address: Assets/Resource/broom.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 4c7dbcb0f89ef604d984f02f99532989, type: 2}
   m_SchemaSet:

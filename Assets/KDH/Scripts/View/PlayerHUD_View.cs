@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
+using Sirenix.Utilities;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +18,7 @@ public class PlayerHUD_View : ViewBase<PlayerHUD_ViewModel, PlayerHUD_Message>
 
     protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        switch(e.PropertyName)
+        switch (e.PropertyName)
         {
             case nameof(PlayerHUD_ViewModel.SwordmanMode):
                 SetSwordmanMode(_vm.SwordmanMode);
@@ -34,9 +31,9 @@ public class PlayerHUD_View : ViewBase<PlayerHUD_ViewModel, PlayerHUD_Message>
                 break;
         }
     }
-    public void SetHp(float currentHp)
+    private void SetHp(float currentHp)
     {
-        for(int i = 0;i < hp_List.Count; i++)
+        for (int i = 0; i < hp_List.Count; i++)
         {
             if (i < currentHp)
                 hp_List[i].SetActive(true);
@@ -45,25 +42,19 @@ public class PlayerHUD_View : ViewBase<PlayerHUD_ViewModel, PlayerHUD_Message>
         }
     }
 
-    public void SetSwordmanMode(bool mode)
+    private void SetSwordmanMode(bool mode)
     {
-        /*var path = "Sprites/Temp/";
-        if (mode)
-        {
-            path += "broom";
-            // 해당 경로에 집어넣을 것.
-        }
-        else
-        {
-            path += "sword";
-        }
-        Player_Image.sprite = Resources.Load<Sprite>(path);
+        string modeName;
 
-        Sprite image = Resources.Load<Sprite>(path);*/
-        
+        if (mode)
+        { modeName = "sword"; }
+        else
+        { modeName = "broom"; }
+
+        Player_Image.sprite = ResourceManager.Instance.LoadResource<Sprite>(modeName);
     }
 
-    public void SetPetulanceGuage(float guage)
+    private void SetPetulanceGuage(float guage)
     {
         PetulanceGuage_Slider.value = guage;
     }
