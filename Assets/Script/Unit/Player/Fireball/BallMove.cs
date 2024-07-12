@@ -10,6 +10,7 @@ public class BallMove : MonoBehaviour
     protected IObjectPool<BallMove> _ballPool;
 
     protected Vector3 _direction;
+    protected Vector3 _gravity;
 
     protected float _bulletSpeed;
     protected float _bulletLifeTime;
@@ -24,7 +25,7 @@ public class BallMove : MonoBehaviour
     protected virtual void OnEnable()
     {
         _isDestroyed = false;
-        CancelInvoke("DestroyBall"); 
+        CancelInvoke(nameof(DestroyBall)); 
     }
 
     protected void OnDisable()
@@ -35,8 +36,8 @@ public class BallMove : MonoBehaviour
     public void Shoot()
     {
         _direction = transform.forward;
-        _rb.velocity = _direction * _bulletSpeed;
-        Invoke("DestroyFireball", _bulletLifeTime);
+        _rb.velocity = _direction * _bulletSpeed + _gravity;
+        Invoke(nameof(DestroyBall), _bulletLifeTime);
     }
 
     public void SetManagedPool(IObjectPool<BallMove> ballPool)
