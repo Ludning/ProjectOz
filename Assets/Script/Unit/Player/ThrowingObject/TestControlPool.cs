@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -14,6 +15,12 @@ public class TestControlPool : MonoBehaviour
 
     [SerializeField] private GameObject _fireballPrefab;
     [SerializeField] private GameObject _flameballPrefab;
+    [SerializeField] private GameObject _meteorPrefab;
+
+    private bool _charging;
+
+    private int _chargingValue;
+    private int _percentOzMagic = 30;
 
     private float _inputTimer = 0;
 
@@ -30,7 +37,7 @@ public class TestControlPool : MonoBehaviour
             _inputTimer += Time.deltaTime;
             if (_inputTimer >= 2.0f)
             {
-                OnAttack(_flameballPool);
+                ChargingAttack();
                 _inputTimer = 0;
             }
         }
@@ -75,5 +82,26 @@ public class TestControlPool : MonoBehaviour
     private void OnDestroyBall(BallMove ball)
     {
         Destroy(ball.gameObject);
+    }
+
+    private void RandomChargingValue()
+    {
+        _chargingValue = UnityEngine.Random.Range(1, 101);
+    }
+
+    private void ChargingAttack()
+    {
+        RandomChargingValue();
+        Debug.Log(_chargingValue);
+
+        if (_chargingValue >= _percentOzMagic)
+        {
+            OnAttack(_flameballPool);
+        }
+        else
+        {
+            Debug.Log("OzFail");
+            // todo
+        }
     }
 }
