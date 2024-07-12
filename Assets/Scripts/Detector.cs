@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class Detector : MonoBehaviour
 {
+    private string _targetTag;
+
+    private float _detectionRadius;
+
     public bool isPlayerInRange { get; private set; }
+    public void Init(string targetTag ,float detectionRadius)
+    {
+        _targetTag = targetTag; 
+        _detectionRadius = detectionRadius;
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {

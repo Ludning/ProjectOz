@@ -91,23 +91,4 @@ public class EnemyDebugManager : MonoBehaviour
 
 
 
-    public void TestKnockback(float force)
-    {
-        _enemy.KnockbackOnSurface(Vector3.back, force);
-    }
-
-    public void TestKnockbackDir(Vector3 dir, float force)
-    {
-        _enemy.KnockbackOnSurface(dir, force);
-    }
-
-    public void TestKnockback_Reflection(string force)
-    {
-        TestKnockback(float.Parse(force));
-    }
-    public void TestKnockbackDir_Reflection(string x, string y, string z, string force)
-    {
-        Vector3 dir = new Vector3(float.Parse(x), float.Parse(y), float.Parse(z));
-        TestKnockbackDir(dir, float.Parse(force));
-    }
 }
