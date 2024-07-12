@@ -28,14 +28,15 @@ public class TestControlPool : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             _inputTimer += Time.deltaTime;
+            if (_inputTimer >= 2.0f)
+            {
+                OnAttack(_flameballPool);
+                _inputTimer = 0;
+            }
         }
         if(Input.GetKeyUp(KeyCode.Space))
         {
-            if (_inputTimer >= 2)
-            {
-                OnAttack(_flameballPool);
-            }
-            else
+            if(_inputTimer < 2f)
             {
                 OnAttack(_fireballPool);
             }
