@@ -6,77 +6,73 @@ using UnityEngine.Pool;
 
 public class TestControlPool : MonoBehaviour
 {
-    private IObjectPool<FireballMove> _fireballPool;
-    private IObjectPool<FlameballMove> _flameballPool;
+    //private IObjectPool<FireballMove> _fireballPool;
+    //private IObjectPool<FlameballMove> _flameballPool;
+
+    private IObjectPool<BallMove> _fireballPool;
+    private IObjectPool<BallMove> _flameballPool;
 
     [SerializeField] private GameObject _fireballPrefab;
     [SerializeField] private GameObject _flameballPrefab;
 
+    private float _inputTimer = 0;
+
     private void Awake()
     {
-        _fireballPool = new ObjectPool<FireballMove>(CreateFireball, OnGetFireball, OnReleaseFireball, OnDestroyFireball);
-        _flameballPool = new ObjectPool<FlameballMove>(CreateFlameball, OnGetFlameball, OnReleaseFlameball, OnDestroyFlameball);
+        _fireballPool = new ObjectPool<BallMove>(() => CreateBall(_fireballPrefab, _fireballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
+        _flameballPool = new ObjectPool<BallMove>(() => CreateBall(_flameballPrefab, _flameballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            OnAttack();
+            _inputTimer += Time.deltaTime;
         }
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            if (_inputTimer >= 2)
+            {
+                OnAttack(_flameballPool);
+            }
+            else
+            {
+                OnAttack(_fireballPool);
+            }
+            _inputTimer = 0f;
+        }
+        
+
         if (Input.GetKeyDown(KeyCode.C))
         {
             transform.Rotate(0f, 180f, 0f);
         }
     }
 
-    private void OnAttack(MonoBehaviour ball, IObjectPool<MonoBehaviour> ballPool)
+    private void OnAttack(IObjectPool<BallMove> ballPool)
     {
-        ball = ballPool.Get();
+        var ball = ballPool.Get();
         ball.transform.position = transform.position;
         ball.transform.rotation = transform.rotation;
         ball.Shoot();
     }
 
-
-
-
-
-    private FireballMove CreateFireball()
+    private BallMove CreateBall(GameObject prefab, IObjectPool<BallMove> pool)
     {
-        FireballMove fireball = Instantiate(_fireballPrefab, transform.position, transform.rotation).GetComponent<FireballMove>();
-        fireball.SetManagedPool(_fireballPool);
-        return fireball;
+        var ball = Instantiate(prefab, transform.position, transform.rotation).GetComponent<BallMove>();
+        ball.SetManagedPool(pool);
+        return ball;
     }
-    private void OnGetFireball(FireballMove fireball)
+    private void OnGetBall(BallMove ball)
     {
-        fireball.gameObject.SetActive(true);
+        ball.gameObject.SetActive(true);
     }
-    private void OnReleaseFireball(FireballMove fireball)
+    private void OnReleaseBall(BallMove ball)
     {
-        fireball.gameObject.SetActive(false);
+        ball.gameObject.SetActive(false);
     }
-    private void OnDestroyFireball(FireballMove fireball)
+    private void OnDestroyBall(BallMove ball)
     {
-        Destroy(fireball.gameObject);
-    }
-
-    private FlameballMove CreateFlameball()
-    {
-        FlameballMove flameball = Instantiate(_flameballPrefab, transform.position, transform.rotation).GetComponent<FlameballMove>();
-        flameball.SetManagedPool(_flameballPool);
-        return flameball;
-    }
-    private void OnGetFlameball(FlameballMove flameball)
-    {
-        flameball.gameObject.SetActive(true);
-    }
-    private void OnReleaseFlameball(FlameballMove flameball)
-    {
-        flameball.gameObject.SetActive(false);
-    }
-    private void OnDestroyFlameball(FlameballMove flameball)
-    {
-        Destroy(flameball.gameObject);
+        Destroy(ball.gameObject);
     }
 }
