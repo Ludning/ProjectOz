@@ -7,6 +7,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         public SharedFloat moveSpeed;
         public SharedTransform targetPostion;
         public NavMeshAgent agent;
+        public bool isDynamicDestination = false;
 
         public override void OnStart()
         {
@@ -26,6 +27,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             {
                 return TaskStatus.Success;
             }
+            agent.destination = targetPostion.Value.position;
             return TaskStatus.Running;
         }
         public override void OnEnd()
