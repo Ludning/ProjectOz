@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -76,5 +75,32 @@ public class Enemy : MonoBehaviour, IKnockbackAble
             }
             yield return new WaitForFixedUpdate();
         }
+    }
+
+
+
+
+    //OnAttack attack
+    //and also make damage collider
+    //or turn on and off the collider
+
+
+
+    public void Attack(Animator animator, Rigidbody rigidbody, Vector3 dir, float force)
+    {
+        animator.SetTrigger("Attack");
+        bool isNeedToMoveToward = dir.magnitude > 0.1f;
+        if (isNeedToMoveToward)
+        {
+            rigidbody.AddForce(dir * force, ForceMode.VelocityChange);
+        }
+    }
+
+    public void TakeHit()
+    {
+        //checkInvincible
+        //addDamage
+        //SetInvincibleTime
+
     }
 }
