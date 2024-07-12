@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour, IKnockbackAble
 
     public void KnockbackOnSurface(Vector3 direction, float force)
     {
+        if (IsStunned) return;
+
         direction.y = 0f;
         direction = direction.normalized;
 
@@ -37,9 +39,11 @@ public class Enemy : MonoBehaviour, IKnockbackAble
 
         _rigidbody.AddForce(direction * force, ForceMode.Impulse);
         _isStunned = true;
+
+
         StartCoroutine(CheckKnockbackEnd());
     }
-
+    public float TestVal = .5f;
     private IEnumerator CheckKnockbackEnd()
     {
         float timeStamp = Time.time;
@@ -47,7 +51,16 @@ public class Enemy : MonoBehaviour, IKnockbackAble
         while (true)
         {
             bool isOverTime = Time.time - timeStamp > 1f;
-            if (_rigidbody.velocity.magnitude <= 0.05f || isOverTime )
+
+
+            Vector3 vel = _rigidbody.velocity;
+            vel.y = 0f;
+            vel *= .3f;
+
+            bool isOnSurface = NavMesh.SamplePosition(transform.position + vel, out NavMeshHit hit, TestVal, NavMesh.AllAreas);
+
+
+            if (_rigidbody.velocity.magnitude <= 0.05f || isOverTime || !isOnSurface)
             {
                 _navMeshAgent.velocity = Vector3.zero;
                 _navMeshAgent.updatePosition = true;
