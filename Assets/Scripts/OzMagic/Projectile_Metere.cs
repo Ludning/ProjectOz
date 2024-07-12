@@ -16,4 +16,9 @@ public class Projectile_Metere : MonoBehaviour
         //데미지 적용
         //파괴 이펙트 등등
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
 }
