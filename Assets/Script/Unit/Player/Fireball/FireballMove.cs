@@ -23,7 +23,7 @@ public class FireballMove : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
 
-        _bulletSpeed = 5.0f;
+        _bulletSpeed = 10.0f;
         _bulletLifeTime = 10.0f;
         _maxBounceCount = 2;
     }
@@ -32,19 +32,18 @@ public class FireballMove : MonoBehaviour
     {
         _bounceCount = 0;
         _isDestroyed = false;
-    }
-    private void Start()
-    {
-        _rb.velocity = _direction * _bulletSpeed;
+        CancelInvoke("DestroyFireball");
     }
 
     private void OnDisable()
     {
-        _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+        _rb.velocity = Vector3.zero;
     }
+
     public void Shoot()
     {
         _direction = transform.forward;
+        _rb.velocity = _direction * _bulletSpeed;
         Invoke("DestroyFireball", _bulletLifeTime);
     }
 
@@ -66,13 +65,16 @@ public class FireballMove : MonoBehaviour
         if(other.gameObject.CompareTag("Ground"))
         {
             Debug.Log("À¸¾Ç");
-            if( _bounceCount == _maxBounceCount )
+
+            _bounceCount++;
+
+            if ( _bounceCount == _maxBounceCount )
             {
                 DestroyFireball();
             }
 
-            _rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
-            _bounceCount++;
+            //_rb.AddForce(Vector3.up * 15f, ForceMode.Impulse);
+            _rb.velocity = new Vector3(_rb.velocity.x, 10.0f, _rb.velocity.z);
         }
     }
 }
