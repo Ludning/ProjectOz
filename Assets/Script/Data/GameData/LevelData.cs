@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class LevelData
+public class LevelData : IDataRepository
 {
     public string landSet;
     public string ID;
