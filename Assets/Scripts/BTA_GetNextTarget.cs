@@ -12,8 +12,13 @@ namespace BehaviorDesigner.Runtime.Tasks
 
         public override void OnStart()
         {
+            SetNextTarget();
+        }
+        private void SetNextTarget()
+        {
+            bool isNextValid = currentTargetIndex.Value + 1 < targetList.Value.Count;
 
-            if (currentTargetIndex.Value + 1 >= targetList.Value.Count)
+            if (isNextValid == false)
             {
                 currentTargetIndex.Value = 0;
             }
@@ -21,7 +26,6 @@ namespace BehaviorDesigner.Runtime.Tasks
             {
                 currentTargetIndex.Value = currentTargetIndex.Value + 1;
             }
-
             currentTarget.Value = targetList.Value[currentTargetIndex.Value];
         }
     }

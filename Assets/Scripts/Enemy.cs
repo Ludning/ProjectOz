@@ -43,6 +43,11 @@ public class Enemy : MonoBehaviour, IKnockbackAble
         StartCoroutine(CheckKnockbackEnd());
     }
     public float TestVal = .5f;
+
+    /// <summary>
+    /// 쿨다운 계산 및 테두리 밖을 튕겨 나갔는지 검사
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator CheckKnockbackEnd()
     {
         float timeStamp = Time.time;
@@ -80,9 +85,8 @@ public class Enemy : MonoBehaviour, IKnockbackAble
 
 
 
-    //OnAttack attack
-    //and also make damage collider
-    //or turn on and off the collider
+    //공격메ㅔ서드
+    //애니메이션 실행, 움직임
 
 
 
