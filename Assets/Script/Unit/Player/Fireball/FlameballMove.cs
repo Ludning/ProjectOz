@@ -23,25 +23,4 @@ public class FlameballMove : MonoBehaviour
         _bulletSpeed = 10.0f;
         _bulletLifeTime = 10.0f;
     }
-
-    private void OnEnable()
-    {
-        _isDestroyed = false;
-        CancelInvoke("DestroyFlameball");
-    }
-
-    private void OnDisable()
-    {
-        _rb.velocity = Vector3.zero;
-    }
-
-    public void Shoot()
-    { 
-    
-    }
-
-    public void SetManagedPool(IObjectPool<FlameballMove> flameball)
-    { 
-        _flameballPool = flameball;
-    }
 }
