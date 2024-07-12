@@ -8,6 +8,8 @@ public class FireballMove : BallMove
     private int _maxBounceCount;
     private int _bounceCount;
 
+    private float _gravityValue;
+
     protected override void Awake()
     {
         base.Awake();
@@ -15,6 +17,8 @@ public class FireballMove : BallMove
         _bulletSpeed = 10.0f;
         _bulletLifeTime = 10.0f;
         _maxBounceCount = 2;
+        _gravityValue = 5.81f;
+        _gravity = new Vector3(0f, -_gravityValue, 0f);
     }
 
     protected override void OnEnable()
