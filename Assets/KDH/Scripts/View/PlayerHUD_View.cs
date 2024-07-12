@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHUD_View : ViewBase<PlayerHUD_ViewModel, PlayerHUD_Message>
 {
-    [SerializeField] GameObject Player_Image;
+    [SerializeField] Image Player_Image;
     [SerializeField] List<GameObject> hp_List;
     [SerializeField] Slider PetulanceGuage_Slider;
     [SerializeField] int value = 100;
@@ -46,15 +47,20 @@ public class PlayerHUD_View : ViewBase<PlayerHUD_ViewModel, PlayerHUD_Message>
 
     public void SetSwordmanMode(bool mode)
     {
-        if(mode)
+        /*var path = "Sprites/Temp/";
+        if (mode)
         {
+            path += "broom";
             // 해당 경로에 집어넣을 것.
-            Player_Image.GetComponent<Image>().sprite = null;
         }
         else
         {
-            Player_Image.GetComponent<Image>().sprite = null;
+            path += "sword";
         }
+        Player_Image.sprite = Resources.Load<Sprite>(path);
+
+        Sprite image = Resources.Load<Sprite>(path);*/
+        
     }
 
     public void SetPetulanceGuage(float guage)
