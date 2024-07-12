@@ -12,4 +12,12 @@ public class FlameballMove : BallMove
         _bulletSpeed = 10.0f;
         _bulletLifeTime = 10.0f;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            DestroyBall();
+        }
+    }
 }
