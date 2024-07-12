@@ -7,17 +7,11 @@ using UnityEngine.Pool;
 
 public class TestControlPool : MonoBehaviour
 {
-    //private IObjectPool<FireballMove> _fireballPool;
-    //private IObjectPool<FlameballMove> _flameballPool;
-
     private IObjectPool<BallMove> _fireballPool;
     private IObjectPool<BallMove> _flameballPool;
 
     [SerializeField] private GameObject _fireballPrefab;
     [SerializeField] private GameObject _flameballPrefab;
-    [SerializeField] private GameObject _meteorPrefab;
-
-    private bool _charging;
 
     private int _chargingValue;
     private int _percentOzMagic = 30;
