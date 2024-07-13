@@ -85,7 +85,8 @@ public class Combat
 
         CalcTakeDamage(damage);
         OnDamaged?.Invoke(attacker);
-
+        Debug.Log($"DamageTaken Test NonObject",_owner );
+        Debug.Log($"DamageTaken ",_owner );
         if (_hp <= 0f)
         {
             _dead = true;

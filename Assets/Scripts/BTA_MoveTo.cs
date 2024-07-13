@@ -5,7 +5,6 @@ namespace BehaviorDesigner.Runtime.Tasks
 {
     public class BTA_MoveTo : Action
     {
-        public SharedFloat moveSpeed;
         public SharedTransform targetPostion;
         public NavMeshAgent agent;
         public bool isDynamicDestination = false;

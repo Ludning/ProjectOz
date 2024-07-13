@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class EnemyDebugManager : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private Dropdown _options_FuncNames;
     [SerializeField] private InputField[] _inputParams;
+
+    [SerializeField] private Collider _collider;
 
     /// <summary>
     /// 현재 클래스에서 메서드 이름 받아서
@@ -55,6 +58,11 @@ public class EnemyDebugManager : MonoBehaviour
 
     private void OnOptionSet(int index)
     {
+        if(_options_FuncNames.options.Count == 0)
+        {
+            return;
+        }
+
         string methodName = _options_FuncNames.options[_options_FuncNames.value].text;
         ParameterInfo[] paramNames = this.GetType().GetMethod(methodName).GetParameters();
         for (int i = 0; i < _inputParams.Length ; i++)
@@ -87,7 +95,17 @@ public class EnemyDebugManager : MonoBehaviour
 
 
 
+    public void TestDamageCollider_Reflection()
+    {
+        StartCoroutine(OnOff(_collider, .1f));
+    }
 
+    private IEnumerator OnOff(Component componentm, float time)
+    {
+        _collider.enabled = true;
+        yield return new WaitForSeconds(time);
+        _collider.enabled = false;
+    }
 
 
 
