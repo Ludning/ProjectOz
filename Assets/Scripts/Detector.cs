@@ -1,6 +1,5 @@
-using BehaviorDesigner.Runtime;
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using UnityEngine;
 
 public class Detector : MonoBehaviour
@@ -12,9 +11,11 @@ public class Detector : MonoBehaviour
     public bool isPlayerInRange { get; private set; }
 
     [SerializeField] private Transform _target;
-    public void Init(string targetTag ,float detectionRadius)
+
+    public void Init(string targetTag, float detectionRadius)
     {
-        _targetTag = targetTag; 
+
+        _targetTag = targetTag;
         _detectionRadius = detectionRadius;
     }
 
@@ -23,21 +24,38 @@ public class Detector : MonoBehaviour
         return _target;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void FixedUpdate()
     {
-        if (other.CompareTag("Player"))
+        Collider[] overlap = Physics.OverlapSphere(transform.position, _detectionRadius);
+
+        //check overlap contains player taged
+
+        Collider col = overlap.FirstOrDefault((col) => col.CompareTag("Player"));
+        if (col != null)
         {
-            isPlayerInRange = true;
-            _target = other.transform;
-            Debug.Log("Player detected");
+            IsPlayerVisible(col.transform);
+            _target = col.transform;
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        else
         {
             isPlayerInRange = false;
-            Debug.Log("Player left");
         }
+    }
+    private bool IsPlayerVisible(Transform target)
+    {
+        if (Physics.Raycast(target.position + transform.up, transform.position - target.position + transform.up, out RaycastHit hit, _detectionRadius))
+        {
+            if (hit.collider.CompareTag("Player") && target.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _detectionRadius);
     }
 }
