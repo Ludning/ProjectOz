@@ -11,6 +11,10 @@ namespace BehaviorDesigner.Runtime.Tasks
         public float range = 3f;
         public SharedTransform currentTarget;
 
+        public override void OnAwake()
+        {
+            owner = GetComponent<Enemy>();
+        }
         public override TaskStatus OnUpdate()
         {
             if (owner == null)

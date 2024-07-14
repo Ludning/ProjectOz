@@ -9,6 +9,11 @@ namespace BehaviorDesigner.Runtime.Tasks
         public NavMeshAgent agent;
         public bool isDynamicDestination = false;
 
+        public override void OnAwake()
+        {
+            agent = GetComponent<NavMeshAgent>();
+        }
+
         public override void OnStart()
         {
             SetMovable(agent, true);

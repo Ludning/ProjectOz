@@ -7,6 +7,11 @@ namespace BehaviorDesigner.Runtime.Tasks
     {
         public Enemy enemy;
 
+        public override void OnAwake()
+        {
+            enemy = GetComponent<Enemy>();
+        }
+
         public override TaskStatus OnUpdate()
         {
             if (enemy.Attack())

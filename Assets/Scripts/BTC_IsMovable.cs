@@ -9,6 +9,11 @@ namespace BehaviorDesigner.Runtime.Tasks
     {
         public Enemy owner;
 
+        public override void OnAwake()
+        {
+            owner = GetComponent<Enemy>();
+        }
+
         public override TaskStatus OnUpdate()
         {
             if (owner == null)
