@@ -23,7 +23,17 @@ public class PlayerController : MonoBehaviour
         Debug.Log(Rigidbody.velocity);
         Vector3 velocity = new Vector3(_direction.x * _speed * Time.deltaTime, Rigidbody.velocity.y, 0);
         Rigidbody.velocity = velocity;
+        switch (_direction.x)
+        {
+            case > 0:
+                transform.rotation = Quaternion.Euler(0, 90, 0);
+                break;
+            case < 0:
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+                break;
+        }
 
+        
 
         CharacterMediatorMessage<int> msg = new CharacterMediatorMessage<int>()
         {
@@ -37,7 +47,7 @@ public class PlayerController : MonoBehaviour
     {
         _direction = context.ReadValue<Vector2>();
     }
-    public void OnRun(InputAction.CallbackContext context)
+    public void OnDash(InputAction.CallbackContext context)
     {
         
     }
