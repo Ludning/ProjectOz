@@ -1,19 +1,19 @@
 using BehaviorDesigner.Runtime;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Combat))]
 public class Enemy : MonoBehaviour
 {
 
     [Header("AI_Patrol")]
-    [SerializeField] private float _moveRange;
     [SerializeField] private Transform _leftPatrolPoint;
     [SerializeField] private Transform _rightPatrolPoint;
 
-    [SerializeField] private Combat _combat;
 
     [SerializeField] private string _enemyId;
     [SerializeField] private EnemyData _enemyData;
@@ -22,79 +22,86 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private Detector _detector;
 
+    private Combat _combat;
     private Rigidbody _rigidbody;
     private Animator _animator;
     private NavMeshAgent _navMeshAgent;
-    private float damage;
+    private BehaviorTree _behaviorTree;
+    private float _damage;
     private Collider _attackCollider;
-
-
     public event Action OnKnockbackEnd;
+
+
     private void Awake()
     {
-        _combat = new Combat();
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
-        _combat.Init(transform, _enemyData.enemyHp);
+
+        _rigidbody = GetComponent<Rigidbody>();
+        _behaviorTree = GetComponent<BehaviorTree>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _combat = GetComponent<Combat>();
+
+        Init(_enemyData);
+    }
+
+    private void Init(EnemyData enemyData)
+    {
+
+
+
+        //Combat
+        _combat.Init(transform, enemyData.enemyHp);
+
         _combat.OnDamaged += OnDamaged;
         _combat.OnDead += OnDead;
-        damage = _enemyData.enemyColDamage * _enemyData.enemyBasePower;
-        _rigidbody = GetComponent<Rigidbody>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
 
 
-        _leftPatrolPoint.position = transform.position + _moveRange * Vector3.right;
-        _rightPatrolPoint.position = transform.position - _moveRange * Vector3.right;
-    }
+        _damage = enemyData.enemyColDamage * enemyData.enemyBasePower;
+        //_attackCooldown = enemyData.enemyAttackCooldown;
+        //_navMeshAgent.speed = enemyData.enemySpeed;
+        //float moveRange = enemyData.enemyPatrolDistance;
+        float moveRange = 3f;
+        _leftPatrolPoint.position = transform.position + moveRange * Vector3.right;
+        _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
 
-    private void OnAttack(GameObject taget, float damage)
-    {
-        if (!taget.TryGetComponent(out Combat targetCombat))
+        //_detector.SetRadius(enemyData.noticeDistance);
+        _detector.Init("Player",6f);
+        SharedTransformList targetList = new SharedTransformList();
+        targetList.Value = new List<Transform>();
+        targetList.Value.Add(_leftPatrolPoint);
+        targetList.Value.Add(_rightPatrolPoint);
+
+        if(gameObject.CompareTag("Player"))
         {
             return;
         }
-        _combat.DealDamage(targetCombat, damage);
-    }
 
-    private void OnDamaged(Combat attacker)
+        _behaviorTree.SetVariable("TargetList", targetList);
+    }
+    private void ResetEnemy()
     {
-        if (attacker == null)
-        {
-            return;
-        }
-        Vector3 attackDir = (transform.position - attacker.transform.position).normalized;
+        _combat.ResetDead();
+        gameObject.SetActive(true);
     }
 
 
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
 
-            if (other.TryGetComponent(out Enemy target) == false)
-            {
-                Debug.Assert(false, "Player has no Combat component");
-                return;
-            }
-            _combat.DealDamage(target.GetCombat(), damage);
-            return;
-        }
-    }
 
+    //전투 관련
     public Combat GetCombat()
     {
         return _combat;
     }
 
-    //공격메ㅔ서드
+    //공격메서드
     //애니메이션 실행, 움직임
-
-
     float _attackCooldown = 0f;
+    float _currentAttackTime = 0f;
     public bool Attack()
     {
-        if(_attackCooldown >= 0f)
+        if(_currentAttackTime >= 0f)
         {
             return false;
         }
@@ -103,7 +110,7 @@ public class Enemy : MonoBehaviour
         float force = dir.magnitude * 10f;
         dir = dir.normalized;
         _rigidbody.AddForce(dir * force, ForceMode.VelocityChange);
-        _attackCooldown = 3f;
+        _currentAttackTime = _attackCooldown;
         return true;
     }
 
@@ -117,17 +124,9 @@ public class Enemy : MonoBehaviour
         _combat.TakeDamage(attacker, damage);
     }
 
-    private void OnDead(Combat attacker, Combat damaged)
-    {
-        gameObject.SetActive(false);
-    }
 
-    private void ResetEnemy()
-    {
-        _combat.ResetDead();
-        gameObject.SetActive(true);
-    }
 
+    //탐지 관련
     public bool IsMovable()
     {
         return _isMovable;
@@ -151,6 +150,45 @@ public class Enemy : MonoBehaviour
     public Transform GetTarget()
     {
         return _detector.GetTarget();
+    }
+
+
+    // 이벤트
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+
+            if (other.TryGetComponent(out Enemy target) == false)
+            {
+                Debug.Assert(false, "Player has no Combat component");
+                return;
+            }
+            _combat.DealDamage(target.GetCombat(), _damage);
+            return;
+        }
+    }
+    private void OnAttack(GameObject taget, float damage)
+    {
+        if (!taget.TryGetComponent(out Combat targetCombat))
+        {
+            return;
+        }
+        _combat.DealDamage(targetCombat, damage);
+    }
+
+    private void OnDamaged(Combat attacker)
+    {
+        if (attacker == null)
+        {
+            return;
+        }
+        Vector3 attackDir = (transform.position - attacker.transform.position).normalized;
+    }
+
+    private void OnDead(Combat attacker, Combat damaged)
+    {
+        gameObject.SetActive(false);
     }
 
 
