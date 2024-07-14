@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 
 [Serializable]
-public class Combat
+public class Combat : MonoBehaviour
 {
     [SerializeField] Transform _owner;
 
