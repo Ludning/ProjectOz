@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AttackType
+public enum PlayerStatControlType
 {
+    ChangeTransformation,
     NormalAttack,//일반공격
     ChargeAttack,//강공격
     UndoTransformation,//변신해제
@@ -15,8 +16,10 @@ public class PlayerStat : MonoBehaviour, IDamageable
     [SerializeField, ReadOnly] private ResourceData _resourceData;
 
     [SerializeField, ReadOnly] private int _playerCurrentHp;
-    [SerializeField, ReadOnly] private float _playerCurrentGage;
+    [SerializeField] private float _playerCurrentGage;
     [SerializeField, ReadOnly] private bool _isDie;
+
+    [SerializeField] private CharacterMediator CharacterMediator;
 
     public float PlayerCurrentGage
     {
@@ -47,7 +50,14 @@ public class PlayerStat : MonoBehaviour, IDamageable
             _playerCurrentHp = 0;
             OnDie();
         }
+
         //MVVM업데이트
+        PlayerHUD_Message msg = new PlayerHUD_Message()
+        {
+            playerHUDType = PlayerHUDType.PlayerHp,
+            value = _playerCurrentHp
+        };
+        MessageManager.Instance.InvokeCallback(msg);
     }
 
     private void OnDie()
@@ -56,19 +66,51 @@ public class PlayerStat : MonoBehaviour, IDamageable
         _isDie = true;
     }
 
-    public void ChangeGage(AttackType type)
+    public void ChangeGage(PlayerStatControlType type)
     {
         switch (type)
         {
-            case AttackType.NormalAttack:
+            case PlayerStatControlType.NormalAttack:
                 PlayerCurrentGage += _resourceData.gageGainNormal;
                 break;
-            case AttackType.ChargeAttack:
+            case PlayerStatControlType.ChargeAttack:
                 PlayerCurrentGage += _resourceData.gageGainCharge;
                 break;
-            case AttackType.UndoTransformation:
+            case PlayerStatControlType.UndoTransformation:
                 PlayerCurrentGage -= _resourceData.gagePenalty;
                 break;
         }
+    }
+    private void ChangeTransformation()
+    {
+        if (PlayerCurrentGage >= 100)
+        {
+            GageReduceStart();
+            CharacterMediator.Notify(this, new CharacterMediatorMessage<PlayerModelState>());
+        }
+    }
+
+    public void OnResponMessage(CharacterMediatorMessage<PlayerStatControlType> message)
+    {
+        switch(message.value)
+        {
+            case PlayerStatControlType.ChangeTransformation:
+                ChangeTransformation();
+                break;
+            case PlayerStatControlType.NormalAttack:
+                ChangeGage(message.value);
+                break;
+            case PlayerStatControlType.ChargeAttack:
+                ChangeGage(message.value);
+                break;
+            case PlayerStatControlType.UndoTransformation:
+                ChangeGage(message.value);
+                break;
+        }
+    }
+
+    public void GageReduceStart()
+    {
+
     }
 }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum PlayerModelState
@@ -19,6 +16,7 @@ public class PlayerModelSwitcher : MonoBehaviour
     {
         _mageModel.SetActive(true);
         _knightModel.SetActive(false);
+        _currentModelState = PlayerModelState.Mage;
     }
 
     public void SwitchModel()
@@ -29,12 +27,23 @@ public class PlayerModelSwitcher : MonoBehaviour
                 _mageModel.SetActive(true);
                 _knightModel.SetActive(false);
                 _currentModelState = PlayerModelState.Mage;
+                ChangeUI_Icon();
                 break;
             case PlayerModelState.Mage:
                 _knightModel.SetActive(true);
                 _mageModel.SetActive(false);
                 _currentModelState = PlayerModelState.Knight;
+                ChangeUI_Icon();
                 break;
         }
+    }
+    public void ChangeUI_Icon()
+    {
+        PlayerHUD_Message msg = new PlayerHUD_Message()
+        {
+            playerHUDType = PlayerHUDType.SwordmanMode,
+            value = _currentModelState == PlayerModelState.Knight ? 1 : 0
+        };
+        MessageManager.Instance.InvokeCallback(msg);
     }
 }
