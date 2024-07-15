@@ -842,7 +842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerController: {fileID: 1257492099}
   PlayerModelSwitcher: {fileID: 1257492102}
-  playerStat: {fileID: 0}
+  playerStat: {fileID: 1257492104}
 --- !u!114 &1257492104
 MonoBehaviour:
   m_ObjectHideFlags: 0
