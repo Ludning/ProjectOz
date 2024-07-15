@@ -15,7 +15,7 @@ public class Combat : MonoBehaviour
     [SerializeField] float _prevHitTime = 0f;
 
     public Func<bool> AdditionalDamageableCheck { get; set; }
-    public Action<Combat> OnDamaged;
+    public Action OnDamaged;
     public Action OnHeal;
     public Action OnDead;
 
@@ -58,25 +58,6 @@ public class Combat : MonoBehaviour
         }
         return true;
     }
-    public bool Damaged(Combat attacker, float damage)
-    {
-        if (!IsDamageable())
-            return false;
-
-        _prevHitTime = Time.time;
-        damage = Mathf.Max(0f, damage);
-        _hp -= damage;
-
-        OnDamaged?.Invoke(attacker);
-
-        Debug.Log($"DamageTaken ", transform);
-        if (_hp <= 0f)
-        {
-            _dead = true;
-            OnDead?.Invoke();
-        }
-        return true;
-    }
     public void Attack(Combat target, float damage)
     {
         if (target == null)
@@ -101,6 +82,25 @@ public class Combat : MonoBehaviour
             //return false;
         }
         //return true;
+    }
+    private bool Damaged(Combat attacker, float damage)
+    {
+        if (!IsDamageable())
+            return false;
+
+        _prevHitTime = Time.time;
+        damage = Mathf.Max(0f, damage);
+        _hp -= damage;
+
+        OnDamaged?.Invoke();
+
+        Debug.Log($"DamageTaken ", transform);
+        if (_hp <= 0f)
+        {
+            _dead = true;
+            OnDead?.Invoke();
+        }
+        return true;
     }
 
     public void Heal(float amount)
@@ -131,6 +131,10 @@ public class Combat : MonoBehaviour
         ResetHp();
         _dead = false;
     }
+
+
+
+
     private void ResetHp()
     {
         Heal(9999999999f);

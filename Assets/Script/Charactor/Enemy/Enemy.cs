@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(Combat attacker, float damage)
     {
-        _combat.Damaged(attacker, damage);
+        _combat.Attack(null, damage);
     }
 
 
@@ -177,13 +177,8 @@ public class Enemy : MonoBehaviour
         _combat.Attack(targetCombat, damage);
     }
 
-    private void OnDamaged(Combat attacker)
+    private void OnDamaged()
     {
-        if (attacker == null)
-        {
-            return;
-        }
-        Vector3 attackDir = (transform.position - attacker.transform.position).normalized;
     }
 
     private void OnDead()
