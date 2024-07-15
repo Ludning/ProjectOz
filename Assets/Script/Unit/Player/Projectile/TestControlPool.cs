@@ -18,10 +18,15 @@ public class TestControlPool : MonoBehaviour
 
     private float _inputTimer = 0;
 
+    private SkillData _fireballData;
+    private SkillData _flameballData;
+
     private void Awake()
     {
         _fireballPool = new ObjectPool<BallMove>(() => CreateBall(_fireballPrefab, _fireballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
         _flameballPool = new ObjectPool<BallMove>(() => CreateBall(_flameballPrefab, _flameballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
+        _fireballData = DataManager.Instance.GetGameData<SkillData>("S101");
+        _flameballData = DataManager.Instance.GetGameData<SkillData>("S102");
     }
 
     private void Update()
@@ -94,8 +99,8 @@ public class TestControlPool : MonoBehaviour
         }
         else
         {
-            Debug.Log("OzFail");
-            // todo
+            Debug.Log("OzMagic");
+            OzMagic.Instance.Execute();
         }
     }
 }
