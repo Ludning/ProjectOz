@@ -5,18 +5,28 @@ using UnityEngine.Pool;
 
 public class FireballMove : BallMove
 {
+    private SkillData _fireballData_Skill;
+    private ProjectileData _fireballData_Projectile;
+
     private int _maxBounceCount;
     private int _bounceCount;
 
+    private float _damage;
     private float _gravityValue;
 
     protected override void Awake()
     {
         base.Awake();
 
-        _bulletSpeed = 10.0f;
-        _bulletLifeTime = 10.0f;
-        _maxBounceCount = 2;
+        _fireballData_Skill = DataManager.Instance.GetGameData<SkillData>("S101");
+        _fireballData_Projectile = DataManager.Instance.GetGameData<ProjectileData>("P101");
+
+        _bulletSpeed = _fireballData_Projectile.projectileSpeedRate;
+        _bulletLifeTime = _fireballData_Projectile.projectileLifeTime;
+
+        _maxBounceCount = _fireballData_Projectile.projectileBounceCount;
+
+        _damage = _fireballData_Skill.skillPowerRate;
         _gravityValue = 5.81f;
         _gravity = new Vector3(0f, -_gravityValue, 0f);
     }
@@ -33,7 +43,7 @@ public class FireballMove : BallMove
         {
             _bounceCount++;
 
-            if ( _bounceCount == _maxBounceCount )
+            if ( _bounceCount >= _maxBounceCount )
             {
                 DestroyBall();
             }
