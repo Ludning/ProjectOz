@@ -1,5 +1,6 @@
 using BehaviorDesigner.Runtime;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,6 +8,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Combat))]
+[RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour
 {
 
@@ -18,9 +20,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private string _enemyId;
     [SerializeField] private EnemyData _enemyData;
 
-    [SerializeField] private bool _isMovable = false;
+    [SerializeField] private bool _isMovable = true;
 
     [SerializeField] private Detector _detector;
+
+    [SerializeField] private bool _isChargeAttack = false;
+
+    private static float positionZ = 0;
 
     private Combat _combat;
     private Rigidbody _rigidbody;
@@ -31,7 +37,6 @@ public class Enemy : MonoBehaviour
     private Collider _attackCollider;
     public event Action OnKnockbackEnd;
 
-
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -40,10 +45,17 @@ public class Enemy : MonoBehaviour
         _behaviorTree = GetComponent<BehaviorTree>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _combat = GetComponent<Combat>();
+        _animator = GetComponent<Animator>();
 
         Init(_enemyData);
     }
-
+    private void Update()
+    {
+        if (_currentAttackTime > 0f)
+        {
+            _currentAttackTime -= Time.deltaTime;
+        }
+    }
     private void Init(EnemyData enemyData)
     {
 
@@ -65,13 +77,13 @@ public class Enemy : MonoBehaviour
         _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
 
         //_detector.SetRadius(enemyData.noticeDistance);
-        _detector.Init("Player",6f);
+        _detector.Init("Player", 6f);
         SharedTransformList targetList = new SharedTransformList();
         targetList.Value = new List<Transform>();
         targetList.Value.Add(_leftPatrolPoint);
         targetList.Value.Add(_rightPatrolPoint);
 
-        if(gameObject.CompareTag("Player"))
+        if (gameObject.CompareTag("Player"))
         {
             return;
         }
@@ -97,21 +109,63 @@ public class Enemy : MonoBehaviour
 
     //공격메서드
     //애니메이션 실행, 움직임
-    float _attackCooldown = 0f;
+    float _attackCooldown = 1f;
     float _currentAttackTime = 0f;
-    public bool Attack()
+
+    public void StartAttackAnimation()
     {
-        if(_currentAttackTime >= 0f)
+        _currentAttackTime = _attackCooldown;
+        _animator.SetTrigger("Attack");
+    }
+    public bool IsAttackable()
+    {
+        if (_currentAttackTime > 0f)
         {
             return false;
         }
-        _animator.SetTrigger("Attack");
-        Vector3 dir = _detector.GetTarget().position - transform.position;
-        float force = dir.magnitude * 10f;
+        return true;
+    }
+
+    public bool CharacterAttack()
+    {
+        if (_isChargeAttack)
+        {
+            ChargeAttack(25f);
+        }
+        else
+        {
+            Attack();
+        }
+        return true;
+    }
+    private void ChargeAttack(float force)
+    {
+        Vector3 dir = _detector.GetTarget().position+ Vector3.up  - transform.position;
+        SetEnableRigidbody(true);
+        dir.z = 0f;
         dir = dir.normalized;
         _rigidbody.AddForce(dir * force, ForceMode.VelocityChange);
-        _currentAttackTime = _attackCooldown;
-        return true;
+        StartCoroutine(ChargeAttackEnd());
+        Attack();
+    }
+    private IEnumerator ChargeAttackEnd()
+    {
+        while (true)
+        {
+            yield return new WaitForFixedUpdate();
+            if (_rigidbody.velocity.magnitude < .1f)
+            {
+                SetEnableRigidbody(false);
+                break;
+            }
+        }
+    }
+    private void Attack()
+    {
+        if (_attackCollider == null)
+            return;
+        _attackCollider.enabled = true;
+        _attackCollider.enabled = false;
     }
 
     public void EnableAttackCollider()
@@ -136,11 +190,11 @@ public class Enemy : MonoBehaviour
     {
         Transform target = _detector.GetTarget();
 
-        if(target == null)
+        if (target == null)
         {
             return false;
         }
-        if(Vector3.Distance(target.position, transform.position) <= range)
+        if (Vector3.Distance(target.position, transform.position) <= range)
         {
             return true;
         }
@@ -184,6 +238,19 @@ public class Enemy : MonoBehaviour
     private void OnDead()
     {
         gameObject.SetActive(false);
+    }
+
+    private void SetEnableRigidbody(bool condition)
+    {
+        _navMeshAgent.velocity = Vector3.zero;
+        _navMeshAgent.updatePosition = !condition;
+        _rigidbody.isKinematic = !condition;
+        _rigidbody.useGravity = false;
+        _rigidbody.freezeRotation = condition;
+        if(!condition)
+        {
+            _navMeshAgent.nextPosition = transform.position;
+        }
     }
 
 

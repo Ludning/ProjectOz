@@ -11,13 +11,8 @@ namespace BehaviorDesigner.Runtime.Tasks
 
         public override TaskStatus OnUpdate()
         {
-            if (owner.Attack())
-            {
-                return TaskStatus.Success;
-            }
-            return TaskStatus.Failure;
+            owner.StartAttackAnimation();
+            return TaskStatus.Success;
         }
-
-
     }
 }
