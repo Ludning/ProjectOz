@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class movement : MonoBehaviour
+public class TempMovement : MonoBehaviour
 {
     private Rigidbody rigid;
     [SerializeField]
-    private float moveForce = 100.0f;
+    private float moveForce = 50.0f;
     private float x_Axis;
 
     private void Awake()

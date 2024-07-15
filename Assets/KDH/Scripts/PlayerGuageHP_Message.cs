@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerHUDType
+{
+    PlayerHp,
+    SwordmanMode,
+    PetulanceGuage,
+}
 public struct PlayerHUD_Message : MessageBase
 {
-    public bool SwordmanMode;
-    public float PlayerHp;
-    public float PetulanceGuage;
+    public PlayerHUDType playerHUDType;
+    public float value;
 }
