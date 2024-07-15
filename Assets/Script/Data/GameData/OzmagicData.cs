@@ -15,4 +15,5 @@ public class OzmagicData : IDataRepository
     public float value3;
     public string chainProjectileID;
     public float chainPowerRate;
+    public string prefabName;
     }
