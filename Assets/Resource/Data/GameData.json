@@ -9,7 +9,6 @@
       "pcMoveSpeed": 1.0,
       "moveSet": "a1",
       "skillSet": "a1",
-      "ozMagicSet": "a",
       "resourceID": "R101",
       "pcIgnoreColTime": 1.0
     },
@@ -22,7 +21,6 @@
       "pcMoveSpeed": 1.0,
       "moveSet": "a2",
       "skillSet": "a2",
-      "ozMagicSet": "-",
       "resourceID": "R101",
       "pcIgnoreColTime": 1.0
     }
@@ -36,7 +34,7 @@
       "enemyHp": 30.0,
       "enemyBasePower": 1.0,
       "enemyMoveSpeed": 1.0,
-      "moveSet": "",
+      "moveSet": "-",
       "skillSet": "b",
       "enemyColDamage": 1.0
     },
@@ -48,7 +46,7 @@
       "enemyHp": 30.0,
       "enemyBasePower": 1.0,
       "enemyMoveSpeed": 1.0,
-      "moveSet": "",
+      "moveSet": "-",
       "skillSet": "c",
       "enemyColDamage": 1.0
     }
@@ -151,7 +149,6 @@
   },
   "OzmagicDatas": {
     "a": {
-      "ozMagicSet": "a",
       "ozMagicID": "O201",
       "description": "다같이 시간정지",
       "ozMagicType": "환경 변화",
