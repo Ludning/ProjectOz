@@ -5,12 +5,19 @@ using UnityEngine.Pool;
 
 public class FlameballMove : BallMove
 {
+    private ProjectileData _flameballData_Projectile;
+
+    private float _damage;
+
     protected override void Awake()
     {
         base.Awake();
 
-        _bulletSpeed = 10.0f;
-        _bulletLifeTime = 10.0f;
+        _flameballData_Projectile = DataManager.Instance.GetGameData<ProjectileData>("P102");
+
+        _damage = DataManager.Instance.GetGameData<SkillData>("P102").skillPowerRate;
+        _bulletSpeed = _flameballData_Projectile.projectileSpeedRate;
+        _bulletLifeTime = _flameballData_Projectile.projectileLifeTime;
     }
 
     private void OnTriggerEnter(Collider other)
