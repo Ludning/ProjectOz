@@ -19,5 +19,7 @@ public class CharacterMediator : MonoBehaviour, IMediator
             return;
         if (message is CharacterMediatorMessage<PlayerModelState>)
             PlayerModelSwitcher.SwitchModel();
+        if (message is CharacterMediatorMessage<PlayerStatControlType> msg)
+            playerStat.OnResponMessage(msg);
     }
 }
