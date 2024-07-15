@@ -34,7 +34,7 @@
       "enemyHp": 30.0,
       "enemyBasePower": 1.0,
       "enemyMoveSpeed": 1.0,
-      "moveSet": "-",
+      "moveSet": "",
       "skillSet": "b",
       "enemyColDamage": 1.0
     },
@@ -46,7 +46,7 @@
       "enemyHp": 30.0,
       "enemyBasePower": 1.0,
       "enemyMoveSpeed": 1.0,
-      "moveSet": "-",
+      "moveSet": "",
       "skillSet": "c",
       "enemyColDamage": 1.0
     }
@@ -102,9 +102,20 @@
     }
   },
   "SkillDatas": {
-    "a1": {
-      "ID": "a1",
-      "skillSet": "S102",
+    "S101": {
+      "ID": "S101",
+      "skillSet": "a1",
+      "description": "기본공격",
+      "skillRangeType": "ranged",
+      "skillPowerRate": 30.0,
+      "skillCooltime": 0.0,
+      "value1": 0.0,
+      "value2": 0.0,
+      "projectileID": "P101"
+    },
+    "S102": {
+      "ID": "S102",
+      "skillSet": "a1",
       "description": "강공격",
       "skillRangeType": "ranged",
       "skillPowerRate": 30.0,
@@ -113,9 +124,9 @@
       "value2": 30.0,
       "projectileID": "P102"
     },
-    "a2": {
-      "ID": "a2",
-      "skillSet": "S103",
+    "S103": {
+      "ID": "S103",
+      "skillSet": "a2",
       "description": "돌진베기",
       "skillRangeType": "melee",
       "skillPowerRate": 30.0,
@@ -124,9 +135,9 @@
       "value2": 5.0,
       "projectileID": "-"
     },
-    "b": {
-      "ID": "b",
-      "skillSet": "S1001",
+    "S1001": {
+      "ID": "S1001",
+      "skillSet": "b",
       "description": "몹A 공격",
       "skillRangeType": "melee",
       "skillPowerRate": 1.0,
@@ -135,9 +146,9 @@
       "value2": 0.0,
       "projectileID": "-"
     },
-    "c": {
-      "ID": "c",
-      "skillSet": "S2001",
+    "S2001": {
+      "ID": "S2001",
+      "skillSet": "c",
       "description": "몹B 공격",
       "skillRangeType": "melee",
       "skillPowerRate": 1.0,
