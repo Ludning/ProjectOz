@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
 
         //Combat
-        _combat.Init(transform, enemyData.enemyHp);
+        _combat.Init(enemyData.enemyHp);
 
         _combat.OnDamaged += OnDamaged;
         _combat.OnDead += OnDead;
@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(Combat attacker, float damage)
     {
-        _combat.TakeDamage(attacker, damage);
+        _combat.Damaged(attacker, damage);
     }
 
 
@@ -164,7 +164,7 @@ public class Enemy : MonoBehaviour
                 Debug.Assert(false, "Player has no Combat component");
                 return;
             }
-            _combat.DealDamage(target.GetCombat(), _damage);
+            _combat.Attack(target.GetCombat(), _damage);
             return;
         }
     }
@@ -174,7 +174,7 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-        _combat.DealDamage(targetCombat, damage);
+        _combat.Attack(targetCombat, damage);
     }
 
     private void OnDamaged(Combat attacker)
@@ -186,7 +186,7 @@ public class Enemy : MonoBehaviour
         Vector3 attackDir = (transform.position - attacker.transform.position).normalized;
     }
 
-    private void OnDead(Combat attacker, Combat damaged)
+    private void OnDead()
     {
         gameObject.SetActive(false);
     }
