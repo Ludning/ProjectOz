@@ -5,14 +5,14 @@ using UnityEngine;
 [Serializable]
 public class Combat : MonoBehaviour
 {
-    [SerializeField] float _maxHp = 100f;
+    [SerializeField] private float _maxHp = 100f;
 
-    [SerializeField] float _hp = 100f;
+    [SerializeField] private float _hp = 100f;
 
-    [SerializeField] bool _dead = false;
+    [SerializeField] private bool _dead = false;
 
-    [SerializeField] float _invincibleTimeOnHit = .1f;
-    [SerializeField] float _prevHitTime = 0f;
+    [SerializeField] private float _invincibleTimeOnHit = .1f;
+    [SerializeField] private float _prevHitTime = 0f;
 
     public Func<bool> AdditionalDamageableCheck { get; set; }
     public Action OnDamaged;
@@ -28,6 +28,7 @@ public class Combat : MonoBehaviour
     public void Init(float maxHp)
     {
         _maxHp = maxHp;
+        _hp = maxHp;
         ResetDead();
     }
     public float GetHp() { return _hp; }

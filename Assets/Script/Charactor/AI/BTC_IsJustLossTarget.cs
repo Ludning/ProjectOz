@@ -2,12 +2,14 @@ using UnityEngine;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Check currentCharacter is movable")]
+    [TaskDescription("Check Is Enemy Just Loss Target")]
     [TaskCategory("Character")]
     [TaskIcon("{SkinColor}ReflectionIcon.png")]
-    public class BTC_IsMovable : Conditional
+    public class BTC_IsJustLossTarget : Conditional
     {
         public Enemy owner;
+        public SharedTransform target;
+        public SharedFloat detectRange;
 
         public override void OnAwake()
         {
@@ -18,12 +20,16 @@ namespace BehaviorDesigner.Runtime.Tasks
         {
             if (owner == null)
             {
-                Debug.LogWarning("Unable to compare field - compare value is null");
                 return TaskStatus.Failure;
             }
-
-            if (owner.IsMovable)
+            if(target.Value == null)
             {
+                return TaskStatus.Failure;
+            }
+            bool isLostTarget = !owner.IsTargetNear(detectRange.Value);
+            if(target.Value.CompareTag("Player") && isLostTarget)
+            {
+                target.Value = null;
                 return TaskStatus.Success;
             }
 

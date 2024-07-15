@@ -4,6 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+[Serializable]
+public class EnemyEditorData
+{
+    public float AttackRange;
+    public float AttackCooldown;
+    public float AttackDamage;
+    public float EnemyPatrolDistance;
+    public float EnemyPatrolDuration;
+    public float EnemyAlramDistance;
+}
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -19,12 +29,22 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private string _enemyId;
     [SerializeField] private EnemyData _enemyData;
-
     [SerializeField] private bool _isMovable = true;
+    public bool IsMovable
+    {
+        get => _isMovable;
+        private set
+        {
+            _navMeshAgent.isStopped = !value;
+            _isMovable = value;
+        }
+    }
 
     [SerializeField] private Detector _detector;
 
     [SerializeField] private bool _isChargeAttack = false;
+
+    [SerializeField] private EnemyEditorData _editorData;
 
     private static float positionZ = 0;
 
@@ -162,10 +182,18 @@ public class Enemy : MonoBehaviour
     }
     private void Attack()
     {
+        IsMovable = false;
         if (_attackCollider == null)
             return;
         _attackCollider.enabled = true;
         _attackCollider.enabled = false;
+        StartCoroutine(AttackEnd());
+    }
+
+    private IEnumerator AttackEnd()
+    {
+        yield return new WaitForSeconds(_attackCooldown);
+        IsMovable = true;
     }
 
     public void EnableAttackCollider()
@@ -178,13 +206,6 @@ public class Enemy : MonoBehaviour
         _combat.Attack(null, damage);
     }
 
-
-
-    //Å½Áö °ü·Ã
-    public bool IsMovable()
-    {
-        return _isMovable;
-    }
 
     public bool IsTargetNear(float range)
     {

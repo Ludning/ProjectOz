@@ -8,7 +8,7 @@ namespace BehaviorDesigner.Runtime.Tasks
     public class BTC_IsTargetNear : Conditional
     {
         public Enemy owner;
-        public float range = 3f;
+        public SharedFloat range = 3f;
         public SharedTransform currentTarget;
 
         public override void OnAwake()
@@ -23,7 +23,7 @@ namespace BehaviorDesigner.Runtime.Tasks
                 return TaskStatus.Failure;
             }
 
-            if (owner.IsTargetNear(range))
+            if (owner.IsTargetNear(range.Value))
             {
                 currentTarget.Value = owner.GetTarget();
                 return TaskStatus.Success;
