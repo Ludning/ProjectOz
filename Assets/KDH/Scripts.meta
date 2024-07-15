@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Script/Unit/Player/ThrowingObject.meta
+guid: 1515d9f0c86c89d4ca4eefe9b84b0780
+========
 guid: 0c015db093cab0242a51044d9acd7016
+>>>>>>>> bsj:Assets/KDH/Scripts.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

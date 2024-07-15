@@ -3,7 +3,6 @@ using System;
 [Serializable]
 public class OzmagicData : IDataRepository
 {
-    public string ozMagicSet;
     public string ozMagicID;
     public string description;
     public string ozMagicType;

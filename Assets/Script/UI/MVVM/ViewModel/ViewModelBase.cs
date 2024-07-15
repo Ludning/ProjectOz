@@ -20,8 +20,10 @@ public class ViewModelBase<TMessage> where TMessage : MessageBase
     protected virtual void OnResponseMessage(TMessage message)
     {
     }
-    
-    
+    protected virtual void OnResponseMessage<T>(TMessage message, T value)
+    {
+    }
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propertyName)

@@ -14,7 +14,7 @@ public class PlayerHUD_ViewModel : ViewModelBase<PlayerHUD_Message>
         set
         {
             _swordmanMode = value;
-            OnPropertyChanged(nameof(PlayerHp));
+            OnPropertyChanged(nameof(SwordmanMode));
         }
     }
 
@@ -24,7 +24,7 @@ public class PlayerHUD_ViewModel : ViewModelBase<PlayerHUD_Message>
         set
         {
             _playerHp = value;
-            OnPropertyChanged(nameof(SwordmanMode));
+            OnPropertyChanged(nameof(PlayerHp));
         }
     }
 
@@ -38,11 +38,19 @@ public class PlayerHUD_ViewModel : ViewModelBase<PlayerHUD_Message>
         }
     }
 
-
     protected override void OnResponseMessage(PlayerHUD_Message message)
     {
-        SwordmanMode = message.SwordmanMode;
-        PlayerHp = message.PlayerHp;
-        PetulanceGuage = message.PetulanceGuage;
+        switch(message.playerHUDType)
+        {
+            case PlayerHUDType.PlayerHp:
+                PlayerHp = message.value;
+                break;
+            case PlayerHUDType.SwordmanMode:
+                SwordmanMode = (message.value == 0) ? false : true;
+                break;
+            case PlayerHUDType.PetulanceGuage:
+                PetulanceGuage = message.value;
+                break;
+        }
     }
 }

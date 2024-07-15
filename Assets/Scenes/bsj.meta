@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resource/Prefab/Fireball.prefab.meta
+guid: 0176f43798436804b9c5a4168f1a7935
+PrefabImporter:
+========
 guid: 96b332ad91f5f3b4caa838920ef83460
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> bsj:Assets/Scenes/bsj.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
