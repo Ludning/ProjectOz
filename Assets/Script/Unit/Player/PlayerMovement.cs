@@ -16,13 +16,12 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private CharacterMediator CharacterMediator;
     [SerializeField] private ScaleController ScaleController;
-
+    
     private bool _isStop = false;
 
 
     private void Update()
     {
-        Debug.Log(Rigidbody.velocity);
         Vector3 velocity = new Vector3(_direction.x * _speed * Time.unscaledDeltaTime, Rigidbody.velocity.y, 0);
         Rigidbody.velocity = velocity;
         switch (_direction.x)
