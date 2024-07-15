@@ -2,23 +2,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class OzMagicManager : SingleTonMono<OzMagicManager>, IOzMagic
-{
+public class OzMagicManager : SingleTonMono<OzMagicManager>
+{ 
     private OzmagicData _ozData;
+    private OzMagic _ozMagic;
 
-    [SerializeField] private List<GameObject> Prefab_OzMagic;
-    private List<int> _ozMagic_weights;
+    [SerializeField] private List<GameObject> Prefab_OzMagic = new List<GameObject>();
+    [SerializeField] private List<float> _ozMagic_weights;
+    private int _listIndex = 0;
 
     private int _ozMagicIndex;
 
     private void Awake()
     {
-        //_ozData = DataManager.Instance.GetGameData<OzmagicData>();
+        Prefab_OzMagic.Add(ResourceManager.Instance.LoadResource<GameObject>("Meteor"));
+    }
+
+    private void OnEnable()
+    {
+        Execute();
+
+        _ozMagic_weights = new List<float>(new float[Prefab_OzMagic.Count]);
+        foreach (var item in Prefab_OzMagic)
+        {
+            var oz = item.GetComponent<OzMagic>();
+            _ozMagic_weights[_listIndex] = oz._ozMagicPercentage;
+            _listIndex++;
+        }
+    }
+
+    private void Update()
+    {
+        Debug.Log(_ozMagic_weights[0]);
     }
 
     public void Execute()
     {
-        RandomOzMagic();
+        //RandomOzMagic();
         Instantiate(Prefab_OzMagic[_ozMagicIndex]);
     }
 
