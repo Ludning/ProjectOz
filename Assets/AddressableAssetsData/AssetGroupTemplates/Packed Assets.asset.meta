@@ -1,6 +1,11 @@
 fileFormatVersion: 2
-guid: e0be2e416a9e48e489507cd1eb0390ab
+<<<<<<<< HEAD:Assets/AddressableAssetsData/AssetGroupTemplates/Packed Assets.asset.meta
+guid: c274d2ad22f26304d9dbc29d28c8d4d1
 NativeFormatImporter:
+========
+guid: 120c63d56a5eab34697a4dd457821167
+DefaultImporter:
+>>>>>>>> neojadu:Assets/LB3D/RandomBlocks/Scenes/CastBlocks.unity.meta
   externalObjects: {}
   mainObjectFileID: 11400000
   userData: 

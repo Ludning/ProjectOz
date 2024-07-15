@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fireballPrefab: {fileID: 8431727877300358046, guid: c8d0a36a65a87f345bc78962a9209a0e,
+  _fireballPrefab: {fileID: 8431727877300358046, guid: 5f93fddd2c1bc9948a3471a8b6df39d7,
     type: 3}
   _flameballPrefab: {fileID: 4438078179324371215, guid: 642f074df1c342a47a60ef6617150851,
     type: 3}
