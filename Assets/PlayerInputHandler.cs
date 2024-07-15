@@ -1,0 +1,69 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerInputHandler : MonoBehaviour
+{
+    #region Input Function
+    [SerializeField] private CharacterMediator CharacterMediator;
+    private Vector2 _direction;
+    private float _jumpForce;
+    
+    
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        Vector2 direction = context.ReadValue<Vector2>().normalized;
+        CharacterMediator.SetMovementDirection(direction);
+    }
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            CharacterMediator.MovementDash();
+        }
+    }
+    public void OnStateChange(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            CharacterMediator.PlayerSwitchTransformation();
+        }
+    }
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            CharacterMediator.MovementJump();
+        }
+        else if (context.performed)
+        {
+            
+        }
+        else if(context.canceled)
+        {
+            
+        }
+    }
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            
+        }
+        else if (context.performed)
+        {
+            
+        }
+        else if(context.canceled)
+        {
+            
+        }
+    }
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        Vector2 mousePosition = context.ReadValue<Vector2>();
+        //Debug.Log($"mousePosition {mousePosition}");
+    }
+    #endregion
+}

@@ -4,22 +4,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class CharacterMediator : MonoBehaviour, IMediator
+public class CharacterMediator : MonoBehaviour
 {
-    [SerializeField] private PlayerController PlayerController;
-    [SerializeField] private PlayerModelSwitcher PlayerModelSwitcher;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerModelController playerModelController;
     [SerializeField] private PlayerStat playerStat;
     
-    public void Notify(object sender, MessageBase message)
-    {
-        if (message is ICharacterMediatorMessage == false)
-            return;
+    [SerializeField] private ScaleController ScaleController;
+    [SerializeField] private GroundChecker PlayerGroundChecker;
+    
 
-        if (playerStat.IsDie)
-            return;
-        if (message is CharacterMediatorMessage<PlayerModelState>)
-            PlayerModelSwitcher.SwitchModel();
-        if (message is CharacterMediatorMessage<PlayerStatControlType> msg)
-            playerStat.OnResponMessage(msg);
+
+    public void MovementDash()
+    {
+        if(PlayerGroundChecker.IsGrounded())
+            playerMovement.OnJump();   
+    }
+    public void MovementJump()
+    {
+        if(PlayerGroundChecker.IsGrounded())
+            playerMovement.OnJump();   
+    }
+    public void SetMovementDirection(Vector2 direction)
+    {
+        playerMovement.SetDirection(direction);
+    }
+    public void PlayerSwitchModel(PlayerModelState modelState)
+    {
+        playerModelController.SwitchModel(modelState);
+    }
+    public void PlayerSwitchTransformation()
+    {
+        playerStat.ChangeTransformation();
     }
 }

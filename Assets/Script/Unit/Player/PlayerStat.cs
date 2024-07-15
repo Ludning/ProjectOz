@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerStatControlType
+public enum AttackType
 {
-    ChangeTransformation,
     NormalAttack,//일반공격
     ChargeAttack,//강공격
     UndoTransformation,//변신해제
@@ -42,6 +41,11 @@ public class PlayerStat : MonoBehaviour, IDamageable
         _playerCurrentGage = 0f;
     }
 
+    private void Update()
+    {
+        
+    }
+
     public void OnDamage(int damage)
     {
         _playerCurrentHp -= damage;
@@ -66,48 +70,30 @@ public class PlayerStat : MonoBehaviour, IDamageable
         _isDie = true;
     }
 
-    public void ChangeGage(PlayerStatControlType type)
+    public void ChangeGage(AttackType type)
     {
         switch (type)
         {
-            case PlayerStatControlType.NormalAttack:
+            case AttackType.NormalAttack:
                 PlayerCurrentGage += _resourceData.gageGainNormal;
                 break;
-            case PlayerStatControlType.ChargeAttack:
+            case AttackType.ChargeAttack:
                 PlayerCurrentGage += _resourceData.gageGainCharge;
                 break;
-            case PlayerStatControlType.UndoTransformation:
+            case AttackType.UndoTransformation:
                 PlayerCurrentGage -= _resourceData.gagePenalty;
                 break;
         }
     }
-    private void ChangeTransformation()
+    public void ChangeTransformation()
     {
         if (PlayerCurrentGage >= 100)
         {
             GageReduceStart();
-            CharacterMediator.Notify(this, new CharacterMediatorMessage<PlayerModelState>());
+            CharacterMediator.PlayerSwitchModel(PlayerModelState.Knight);
         }
     }
 
-    public void OnResponMessage(CharacterMediatorMessage<PlayerStatControlType> message)
-    {
-        switch(message.value)
-        {
-            case PlayerStatControlType.ChangeTransformation:
-                ChangeTransformation();
-                break;
-            case PlayerStatControlType.NormalAttack:
-                ChangeGage(message.value);
-                break;
-            case PlayerStatControlType.ChargeAttack:
-                ChangeGage(message.value);
-                break;
-            case PlayerStatControlType.UndoTransformation:
-                ChangeGage(message.value);
-                break;
-        }
-    }
 
     public void GageReduceStart()
     {

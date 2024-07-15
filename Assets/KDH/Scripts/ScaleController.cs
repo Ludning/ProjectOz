@@ -2,13 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class ScaleController : MonoBehaviour
 {
-    [SerializeField] private PlayerController PlayerController;
+    [SerializeField] private PlayerMovement playerMovement;
+    private bool _isStop = false;
+    public void OnStop()
+    {
+        if (!_isStop)
+        {
+            PauseAllExceptPlayer(gameObject);
+            _isStop = !_isStop;
+        }
+        else
+        {
+            ResumeAll();
+            _isStop = !_isStop;
+        }
+    }
 
     //해당 오브젝트를 제외한 것들의 정지.
-    public void PauseAllExceptPlayer(GameObject gameObject)
+    private void PauseAllExceptPlayer(GameObject gameObject)
     {
         // Rigidbody 컴포넌트를 멈춤
         Rigidbody[] allRigidbodies = FindObjectsOfType<Rigidbody>();
@@ -43,7 +58,7 @@ public class ScaleController : MonoBehaviour
         }
     }
 
-    public void ResumeAll()
+    private void ResumeAll()
     {
         // Rigidbody 컴포넌트를 다시 시작
         Rigidbody[] allRigidbodies = FindObjectsOfType<Rigidbody>();

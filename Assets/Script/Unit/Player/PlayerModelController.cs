@@ -2,15 +2,18 @@ using UnityEngine;
 
 public enum PlayerModelState
 {
-    Knight,
     Mage,
+    Knight,
 }
-public class PlayerModelSwitcher : MonoBehaviour
+public class PlayerModelController : MonoBehaviour
 {
-    [SerializeField] private GameObject _knightModel;
     [SerializeField] private GameObject _mageModel;
+    [SerializeField] private GameObject _knightModel;
+    [SerializeField] private Animator _mageMAnimator;
+    [SerializeField] private Animator _knightAnimator;
     
     [SerializeField, ReadOnly] private PlayerModelState _currentModelState;
+    [SerializeField, ReadOnly] private Animator _currentAnimator;
 
     private void Start()
     {
@@ -18,26 +21,30 @@ public class PlayerModelSwitcher : MonoBehaviour
         _knightModel.SetActive(false);
         _currentModelState = PlayerModelState.Mage;
     }
-
-    public void SwitchModel()
+    public void SwitchModel(PlayerModelState modelState)
     {
-        switch (_currentModelState)
+        if (modelState == _currentModelState)
+            return;
+        switch (modelState)
         {
             case PlayerModelState.Knight:
                 _mageModel.SetActive(true);
                 _knightModel.SetActive(false);
                 _currentModelState = PlayerModelState.Mage;
+                _currentAnimator = _mageMAnimator;
                 ChangeUI_Icon();
                 break;
             case PlayerModelState.Mage:
                 _knightModel.SetActive(true);
                 _mageModel.SetActive(false);
                 _currentModelState = PlayerModelState.Knight;
+                _currentAnimator = _mageMAnimator;
                 ChangeUI_Icon();
                 break;
         }
     }
-    public void ChangeUI_Icon()
+    
+    private void ChangeUI_Icon()
     {
         PlayerHUD_Message msg = new PlayerHUD_Message()
         {
