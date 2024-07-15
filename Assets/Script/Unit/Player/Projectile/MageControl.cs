@@ -5,7 +5,7 @@ using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class TestControlPool : MonoBehaviour
+public class MageControl : MonoBehaviour
 {
     private IObjectPool<BallMove> _fireballPool;
     private IObjectPool<BallMove> _flameballPool;
