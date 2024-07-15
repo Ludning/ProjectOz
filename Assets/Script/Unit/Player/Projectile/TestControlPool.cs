@@ -13,14 +13,13 @@ public class TestControlPool : MonoBehaviour
     private GameObject _fireballPrefab;
     private GameObject _flameballPrefab;
 
-    private int _chargingValue;
-    private int _percentOzMagic = 30;
+    private float _chargingValue;
+    private float _percentOzMagic;
 
     private float _inputTimer = 0;
-
-    private SkillData _fireballData;
-    private SkillData _flameballData;
-
+    
+    private float _inputChargingTimer;
+    
     private void Awake()
     {
         _fireballPrefab = ResourceManager.Instance.LoadResource<GameObject>("Fireball");
@@ -28,8 +27,9 @@ public class TestControlPool : MonoBehaviour
         
         _fireballPool = new ObjectPool<BallMove>(() => CreateBall(_fireballPrefab, _fireballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
         _flameballPool = new ObjectPool<BallMove>(() => CreateBall(_flameballPrefab, _flameballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
-        _fireballData = DataManager.Instance.GetGameData<SkillData>("S101");
-        _flameballData = DataManager.Instance.GetGameData<SkillData>("S102");
+        
+        _inputChargingTimer = DataManager.Instance.GetGameData<SkillData>("S102").value1;
+        _percentOzMagic = DataManager.Instance.GetGameData<SkillData>("S102").value2;
     }
 
     private void Update()
@@ -37,7 +37,7 @@ public class TestControlPool : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             _inputTimer += Time.deltaTime;
-            if (_inputTimer >= 2.0f)
+            if (_inputTimer >= _inputChargingTimer)
             {
                 ChargingAttack();
                 _inputTimer = 0;
@@ -45,17 +45,11 @@ public class TestControlPool : MonoBehaviour
         }
         if(Input.GetKeyUp(KeyCode.Space))
         {
-            if(_inputTimer < 2f)
+            if(_inputTimer < _inputChargingTimer)
             {
                 OnAttack(_fireballPool);
             }
             _inputTimer = 0f;
-        }
-        
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            transform.Rotate(0f, 180f, 0f);
         }
     }
 
