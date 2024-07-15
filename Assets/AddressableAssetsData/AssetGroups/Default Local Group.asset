@@ -17,13 +17,13 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: c9cef84061d0f404f9438f707217f19f
   m_SerializeEntries:
-  - m_GUID: 354de59680bbcf84bbc966d77020dff0
-    m_Address: Assets/Resource/Data/AssetAddress.json
+  - m_GUID: 1e24136aee7e94f4bad0b4e05bee3cb1
+    m_Address: Assets/Resource/Data/GameData.json
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1e24136aee7e94f4bad0b4e05bee3cb1
-    m_Address: Assets/Resource/Data/GameData.json
+  - m_GUID: 354de59680bbcf84bbc966d77020dff0
+    m_Address: Assets/Resource/Data/AssetAddress.json
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
