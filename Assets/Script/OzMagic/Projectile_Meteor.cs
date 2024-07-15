@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile_Metere : MonoBehaviour
+public class Projectile_Meteor : MonoBehaviour
 {
     public void Hit()
     {
@@ -13,8 +13,8 @@ public class Projectile_Metere : MonoBehaviour
     private void Explode()
     {
         Debug.Log("Projectile_Metere Explode");
-        //µ¥¹ÌÁö Àû¿ë
-        //ÆÄ±« ÀÌÆåÆ® µîµî
+        //ë°ë¯¸ì§€ ì ìš©
+        //íŒŒê´´ ì´í™íŠ¸ ë“±ë“±
     }
 
     private void OnTriggerEnter(Collider other)

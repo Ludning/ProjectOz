@@ -10,8 +10,8 @@ public class TestControlPool : MonoBehaviour
     private IObjectPool<BallMove> _fireballPool;
     private IObjectPool<BallMove> _flameballPool;
 
-    [SerializeField] private GameObject _fireballPrefab;
-    [SerializeField] private GameObject _flameballPrefab;
+    private GameObject _fireballPrefab;
+    private GameObject _flameballPrefab;
 
     private int _chargingValue;
     private int _percentOzMagic = 30;
@@ -23,6 +23,9 @@ public class TestControlPool : MonoBehaviour
 
     private void Awake()
     {
+        _fireballPrefab = ResourceManager.Instance.LoadResource<GameObject>("Fireball");
+        _flameballPrefab = ResourceManager.Instance.LoadResource<GameObject>("Flameball");
+        
         _fireballPool = new ObjectPool<BallMove>(() => CreateBall(_fireballPrefab, _fireballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
         _flameballPool = new ObjectPool<BallMove>(() => CreateBall(_flameballPrefab, _flameballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
         _fireballData = DataManager.Instance.GetGameData<SkillData>("S101");
@@ -100,7 +103,6 @@ public class TestControlPool : MonoBehaviour
         else
         {
             Debug.Log("OzMagic");
-            OzMagic.Instance.Execute();
         }
     }
 }
