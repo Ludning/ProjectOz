@@ -7,13 +7,17 @@ using UnityEngine.UI;
 public class PlayerHUD_View : ViewBase<PlayerHUD_ViewModel, PlayerHUD_Message>
 {
     [SerializeField] Image Player_Image;
-    [SerializeField] List<GameObject> hp_List;
     [SerializeField] Slider PetulanceGuage_Slider;
     [SerializeField] int value = 100;
 
-    private void Awake()
+    [SerializeField] List<GameObject> hp_List;
+    [SerializeField] GenerateHP generateHP;
+
+    private void Start()
     {
         PetulanceGuage_Slider.maxValue = value;
+        hp_List = new List<GameObject>();
+        hp_List = generateHP.hp_List;
     }
 
     protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -47,9 +51,9 @@ public class PlayerHUD_View : ViewBase<PlayerHUD_ViewModel, PlayerHUD_Message>
         string modeName;
 
         if (mode)
-        { modeName = "sword"; }
+            { modeName = "Knight_Mode_UI"; }
         else
-        { modeName = "broom"; }
+            { modeName = "Mage_Mode_UI"; }
 
         Player_Image.sprite = ResourceManager.Instance.LoadResource<Sprite>(modeName);
     }

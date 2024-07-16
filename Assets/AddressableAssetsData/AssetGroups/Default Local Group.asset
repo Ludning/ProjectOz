@@ -52,6 +52,26 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b00b35793c6d4545b005609c38218cc
+    m_Address: Assets/Resource/Sprite/UISprite/Knight_Mode_UI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eca95278d31e05346853c1eec122bdc4
+    m_Address: Assets/Resource/Sprite/UISprite/Mage_Mode_UI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a698fd8b273c87f409347718c0c48a43
+    m_Address: Assets/Resource/Sprite/UISprite/Hp_UI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1afc707195c8a904ca5e876b61d662dc
+    m_Address: Assets/Resource/Sprite/UISprite/Hp_UI_Del.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 440a990e58ac86b439090a3b4e6af67f, type: 2}
   m_SchemaSet:
