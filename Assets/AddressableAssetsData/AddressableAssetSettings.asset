@@ -88,7 +88,8 @@ MonoBehaviour:
     m_LabelNames:
     - default
   m_SchemaTemplates: []
-  m_GroupTemplateObjects: []
+  m_GroupTemplateObjects:
+  - {fileID: 11400000, guid: c274d2ad22f26304d9dbc29d28c8d4d1, type: 2}
   m_InitializationObjects: []
   m_CertificateHandlerType:
     m_AssemblyName: 
