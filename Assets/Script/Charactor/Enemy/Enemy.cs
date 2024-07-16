@@ -240,17 +240,16 @@ public class Enemy : MonoBehaviour
 
 
     // ¿Ã∫•∆Æ
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-
-            if (other.TryGetComponent(out Enemy target) == false)
+            if (other.TryGetComponent(out Combat target) == false)
             {
                 Debug.Assert(false, "Player has no Combat component");
                 return;
             }
-            target.GetCombat().Damaged(_damage);
+            target.Damaged(_damage);
             return;
         }
     }
