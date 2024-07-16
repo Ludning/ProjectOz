@@ -34,7 +34,7 @@ public class MageControl : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetMouseButton(0))
         {
             _inputTimer += Time.deltaTime;
             if (_inputTimer >= _inputChargingTimer)
@@ -43,7 +43,7 @@ public class MageControl : MonoBehaviour
                 _inputTimer = 0;
             }
         }
-        if(Input.GetKeyUp(KeyCode.Space))
+        if(Input.GetMouseButtonUp(0))
         {
             if(_inputTimer < _inputChargingTimer)
             {
@@ -96,6 +96,7 @@ public class MageControl : MonoBehaviour
         }
         else
         {
+            OzMagicManager.Instance.Execute();
             Debug.Log("OzMagic");
         }
     }
