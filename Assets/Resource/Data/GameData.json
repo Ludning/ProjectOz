@@ -6,7 +6,7 @@
       "pcType": "wizard",
       "pcHp": 5,
       "pcBasePower": 1.0,
-      "pcMoveSpeed": 300.0,
+      "pcMoveSpeed": 1.0,
       "moveSet": "a1",
       "skillSet": "a1",
       "ozMagicSet": "a",
@@ -19,7 +19,7 @@
       "pcType": "swordman",
       "pcHp": 5,
       "pcBasePower": 1.0,
-      "pcMoveSpeed": 300.0,
+      "pcMoveSpeed": 1.0,
       "moveSet": "a2",
       "skillSet": "a2",
       "ozMagicSet": "-",
@@ -36,7 +36,7 @@
       "enemyHp": 30.0,
       "enemyBasePower": 1.0,
       "enemyMoveSpeed": 1.0,
-      "moveSet": "-",
+      "moveSet": "",
       "skillSet": "b",
       "enemyColDamage": 1.0
     },
@@ -48,7 +48,7 @@
       "enemyHp": 30.0,
       "enemyBasePower": 1.0,
       "enemyMoveSpeed": 1.0,
-      "moveSet": "-",
+      "moveSet": "",
       "skillSet": "c",
       "enemyColDamage": 1.0
     }
@@ -161,7 +161,71 @@
     }
   },
   "OzmagicDatas": {
-    "a": {
+    "O101": {
+      "ozMagicSet": "a",
+      "ozMagicID": "O101",
+      "description": "메테오",
+      "ozMagicType": "투사체",
+      "projectileID": "P201",
+      "gageGainOz": 50.0,
+      "ozSkillPercentage": 12.5,
+      "ozPowerRate": 100.0,
+      "value1": 10.0,
+      "value2": 0.5,
+      "value3": 100.0,
+      "chainProjectileID": "P2011",
+      "chainPowerRate": 100.0,
+      "prefabName": "Meteor"
+    },
+    "O102": {
+      "ozMagicSet": "a",
+      "ozMagicID": "O102",
+      "description": "왕복 화염구",
+      "ozMagicType": "투사체",
+      "projectileID": "P202",
+      "gageGainOz": 25.0,
+      "ozSkillPercentage": 25.0,
+      "ozPowerRate": 30.0,
+      "value1": 10.0,
+      "value2": 5.0,
+      "value3": 75.0,
+      "chainProjectileID": "P2012",
+      "chainPowerRate": 50.0,
+      "prefabName": "Meteor"
+    },
+    "O103": {
+      "ozMagicSet": "a",
+      "ozMagicID": "O103",
+      "description": "과자 투척",
+      "ozMagicType": "투사체",
+      "projectileID": "P203",
+      "gageGainOz": 25.0,
+      "ozSkillPercentage": 25.0,
+      "ozPowerRate": 1.0,
+      "value1": 0.0,
+      "value2": 0.0,
+      "value3": 75.0,
+      "chainProjectileID": "P2012",
+      "chainPowerRate": 50.0,
+      "prefabName": "Meteor"
+    },
+    "O104": {
+      "ozMagicSet": "a",
+      "ozMagicID": "O104",
+      "description": "느린 태양구",
+      "ozMagicType": "투사체",
+      "projectileID": "P204",
+      "gageGainOz": 25.0,
+      "ozSkillPercentage": 25.0,
+      "ozPowerRate": 100.0,
+      "value1": 0.0,
+      "value2": 0.0,
+      "value3": 75.0,
+      "chainProjectileID": "P2012",
+      "chainPowerRate": 50.0,
+      "prefabName": "Meteor"
+    },
+    "O201": {
       "ozMagicSet": "a",
       "ozMagicID": "O201",
       "description": "다같이 시간정지",
@@ -174,7 +238,8 @@
       "value2": 0.1,
       "value3": 5.0,
       "chainProjectileID": "-",
-      "chainPowerRate": 0.0
+      "chainPowerRate": 0.0,
+      "prefabName": "Meteor"
     }
   },
   "ProjectileDatas": {
