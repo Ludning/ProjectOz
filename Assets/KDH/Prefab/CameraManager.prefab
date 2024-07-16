@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2687984805326920383}
   serializedVersion: 2
   m_LocalRotation: {x: 0.011762265, y: -0, z: -0, w: 0.99993086}
-  m_LocalPosition: {x: 2.858141, y: -1.8149114, z: -14.9977865}
+  m_LocalPosition: {x: -93.960556, y: 16.700855, z: -7.922513}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -66,11 +66,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: -5.7
   far clip plane: 5000
   field of view: 60.000004
-  orthographic: 0
-  orthographic size: 10
+  orthographic: 1
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -248,14 +248,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 26.278143, y: 7.4291096}
-      - {x: 12.363193, y: 7.279007}
-      - {x: 12.46241, y: -0.22292122}
+    - - {x: -92.91395, y: 136.22775}
+      - {x: -92.97703, y: 0.30950165}
       - {x: 25.51254, y: -0.026828945}
       - {x: 28.700224, y: -0.108389065}
       - {x: 33.466522, y: -0.1253283}
-      - {x: 36.920525, y: -0.18443418}
-      - {x: 35.593784, y: 7.3074956}
+      - {x: 106.90755, y: 0.06850505}
+      - {x: 107.15013, y: 137.35675}
   m_UseDelaunayMesh: 0
 --- !u!1 &4339180396288597221
 GameObject:
@@ -323,16 +322,16 @@ MonoBehaviour:
   m_ZDamping: 1
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
-  m_ScreenY: 0.5
+  m_ScreenY: 0.58
   m_CameraDistance: 8
-  m_DeadZoneWidth: 0.5
+  m_DeadZoneWidth: 0.2
   m_DeadZoneHeight: 0.5
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.8
+  m_SoftZoneWidth: 0.2
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
-  m_BiasY: 0
+  m_BiasY: -0.16
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0
@@ -372,7 +371,7 @@ Transform:
   m_GameObject: {fileID: 4604118417240787923}
   serializedVersion: 2
   m_LocalRotation: {x: 0.011762265, y: -0, z: -0, w: 0.99993086}
-  m_LocalPosition: {x: 2.858141, y: -1.8149114, z: -14.9977865}
+  m_LocalPosition: {x: -112.06186, y: 1.5242023, z: -7.922513}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -401,8 +400,8 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60.000004
-    OrthographicSize: 10
-    NearClipPlane: 0.1
+    OrthographicSize: 20
+    NearClipPlane: -5.7
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
