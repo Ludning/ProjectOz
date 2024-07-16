@@ -127,8 +127,6 @@ MonoBehaviour:
   _currentState: 0
   jumpForce: 10
   dashForce: 100
-  moveSpeed: 100
-  dashDuration: 1000
   _isDash: 0
   dashSpeed: 20
   dashDistance: 5
@@ -153,11 +151,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spherePosition: {x: 0, y: 0.4, z: 0}
-  maxDistance: 0.5
+  maxDistance: 0.45
   groundLayer:
     serializedVersion: 2
     m_Bits: 3072
-  drawGizmo: 1
+  drawGizmo: 0
 --- !u!114 &939282728260279377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,6 +323,7 @@ MonoBehaviour:
     pcMoveSpeed: 0
     moveSet: 
     skillSet: 
+    ozMagicSet: 
     resourceID: 
     pcIgnoreColTime: 0
   _resourceData:

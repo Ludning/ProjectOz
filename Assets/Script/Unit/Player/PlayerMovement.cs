@@ -1,5 +1,9 @@
 using UnityEngine;
 
+public enum JumpMode
+{
+    
+}
 public class PlayerMovement : MonoBehaviour
 {
     private Vector2 _direction;
@@ -12,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody Rigidbody;
 
     public PlayerModelState _currentState;
-
     public PcData CurrentData => _currentState == PlayerModelState.Knight ? _knightData : _mageData;
     
     //임시 변수
@@ -114,6 +117,8 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, 0);
         Vector2 nextPosition = Vector2.MoveTowards(Rigidbody.position, dashTargetPosition, dashSpeed * Time.fixedDeltaTime);
         RaycastHit2D hit = Physics2D.Raycast(Rigidbody.position, _lastDirection, (nextPosition - (Vector2)Rigidbody.position).magnitude, dashLayerMask);
+        Debug.DrawLine(transform.position, (Vector2)transform.position + _lastDirection * (nextPosition - (Vector2)Rigidbody.position).magnitude, Color.red);
+        Debug.DrawRay((Vector2)transform.position + Vector2.up, _lastDirection, Color.blue);
         if (hit.collider != null)
         {
             Debug.Log("DashOff");
