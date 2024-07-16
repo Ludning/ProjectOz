@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool _isChargeAttack = false;
 
     [SerializeField] private EnemyEditorData _editorData;
+    [SerializeField] private Transform _rotateTarget;
 
     private static float positionZ = 0;
 
@@ -54,8 +55,9 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     private BehaviorTree _behaviorTree;
     private float _damage;
-    private Collider _attackCollider;
+    private DamageBox _attackCollider;
     public event Action OnKnockbackEnd;
+    private bool _isFlying = false;
 
     private void Awake()
     {
@@ -66,27 +68,41 @@ public class Enemy : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _combat = GetComponent<Combat>();
         _animator = GetComponent<Animator>();
+        _attackCollider = GetComponentInChildren<DamageBox>();
+
+        _navMeshAgent.updateRotation = false;
 
         Init(_enemyData);
     }
+    Quaternion look;
     private void Update()
     {
         if (_currentAttackTime > 0f)
         {
             _currentAttackTime -= Time.deltaTime;
         }
+        Vector3 dir = _navMeshAgent.destination - transform.position;
+        dir = dir.normalized;
+        if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
+        {
+            look = Quaternion.LookRotation(dir, Vector3.up);
+            transform.rotation = look;
+        }
+        else
+        {
+
+            transform.rotation = look;
+        }
     }
     private void Init(EnemyData enemyData)
     {
-
-
-
         //Combat
         _combat.Init(enemyData.enemyHp);
 
         _combat.OnDamaged += OnDamaged;
         _combat.OnDead += OnDead;
 
+        _isFlying = enemyData.enemyMoveType == "movetype_enemy_flying";
 
         _damage = enemyData.enemyColDamage * enemyData.enemyBasePower;
         //_attackCooldown = enemyData.enemyAttackCooldown;
@@ -107,8 +123,13 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-
+        SharedFloat attackRange = new SharedFloat();
+        attackRange.Value = 2f;
+        SharedFloat detectRange = new SharedFloat();
+        detectRange.Value = 6f;
         _behaviorTree.SetVariable("TargetList", targetList);
+        _behaviorTree.SetVariable("AttackRange", attackRange);
+        _behaviorTree.SetVariable("DetectRange", detectRange);
     }
     private void ResetEnemy()
     {
@@ -134,6 +155,7 @@ public class Enemy : MonoBehaviour
 
     public void StartAttackAnimation()
     {
+        IsMovable = false;
         _currentAttackTime = _attackCooldown;
         _animator.SetTrigger("Attack");
     }
@@ -183,22 +205,17 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         IsMovable = false;
+        StartCoroutine(AttackEnd());
         if (_attackCollider == null)
             return;
+        _attackCollider.SetDamage(_damage);
         _attackCollider.enabled = true;
-        _attackCollider.enabled = false;
-        StartCoroutine(AttackEnd());
     }
 
     private IEnumerator AttackEnd()
     {
         yield return new WaitForSeconds(_attackCooldown);
         IsMovable = true;
-    }
-
-    public void EnableAttackCollider()
-    {
-        _attackCollider.enabled = true;
     }
 
     public void TakeDamage(Combat attacker, float damage)
@@ -267,7 +284,6 @@ public class Enemy : MonoBehaviour
         _navMeshAgent.updatePosition = !condition;
         _rigidbody.isKinematic = !condition;
         _rigidbody.useGravity = false;
-        _rigidbody.freezeRotation = condition;
         if(!condition)
         {
             _navMeshAgent.nextPosition = transform.position;
