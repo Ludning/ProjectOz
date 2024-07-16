@@ -15,7 +15,7 @@ public class FlameballMove : BallMove
 
         _flameballData_Projectile = DataManager.Instance.GetGameData<ProjectileData>("P102");
 
-        _damage = DataManager.Instance.GetGameData<SkillData>("P102").skillPowerRate;
+        _damage = DataManager.Instance.GetGameData<SkillData>("S102").skillPowerRate;
         _bulletSpeed = _flameballData_Projectile.projectileSpeedRate;
         _bulletLifeTime = _flameballData_Projectile.projectileLifeTime;
     }
@@ -26,5 +26,13 @@ public class FlameballMove : BallMove
         {
             DestroyBall();
         }
+        if (other.CompareTag("Enemy"))
+        {
+            if (other.TryGetComponent(out Combat combat))
+            {
+                combat.Damaged(_damage);
+            }
+        }
     }
+
 }

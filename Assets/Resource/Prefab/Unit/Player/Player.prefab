@@ -127,8 +127,6 @@ MonoBehaviour:
   _currentState: 0
   jumpForce: 10
   dashForce: 100
-  moveSpeed: 100
-  dashDuration: 1000
   _isDash: 0
   dashSpeed: 20
   dashDistance: 5
@@ -325,6 +323,7 @@ MonoBehaviour:
     pcMoveSpeed: 0
     moveSet: 
     skillSet: 
+    ozMagicSet: 
     resourceID: 
     pcIgnoreColTime: 0
   _resourceData:
@@ -366,6 +365,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterMediator: {fileID: 5016133849406154776}
+--- !u!1 &6264100302231167725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7872153115769591860}
+  - component: {fileID: 4636269438900901062}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7872153115769591860
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264100302231167725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 1.735, z: 0.787}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1235818208893862554}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4636269438900901062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264100302231167725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1235818208893737084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -385,7 +428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100102, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_LocalPosition.x
@@ -433,13 +476,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: f39fd3ca4bf0ae447be1193371b4b292, type: 2}
     - target: {fileID: 9500000, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'B_L_Foot'\n\tTransform 'B_L_Finger31'\n\tTransform
-        'B_R_Forearm'\n\tTransform 'B_Pelvis'\n\tTransform 'B_R_Finger01'\n\tTransform
-        'B_L_Finger12'\n\tTransform 'B_L_Finger41'\n\tTransform 'B_R_Finger12'\n\tTransform
-        'B_R_Calf'\n\tTransform 'B_R_Clavicle'\n\tand more ...\n\tFrom animation
-        clip 'Jump'\n\tFrom animation clip 'Fall'"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_ApplyRootMotion
@@ -451,12 +488,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 477b1ce20530f594b87bce7fe5ba012a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 100102, guid: 7c72ed3f90575084c9f3b5b585887182,
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 285965494101870882}
+      addedObject: {fileID: 7872153115769591860}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
 --- !u!1 &1235818208893837178 stripped
 GameObject:
@@ -464,18 +501,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1235818208893737084}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &285965494101870882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1235818208893837178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1235818208893862554 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182,
