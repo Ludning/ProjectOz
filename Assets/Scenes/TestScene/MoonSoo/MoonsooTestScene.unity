@@ -160,7 +160,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -550,7 +550,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: 79ce8694ae585b94fa8bfb9194549618, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1125501422111972014, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
@@ -811,7 +812,7 @@ MonoBehaviour:
   maxDistance: 0.5
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   drawGizmo: 1
 --- !u!114 &1257492102
 MonoBehaviour:
@@ -842,7 +843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerController: {fileID: 1257492099}
   PlayerModelSwitcher: {fileID: 1257492102}
-  playerStat: {fileID: 0}
+  playerStat: {fileID: 1257492104}
 --- !u!114 &1257492104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,7 +865,6 @@ MonoBehaviour:
     pcMoveSpeed: 0
     moveSet: 
     skillSet: 
-    ozMagicSet: 
     resourceID: 
     pcIgnoreColTime: 0
   _resourceData:
@@ -944,6 +944,16 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: f39fd3ca4bf0ae447be1193371b4b292, type: 2}
+    - target: {fileID: 9500000, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'B_L_Foot'\n\tTransform 'B_L_Finger31'\n\tTransform
+        'B_R_Forearm'\n\tTransform 'B_Pelvis'\n\tTransform 'B_R_Finger01'\n\tTransform
+        'B_L_Finger12'\n\tTransform 'B_L_Finger41'\n\tTransform 'B_R_Finger12'\n\tTransform
+        'B_R_Calf'\n\tTransform 'B_R_Clavicle'\n\tand more ...\n\tFrom animation
+        clip 'Jump'\n\tFrom animation clip 'Fall'"
+      objectReference: {fileID: 0}
     - target: {fileID: 13700008, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -951,7 +961,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100102, guid: 7c72ed3f90575084c9f3b5b585887182,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1277582337}
   m_SourcePrefab: {fileID: 100100000, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
 --- !u!4 &1277582336 stripped
 Transform:
@@ -959,6 +973,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1277582335}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1277582337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394796069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2126463453 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100102, guid: 417a287abb2cab94889f1f1ddd91f928,

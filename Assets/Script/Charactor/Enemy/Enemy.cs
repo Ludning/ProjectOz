@@ -89,14 +89,14 @@ public class Enemy : MonoBehaviour
 
 
 
-    //ÀüÅõ °ü·Ã
+    //ì „íˆ¬ ê´€ë ¨
     public Combat GetCombat()
     {
         return _combat;
     }
 
-    //°ø°İ¸Ş¼­µå
-    //¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà, ¿òÁ÷ÀÓ
+    //ê³µê²©ë©”ì„œë“œ
+    //ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰, ì›€ì§ì„
     float _attackCooldown = 0f;
     float _currentAttackTime = 0f;
     public bool Attack()
@@ -126,7 +126,7 @@ public class Enemy : MonoBehaviour
 
 
 
-    //Å½Áö °ü·Ã
+    //íƒì§€ ê´€ë ¨
     public bool IsMovable()
     {
         return _isMovable;
@@ -153,7 +153,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // ÀÌº¥Æ®
+    // ì´ë²¤íŠ¸
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -214,7 +214,7 @@ public class Enemy : MonoBehaviour
     //}
 
     ///// <summary>
-    ///// Äğ´Ù¿î °è»ê ¹× Å×µÎ¸® ¹ÛÀ» Æ¨°Ü ³ª°¬´ÂÁö °Ë»ç
+    ///// ì¿¨ë‹¤ìš´ ê³„ì‚° ë° í…Œë‘ë¦¬ ë°–ì„ íŠ•ê²¨ ë‚˜ê°”ëŠ”ì§€ ê²€ì‚¬
     ///// </summary>
     ///// <returns></returns>
     //private IEnumerator CheckKnockbackEnd()
