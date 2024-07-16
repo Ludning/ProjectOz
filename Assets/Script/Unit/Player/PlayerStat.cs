@@ -9,16 +9,16 @@ public enum AttackType
     ChargeAttack,//강공격
     UndoTransformation,//변신해제
 }
-public class PlayerStat : MonoBehaviour, IDamageable
+public class PlayerStat : MonoBehaviour
 {
     [SerializeField, ReadOnly] private PcData _playerData;
     [SerializeField, ReadOnly] private ResourceData _resourceData;
 
-    [SerializeField, ReadOnly] private int _playerCurrentHp;
     [SerializeField] private float _playerCurrentGage;
     [SerializeField, ReadOnly] private bool _isDie;
 
     [SerializeField] private CharacterMediator CharacterMediator;
+    [SerializeField] private Combat _playerCombat;
 
     public float PlayerCurrentGage
     {
@@ -32,34 +32,36 @@ public class PlayerStat : MonoBehaviour, IDamageable
                 _playerCurrentGage = _resourceData.gageMax;
         }
     }
-    public bool IsDie => _isDie;
+    public bool IsDie => _playerCombat.IsDead();
     private void Start()
     {
         _playerData = DataManager.Instance.GetGameData<PcData>("C102");
         _resourceData = DataManager.Instance.GetGameData<ResourceData>("R101");
-        _playerCurrentHp = _playerData.pcHp;
         _playerCurrentGage = 0f;
+
+        _playerCombat.Init(_playerData.pcHp);
+        _playerCombat.OnDamaged += OnDamage;
+        _playerCombat.OnDead += OnDie;
     }
 
     private void Update()
     {
-        
+        //Todo 분노게이지 감소
     }
 
-    public void OnDamage(int damage)
+    private void OnDestroy()
     {
-        _playerCurrentHp -= damage;
-        if (_playerCurrentHp < 0)
-        {
-            _playerCurrentHp = 0;
-            OnDie();
-        }
+        _playerCombat.OnDead -= OnDie;
+        _playerCombat.OnDamaged -= OnDamage;
+    }
 
+    public void OnDamage()
+    {
         //MVVM업데이트
         PlayerHUD_Message msg = new PlayerHUD_Message()
         {
             playerHUDType = PlayerHUDType.PlayerHp,
-            value = _playerCurrentHp
+            value = _playerCombat.GetHp(),
         };
         MessageManager.Instance.InvokeCallback(msg);
     }
@@ -67,6 +69,7 @@ public class PlayerStat : MonoBehaviour, IDamageable
     private void OnDie()
     {
         //사망처리
+        gameObject.SetActive(false);
         _isDie = true;
     }
 

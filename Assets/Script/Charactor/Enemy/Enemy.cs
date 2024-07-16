@@ -182,7 +182,7 @@ public class Enemy : MonoBehaviour
     }
     private void ChargeAttack(float force)
     {
-        Vector3 dir = _detector.GetTarget().position+ Vector3.up  - transform.position;
+        Vector3 dir = _detector.GetTarget().position + Vector3.up - transform.position;
         SetEnableRigidbody(true);
         dir.z = 0f;
         dir = dir.normalized;
@@ -218,12 +218,6 @@ public class Enemy : MonoBehaviour
         IsMovable = true;
     }
 
-    public void TakeDamage(Combat attacker, float damage)
-    {
-        _combat.Attack(null, damage);
-    }
-
-
     public bool IsTargetNear(float range)
     {
         Transform target = _detector.GetTarget();
@@ -246,17 +240,16 @@ public class Enemy : MonoBehaviour
 
 
     // ¿Ã∫•∆Æ
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-
-            if (other.TryGetComponent(out Enemy target) == false)
+            if (other.TryGetComponent(out Combat target) == false)
             {
                 Debug.Assert(false, "Player has no Combat component");
                 return;
             }
-            _combat.Attack(target.GetCombat(), _damage);
+            target.Damaged(_damage);
             return;
         }
     }
@@ -266,7 +259,7 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-        _combat.Attack(targetCombat, damage);
+        targetCombat.Damaged(damage);
     }
 
     private void OnDamaged()
@@ -284,7 +277,7 @@ public class Enemy : MonoBehaviour
         _navMeshAgent.updatePosition = !condition;
         _rigidbody.isKinematic = !condition;
         _rigidbody.useGravity = false;
-        if(!condition)
+        if (!condition)
         {
             _navMeshAgent.nextPosition = transform.position;
         }
