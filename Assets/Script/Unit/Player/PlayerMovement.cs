@@ -20,9 +20,6 @@ public class PlayerMovement : MonoBehaviour
     
     //임시 변수
     [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private float dashForce = 100f;
-    //[SerializeField] private float moveSpeed = 100f;
-    //[SerializeField] private int dashDuration = 1000;
 
     [SerializeField] private bool _isDash = false;
 
@@ -109,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
     #region OnUpdate
     private void OnUpdateMove()
     {
-        Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
+        Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
         Rigidbody.velocity = velocity;
     }
     private void OnUpdateDash()
