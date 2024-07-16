@@ -64,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
         CharacterMediator.PlayerAnimator.SetFloat(DirectionYHash, Rigidbody.velocity.y);
         CharacterMediator.PlayerAnimator.SetBool(GroundHash, CharacterMediator.IsGround);
         
-        
         //CharacterMediator.PlayerAnimator.SetTrigger(IsAttack);
         //CharacterMediator.PlayerAnimator.SetFloat(DirectionY, 0.1f);
     }
@@ -117,8 +116,6 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, 0);
         Vector2 nextPosition = Vector2.MoveTowards(Rigidbody.position, dashTargetPosition, dashSpeed * Time.fixedDeltaTime);
         RaycastHit2D hit = Physics2D.Raycast(Rigidbody.position, _lastDirection, (nextPosition - (Vector2)Rigidbody.position).magnitude, dashLayerMask);
-        Debug.DrawLine(transform.position, (Vector2)transform.position + _lastDirection * (nextPosition - (Vector2)Rigidbody.position).magnitude, Color.red);
-        Debug.DrawRay((Vector2)transform.position + Vector2.up, _lastDirection, Color.blue);
         if (hit.collider != null)
         {
             Debug.Log("DashOff");
@@ -140,5 +137,4 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     #endregion
-    
 }
