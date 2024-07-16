@@ -6,6 +6,7 @@ using UnityEngine;
 public class MessageManager : SingleTon<MessageManager>
 {
     private Dictionary<Type, Delegate> _uiDic = new Dictionary<Type, Delegate>();
+    private Dictionary<Type, Delegate> _viewModelDic = new Dictionary<Type, Delegate>();
 
     /*private class MessageHandler<T> where T : MessageBase
     {

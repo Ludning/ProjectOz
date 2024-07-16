@@ -3,6 +3,7 @@ using System;
 [Serializable]
 public class OzmagicData : IDataRepository
 {
+    public string ozMagicSet;
     public string ozMagicID;
     public string description;
     public string ozMagicType;
@@ -15,4 +16,5 @@ public class OzmagicData : IDataRepository
     public float value3;
     public string chainProjectileID;
     public float chainPowerRate;
+    public string prefabName;
     }

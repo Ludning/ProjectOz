@@ -27,8 +27,58 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae87465b25d9c8e418496ca0e602f987
+    m_Address: Assets/Resource/sword.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d214ff0923e4c24a9a36be48846ecbe
+    m_Address: Assets/Resource/Cube.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7ab3dfdd4aee7142a15e2d67e074008
+    m_Address: Assets/Resource/broom.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 642f074df1c342a47a60ef6617150851
+    m_Address: Assets/Resource/Prefab/Flameball.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f93fddd2c1bc9948a3471a8b6df39d7
+    m_Address: Assets/Resource/Prefab/Fireball.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b00b35793c6d4545b005609c38218cc
+    m_Address: Assets/Resource/Sprite/UISprite/Knight_Mode_UI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eca95278d31e05346853c1eec122bdc4
+    m_Address: Assets/Resource/Sprite/UISprite/Mage_Mode_UI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a698fd8b273c87f409347718c0c48a43
+    m_Address: Assets/Resource/Sprite/UISprite/Hp_UI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1afc707195c8a904ca5e876b61d662dc
+    m_Address: Assets/Resource/Sprite/UISprite/Hp_UI_Del.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2ffd2a30a8ee9b4b9b10aaa1342b551
+    m_Address: Assets/Resource/Prefab/Meteor.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
-  m_Settings: {fileID: 11400000, guid: 1d249aad61c4f7648b15a91492eaf644, type: 2}
+  m_Settings: {fileID: 11400000, guid: 440a990e58ac86b439090a3b4e6af67f, type: 2}
   m_SchemaSet:
     m_Schemas:
     - {fileID: 11400000, guid: 54a833f9c4eabf94583b56a7e48ac2a8, type: 2}
