@@ -1,6 +1,3 @@
-using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile_Meteor : OzMagic
@@ -35,33 +32,33 @@ public class Projectile_Meteor : OzMagic
     }
 
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         _camera = Camera.main;
         _spawnPos = _camera.gameObject.transform.position + new Vector3(0.0f, _camera.orthographicSize, 10.0f);
         transform.position = _spawnPos;
-        _rb.velocity = new Vector3(0, -_gravity, 0);
         _damageTimer = 0f;
-        Invoke(nameof(DestroyMeteor), _lifeTime);
+        CancelInvoke(nameof(DestroyOzMagic));
     }
 
     private void Update()
     {
         transform.Rotate(new Vector3(0, 0, _rotSpeed * Time.deltaTime));
-        Debug.Log(_ozMagicPercentage);
-        Debug.Log(_lifeTime);
     }
 
-    private void DestroyMeteor()
-    { 
-        gameObject.SetActive(false);
+    public override void Excute()
+    {
+        _rb.velocity = new Vector3(0, -_gravity, 0);
+        Invoke(nameof(DestroyOzMagic), _lifeTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            gameObject.SetActive(false);
+            DestroyOzMagic();
         }           
     }
     private void OnTriggerStay(Collider other)
