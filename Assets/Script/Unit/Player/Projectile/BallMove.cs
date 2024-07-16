@@ -36,7 +36,7 @@ public class BallMove : MonoBehaviour
     public void Shoot()
     {
         _direction = transform.forward;
-        _rb.velocity = _direction * _bulletSpeed + _gravity;
+        _rb.velocity = _direction * _bulletSpeed;
         Invoke(nameof(DestroyBall), _bulletLifeTime);
     }
 

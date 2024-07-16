@@ -33,7 +33,7 @@ public class DamageBox : MonoBehaviour
             {
                 continue;
             }
-            _owner.Attack(combat, _damage);
+            combat.Damaged(_damage);
         }
         enabled = false;
     }
