@@ -43,7 +43,13 @@ public class PlayerStat : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        
+        //MVVM업데이트
+        PlayerHUD_Message msg = new PlayerHUD_Message()
+        {
+            playerHUDType = PlayerHUDType.PetulanceGuage,
+            value = _playerCurrentGage
+        };
+        MessageManager.Instance.InvokeCallback(msg);
     }
 
     public void OnDamage(int damage)

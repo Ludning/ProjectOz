@@ -598,10 +598,5 @@ MonoBehaviour:
   Player_Image: {fileID: 2657524018310581874}
   PetulanceGuage_Slider: {fileID: 6816576958330231429}
   value: 100
-  hp_List:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  hp_List: []
   generateHP: {fileID: 1754523682369365870}
