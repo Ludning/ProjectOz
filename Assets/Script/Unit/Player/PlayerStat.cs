@@ -95,7 +95,7 @@ public class PlayerStat : MonoBehaviour, IDamageable
     }
 
 
-    public void GageReduceStart()
+    private void GageReduceStart()
     {
 
     }

@@ -9,29 +9,28 @@ public class CharacterMediator : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerModelController playerModelController;
     [SerializeField] private PlayerStat playerStat;
-    
+
     [SerializeField] private ScaleController ScaleController;
     [SerializeField] private GroundChecker PlayerGroundChecker;
-    
 
+    public Animator PlayerAnimator => playerModelController.CurrentAnimator;
+    public bool IsGround => PlayerGroundChecker.IsGrounded();
 
     public void MovementDash()
     {
-        if(PlayerGroundChecker.IsGrounded())
-            playerMovement.OnJump();   
+        playerMovement.OnInputDash();
     }
     public void MovementJump()
     {
-        if(PlayerGroundChecker.IsGrounded())
-            playerMovement.OnJump();   
+        playerMovement.OnInputJump();
     }
     public void SetMovementDirection(Vector2 direction)
     {
-        playerMovement.SetDirection(direction);
+        playerMovement.OnInputSetDirection(direction);
     }
     public void PlayerSwitchModel(PlayerModelState modelState)
     {
-        playerModelController.SwitchModel(modelState);
+        playerModelController.OnInputSwitchModel(modelState);
     }
     public void PlayerSwitchTransformation()
     {

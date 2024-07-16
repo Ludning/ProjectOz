@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 939282728260279377}
   - component: {fileID: 1622184637121969576}
   - component: {fileID: 7676777724143174206}
+  - component: {fileID: 1067543431504858915}
+  - component: {fileID: 1004522874737238760}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -103,9 +105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4166ca5ab2140d458c1a9f2e794d3b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerController: {fileID: 6777130721489702383}
-  PlayerModelSwitcher: {fileID: 1622184637121969576}
+  playerMovement: {fileID: 6777130721489702383}
+  playerModelController: {fileID: 1622184637121969576}
   playerStat: {fileID: 7676777724143174206}
+  ScaleController: {fileID: 1067543431504858915}
+  PlayerGroundChecker: {fileID: 2333123253030120768}
 --- !u!114 &6777130721489702383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,11 +122,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff5a8c98c4edaf4e92a8b0e7032a36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rigidbody: {fileID: 5236318171550696614}
-  PlayerGroundChecker: {fileID: 2333123253030120768}
-  _speed: 100
-  _jumpForce: 5
   CharacterMediator: {fileID: 5016133849406154776}
+  Rigidbody: {fileID: 5236318171550696614}
+  _currentState: 0
+  jumpForce: 10
+  dashForce: 100
+  moveSpeed: 100
+  dashDuration: 1000
+  _isDash: 0
+  dashSpeed: 20
+  dashDistance: 5
+  dashCooldown: 1
+  dashLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  moveInput: 0
+  lastDashTime: 0
+  dashStartPosition: {x: 0, y: 0}
+  dashTargetPosition: {x: 0, y: 0}
 --- !u!114 &2333123253030120768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +156,7 @@ MonoBehaviour:
   maxDistance: 0.5
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 3072
   drawGizmo: 1
 --- !u!114 &939282728260279377
 MonoBehaviour:
@@ -169,8 +186,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6777130721489702383}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1004522874737238760}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -185,8 +202,8 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6777130721489702383}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1004522874737238760}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnLook
         m_Mode: 0
         m_Arguments:
@@ -201,8 +218,8 @@ MonoBehaviour:
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6777130721489702383}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1004522874737238760}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnAttack
         m_Mode: 0
         m_Arguments:
@@ -217,8 +234,8 @@ MonoBehaviour:
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6777130721489702383}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1004522874737238760}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
@@ -233,8 +250,8 @@ MonoBehaviour:
     m_ActionName: Player/New action
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6777130721489702383}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1004522874737238760}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnDash
         m_Mode: 0
         m_Arguments:
@@ -249,8 +266,8 @@ MonoBehaviour:
     m_ActionName: Player/New action
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6777130721489702383}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1004522874737238760}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnStateChange
         m_Mode: 0
         m_Arguments:
@@ -280,9 +297,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b0fb73827cb8749a41d82c1ed790c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _knightModel: {fileID: 2499155618696776759}
   _mageModel: {fileID: 1235818208893837178}
+  _knightModel: {fileID: 2499155618696776759}
+  _mageMAnimator: {fileID: 1235818208901131548}
+  _knightAnimator: {fileID: 2499155618687270481}
   _currentModelState: 0
+  _currentAnimator: {fileID: 0}
+  CharacterMediator: {fileID: 0}
 --- !u!114 &7676777724143174206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,8 +337,35 @@ MonoBehaviour:
     gageGainNormal: 0
     gageGainCharge: 0
   _playerCurrentHp: 0
-  _playerCurrentGage: 0
+  _playerCurrentGage: 100
   _isDie: 0
+  CharacterMediator: {fileID: 5016133849406154776}
+--- !u!114 &1067543431504858915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902790095006344572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1229ba06306ba41a653b9fbf57dbb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 6777130721489702383}
+--- !u!114 &1004522874737238760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902790095006344572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e55da3527b512e47945a85a65f6245c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterMediator: {fileID: 5016133849406154776}
 --- !u!1001 &1235818208893737084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -393,6 +441,10 @@ PrefabInstance:
         'B_R_Calf'\n\tTransform 'B_R_Clavicle'\n\tand more ...\n\tFrom animation
         clip 'Jump'\n\tFrom animation clip 'Fall'"
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 13700008, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -427,6 +479,12 @@ MonoBehaviour:
 --- !u!4 &1235818208893862554 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182,
+    type: 3}
+  m_PrefabInstance: {fileID: 1235818208893737084}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1235818208901131548 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 7c72ed3f90575084c9f3b5b585887182,
     type: 3}
   m_PrefabInstance: {fileID: 1235818208893737084}
   m_PrefabAsset: {fileID: 0}
@@ -496,6 +554,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
+--- !u!95 &2499155618687270481 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 417a287abb2cab94889f1f1ddd91f928,
+    type: 3}
+  m_PrefabInstance: {fileID: 2499155618696678193}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2499155618696286679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400102, guid: 417a287abb2cab94889f1f1ddd91f928,

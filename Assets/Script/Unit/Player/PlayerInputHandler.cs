@@ -5,12 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    #region Input Function
     [SerializeField] private CharacterMediator CharacterMediator;
-    private Vector2 _direction;
-    private float _jumpForce;
     
-    
+    #region Input Function
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>().normalized;

@@ -14,30 +14,36 @@ public class PlayerModelController : MonoBehaviour
     
     [SerializeField, ReadOnly] private PlayerModelState _currentModelState;
     [SerializeField, ReadOnly] private Animator _currentAnimator;
+    [SerializeField] private CharacterMediator CharacterMediator;
+
+    public Animator CurrentAnimator => _currentAnimator;
+    
+    private readonly int IsAttack = Animator.StringToHash("IsAttack");
 
     private void Start()
     {
         _mageModel.SetActive(true);
         _knightModel.SetActive(false);
         _currentModelState = PlayerModelState.Mage;
+        _currentAnimator = _mageMAnimator;
     }
-    public void SwitchModel(PlayerModelState modelState)
+    public void OnInputSwitchModel(PlayerModelState modelState)
     {
         if (modelState == _currentModelState)
             return;
         switch (modelState)
         {
             case PlayerModelState.Knight:
-                _mageModel.SetActive(true);
-                _knightModel.SetActive(false);
-                _currentModelState = PlayerModelState.Mage;
-                _currentAnimator = _mageMAnimator;
-                ChangeUI_Icon();
-                break;
-            case PlayerModelState.Mage:
                 _knightModel.SetActive(true);
                 _mageModel.SetActive(false);
                 _currentModelState = PlayerModelState.Knight;
+                _currentAnimator = _knightAnimator;
+                ChangeUI_Icon();
+                break;
+            case PlayerModelState.Mage:
+                _mageModel.SetActive(true);
+                _knightModel.SetActive(false);
+                _currentModelState = PlayerModelState.Mage;
                 _currentAnimator = _mageMAnimator;
                 ChangeUI_Icon();
                 break;
@@ -52,5 +58,10 @@ public class PlayerModelController : MonoBehaviour
             value = _currentModelState == PlayerModelState.Knight ? 1 : 0
         };
         MessageManager.Instance.InvokeCallback(msg);
+    }
+
+    public void Attack()
+    {
+        CharacterMediator.PlayerAnimator.SetTrigger(IsAttack);
     }
 }
