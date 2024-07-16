@@ -1,26 +1,18 @@
-using UnityEngine;
-using UnityEngine.AI;
-
 namespace BehaviorDesigner.Runtime.Tasks
 {
     public class BTA_Attack : Action
     {
-        public Enemy enemy;
+        public Enemy owner;
 
         public override void OnAwake()
         {
-            enemy = GetComponent<Enemy>();
+            owner = GetComponent<Enemy>();
         }
 
         public override TaskStatus OnUpdate()
         {
-            if (enemy.Attack())
-            {
-                return TaskStatus.Success;
-            }
-            return TaskStatus.Failure;
+            owner.StartAttackAnimation();
+            return TaskStatus.Success;
         }
-
-
     }
 }

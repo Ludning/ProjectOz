@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Check currentCharacter is movable")]
+    [TaskDescription("Check IsEnemy Attackable")]
     [TaskCategory("Character")]
     [TaskIcon("{SkinColor}ReflectionIcon.png")]
-    public class BTC_IsMovable : Conditional
+    public class BTC_IsAttackable : Conditional
     {
         public Enemy owner;
 
@@ -13,7 +13,6 @@ namespace BehaviorDesigner.Runtime.Tasks
         {
             owner = GetComponent<Enemy>();
         }
-
         public override TaskStatus OnUpdate()
         {
             if (owner == null)
@@ -22,7 +21,7 @@ namespace BehaviorDesigner.Runtime.Tasks
                 return TaskStatus.Failure;
             }
 
-            if (owner.IsMovable)
+            if (owner.IsAttackable())
             {
                 return TaskStatus.Success;
             }

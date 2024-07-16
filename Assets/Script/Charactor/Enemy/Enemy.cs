@@ -1,12 +1,24 @@
 using BehaviorDesigner.Runtime;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+[Serializable]
+public class EnemyEditorData
+{
+    public float AttackRange;
+    public float AttackCooldown;
+    public float AttackDamage;
+    public float EnemyPatrolDistance;
+    public float EnemyPatrolDuration;
+    public float EnemyAlramDistance;
+}
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Combat))]
+[RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour
 {
 
@@ -17,10 +29,25 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private string _enemyId;
     [SerializeField] private EnemyData _enemyData;
-
-    [SerializeField] private bool _isMovable = false;
+    [SerializeField] private bool _isMovable = true;
+    public bool IsMovable
+    {
+        get => _isMovable;
+        private set
+        {
+            _navMeshAgent.isStopped = !value;
+            _isMovable = value;
+        }
+    }
 
     [SerializeField] private Detector _detector;
+
+    [SerializeField] private bool _isChargeAttack = false;
+
+    [SerializeField] private EnemyEditorData _editorData;
+    [SerializeField] private Transform _rotateTarget;
+
+    private static float positionZ = 0;
 
     private Combat _combat;
     private Rigidbody _rigidbody;
@@ -28,9 +55,9 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     private BehaviorTree _behaviorTree;
     private float _damage;
-    private Collider _attackCollider;
+    private DamageBox _attackCollider;
     public event Action OnKnockbackEnd;
-
+    private bool _isFlying = false;
 
     private void Awake()
     {
@@ -40,21 +67,42 @@ public class Enemy : MonoBehaviour
         _behaviorTree = GetComponent<BehaviorTree>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _combat = GetComponent<Combat>();
+        _animator = GetComponent<Animator>();
+        _attackCollider = GetComponentInChildren<DamageBox>();
+
+        _navMeshAgent.updateRotation = false;
 
         Init(_enemyData);
     }
+    Quaternion look;
+    private void Update()
+    {
+        if (_currentAttackTime > 0f)
+        {
+            _currentAttackTime -= Time.deltaTime;
+        }
+        Vector3 dir = _navMeshAgent.destination - transform.position;
+        dir = dir.normalized;
+        if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
+        {
+            look = Quaternion.LookRotation(dir, Vector3.up);
+            transform.rotation = look;
+        }
+        else
+        {
 
+            transform.rotation = look;
+        }
+    }
     private void Init(EnemyData enemyData)
     {
-
-
-
         //Combat
-        _combat.Init(transform, enemyData.enemyHp);
+        _combat.Init(enemyData.enemyHp);
 
         _combat.OnDamaged += OnDamaged;
         _combat.OnDead += OnDead;
 
+        _isFlying = enemyData.enemyMoveType == "movetype_enemy_flying";
 
         _damage = enemyData.enemyColDamage * enemyData.enemyBasePower;
         //_attackCooldown = enemyData.enemyAttackCooldown;
@@ -65,18 +113,23 @@ public class Enemy : MonoBehaviour
         _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
 
         //_detector.SetRadius(enemyData.noticeDistance);
-        _detector.Init("Player",6f);
+        _detector.Init("Player", 6f);
         SharedTransformList targetList = new SharedTransformList();
         targetList.Value = new List<Transform>();
         targetList.Value.Add(_leftPatrolPoint);
         targetList.Value.Add(_rightPatrolPoint);
 
-        if(gameObject.CompareTag("Player"))
+        if (gameObject.CompareTag("Player"))
         {
             return;
         }
-
+        SharedFloat attackRange = new SharedFloat();
+        attackRange.Value = 2f;
+        SharedFloat detectRange = new SharedFloat();
+        detectRange.Value = 6f;
         _behaviorTree.SetVariable("TargetList", targetList);
+        _behaviorTree.SetVariable("AttackRange", attackRange);
+        _behaviorTree.SetVariable("DetectRange", detectRange);
     }
     private void ResetEnemy()
     {
@@ -89,58 +142,97 @@ public class Enemy : MonoBehaviour
 
 
 
-    //Ï†ÑÌà¨ Í¥ÄÎ†®
+    //¿¸≈ı ∞¸∑√
     public Combat GetCombat()
     {
         return _combat;
     }
 
-    //Í≥µÍ≤©Î©îÏÑúÎìú
-    //Ïï†ÎãàÎ©îÏù¥ÏÖò Ïã§Ìñâ, ÏõÄÏßÅÏûÑ
-    float _attackCooldown = 0f;
+    //∞¯∞›∏ﬁº≠µÂ
+    //æ÷¥œ∏ﬁ¿Ãº« Ω««‡, øÚ¡˜¿”
+    float _attackCooldown = 1f;
     float _currentAttackTime = 0f;
-    public bool Attack()
+
+    public void StartAttackAnimation()
     {
-        if(_currentAttackTime >= 0f)
+        IsMovable = false;
+        _currentAttackTime = _attackCooldown;
+        _animator.SetTrigger("Attack");
+    }
+    public bool IsAttackable()
+    {
+        if (_currentAttackTime > 0f)
         {
             return false;
         }
-        _animator.SetTrigger("Attack");
-        Vector3 dir = _detector.GetTarget().position - transform.position;
-        float force = dir.magnitude * 10f;
-        dir = dir.normalized;
-        _rigidbody.AddForce(dir * force, ForceMode.VelocityChange);
-        _currentAttackTime = _attackCooldown;
         return true;
     }
 
-    public void EnableAttackCollider()
+    public bool CharacterAttack()
     {
+        if (_isChargeAttack)
+        {
+            ChargeAttack(25f);
+        }
+        else
+        {
+            Attack();
+        }
+        return true;
+    }
+    private void ChargeAttack(float force)
+    {
+        Vector3 dir = _detector.GetTarget().position+ Vector3.up  - transform.position;
+        SetEnableRigidbody(true);
+        dir.z = 0f;
+        dir = dir.normalized;
+        _rigidbody.AddForce(dir * force, ForceMode.VelocityChange);
+        StartCoroutine(ChargeAttackEnd());
+        Attack();
+    }
+    private IEnumerator ChargeAttackEnd()
+    {
+        while (true)
+        {
+            yield return new WaitForFixedUpdate();
+            if (_rigidbody.velocity.magnitude < .1f)
+            {
+                SetEnableRigidbody(false);
+                break;
+            }
+        }
+    }
+    private void Attack()
+    {
+        IsMovable = false;
+        StartCoroutine(AttackEnd());
+        if (_attackCollider == null)
+            return;
+        _attackCollider.SetDamage(_damage);
         _attackCollider.enabled = true;
+    }
+
+    private IEnumerator AttackEnd()
+    {
+        yield return new WaitForSeconds(_attackCooldown);
+        IsMovable = true;
     }
 
     public void TakeDamage(Combat attacker, float damage)
     {
-        _combat.TakeDamage(attacker, damage);
+        _combat.Attack(null, damage);
     }
 
-
-
-    //ÌÉêÏßÄ Í¥ÄÎ†®
-    public bool IsMovable()
-    {
-        return _isMovable;
-    }
 
     public bool IsTargetNear(float range)
     {
         Transform target = _detector.GetTarget();
 
-        if(target == null)
+        if (target == null)
         {
             return false;
         }
-        if(Vector3.Distance(target.position, transform.position) <= range)
+        if (Vector3.Distance(target.position, transform.position) <= range)
         {
             return true;
         }
@@ -153,7 +245,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // Ïù¥Î≤§Ìä∏
+    // ¿Ã∫•∆Æ
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -164,7 +256,7 @@ public class Enemy : MonoBehaviour
                 Debug.Assert(false, "Player has no Combat component");
                 return;
             }
-            _combat.DealDamage(target.GetCombat(), _damage);
+            _combat.Attack(target.GetCombat(), _damage);
             return;
         }
     }
@@ -174,21 +266,28 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-        _combat.DealDamage(targetCombat, damage);
+        _combat.Attack(targetCombat, damage);
     }
 
-    private void OnDamaged(Combat attacker)
+    private void OnDamaged()
     {
-        if (attacker == null)
-        {
-            return;
-        }
-        Vector3 attackDir = (transform.position - attacker.transform.position).normalized;
     }
 
-    private void OnDead(Combat attacker, Combat damaged)
+    private void OnDead()
     {
         gameObject.SetActive(false);
+    }
+
+    private void SetEnableRigidbody(bool condition)
+    {
+        _navMeshAgent.velocity = Vector3.zero;
+        _navMeshAgent.updatePosition = !condition;
+        _rigidbody.isKinematic = !condition;
+        _rigidbody.useGravity = false;
+        if(!condition)
+        {
+            _navMeshAgent.nextPosition = transform.position;
+        }
     }
 
 
@@ -214,7 +313,7 @@ public class Enemy : MonoBehaviour
     //}
 
     ///// <summary>
-    ///// Ïø®Îã§Ïö¥ Í≥ÑÏÇ∞ Î∞è ÌÖåÎëêÎ¶¨ Î∞ñÏùÑ ÌäïÍ≤® ÎÇòÍ∞îÎäîÏßÄ Í≤ÄÏÇ¨
+    ///// ƒ¥ŸøÓ ∞ËªÍ π◊ ≈◊µŒ∏Æ π€¿ª ∆®∞‹ ≥™∞¨¥¬¡ˆ ∞ÀªÁ
     ///// </summary>
     ///// <returns></returns>
     //private IEnumerator CheckKnockbackEnd()

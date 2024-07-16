@@ -34,7 +34,7 @@
       "enemyHp": 30.0,
       "enemyBasePower": 1.0,
       "enemyMoveSpeed": 1.0,
-      "moveSet": "",
+      "moveSet": "-",
       "skillSet": "b",
       "enemyColDamage": 1.0
     },
@@ -46,7 +46,7 @@
       "enemyHp": 30.0,
       "enemyBasePower": 1.0,
       "enemyMoveSpeed": 1.0,
-      "moveSet": "",
+      "moveSet": "-",
       "skillSet": "c",
       "enemyColDamage": 1.0
     }
