@@ -106,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
     #region OnUpdate
     private void OnUpdateMove()
     {
-        Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * Time.unscaledDeltaTime, Rigidbody.velocity.y, 0);
+        Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
         Rigidbody.velocity = velocity;
     }
     private void OnUpdateDash()
