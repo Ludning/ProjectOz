@@ -53,5 +53,12 @@ public class FireballMove : BallMove
             else
                 _rb.velocity = new Vector3(-_rb.velocity.x, _rb.velocity.y, -_rb.velocity.z);
         }
+        if(other.CompareTag("Enemy"))
+        {
+            if(other.TryGetComponent(out Combat combat))
+            {
+                combat.Damaged(_damage);
+            }
+        }
     }
 }
