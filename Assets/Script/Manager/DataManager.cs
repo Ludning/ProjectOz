@@ -57,6 +57,36 @@ public class DataManager : SingleTon<DataManager>
         return new T();
     }
 
+    public Dictionary<string, T> GetGameDataDictionary<T>() where T : class, IDataRepository
+    {
+        if (_gameData == null)
+        {
+            TextAsset jsonFile = Addressables.LoadAssetAsync<TextAsset>(_dataJsonPath).WaitForCompletion();
+            _gameData = JsonConvert.DeserializeObject<GameData>(jsonFile.text);
+        }
+
+        switch (typeof(T).Name)
+        {
+            case "PcData":
+                return _gameData.PcDatas as Dictionary<string, T>;
+            case "EnemyData":
+                return _gameData.EnemyDatas as Dictionary<string, T>;
+            case "MovesetData":
+                return _gameData.MovesetDatas as Dictionary<string, T>;
+            case "ResourceData":
+                return _gameData.ResourceDatas as Dictionary<string, T>;
+            case "SkillData":
+                return _gameData.SkillDatas as Dictionary<string, T>;
+            case "OzmagicData":
+                return _gameData.OzmagicDatas as Dictionary<string, T>;
+            case "ProjectileData":
+                return _gameData.ProjectileDatas as Dictionary<string, T>;
+            case "LevelData":
+                return _gameData.LevelDatas as Dictionary<string, T>;
+        }
+        return null;
+    }
+
     public string GetAssetAddress(string key)
     {
         if (_assetAddressData == null)
