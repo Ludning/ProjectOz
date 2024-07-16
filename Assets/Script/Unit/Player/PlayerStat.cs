@@ -15,8 +15,10 @@ public class PlayerStat : MonoBehaviour, IDamageable
     [SerializeField, ReadOnly] private ResourceData _resourceData;
 
     [SerializeField, ReadOnly] private int _playerCurrentHp;
-    [SerializeField, ReadOnly] private float _playerCurrentGage;
+    [SerializeField] private float _playerCurrentGage;
     [SerializeField, ReadOnly] private bool _isDie;
+
+    [SerializeField] private CharacterMediator CharacterMediator;
 
     public float PlayerCurrentGage
     {
@@ -39,6 +41,11 @@ public class PlayerStat : MonoBehaviour, IDamageable
         _playerCurrentGage = 0f;
     }
 
+    private void Update()
+    {
+        
+    }
+
     public void OnDamage(int damage)
     {
         _playerCurrentHp -= damage;
@@ -47,7 +54,14 @@ public class PlayerStat : MonoBehaviour, IDamageable
             _playerCurrentHp = 0;
             OnDie();
         }
+
         //MVVM업데이트
+        PlayerHUD_Message msg = new PlayerHUD_Message()
+        {
+            playerHUDType = PlayerHUDType.PlayerHp,
+            value = _playerCurrentHp
+        };
+        MessageManager.Instance.InvokeCallback(msg);
     }
 
     private void OnDie()
@@ -70,5 +84,19 @@ public class PlayerStat : MonoBehaviour, IDamageable
                 PlayerCurrentGage -= _resourceData.gagePenalty;
                 break;
         }
+    }
+    public void ChangeTransformation()
+    {
+        if (PlayerCurrentGage >= 100)
+        {
+            GageReduceStart();
+            CharacterMediator.PlayerSwitchModel(PlayerModelState.Knight);
+        }
+    }
+
+
+    private void GageReduceStart()
+    {
+
     }
 }
