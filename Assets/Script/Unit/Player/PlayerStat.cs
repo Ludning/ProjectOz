@@ -47,6 +47,13 @@ public class PlayerStat : MonoBehaviour
     private void Update()
     {
         //Todo 분노게이지 감소
+        //MVVM업데이트
+        PlayerHUD_Message msg = new PlayerHUD_Message()
+        {
+            playerHUDType = PlayerHUDType.PetulanceGuage,
+            value = _playerCurrentGage
+        };
+        MessageManager.Instance.InvokeCallback(msg);
     }
 
     private void OnDestroy()

@@ -16,9 +16,10 @@ public class PlayerModelController : MonoBehaviour
     [SerializeField, ReadOnly] private Animator _currentAnimator;
     [SerializeField] private CharacterMediator CharacterMediator;
 
+    public PlayerModelState CurrentModelState => _currentModelState;
     public Animator CurrentAnimator => _currentAnimator;
     
-    private readonly int IsAttack = Animator.StringToHash("IsAttack");
+    
 
     private void Start()
     {
@@ -62,6 +63,6 @@ public class PlayerModelController : MonoBehaviour
 
     public void Attack()
     {
-        CharacterMediator.PlayerAnimator.SetTrigger(IsAttack);
+        
     }
 }
