@@ -20,7 +20,7 @@ public enum AIState
 public class EnemyEditorData
 {
     public float AttackRange = 2f;
-    public float AttackCooldown = 2f; 
+    public float AttackCooldown = 2f;
     public float ChargeAttackForce = 80f;
     public float EnemyPatrolDistance = 4f;
     public float EnemyPatrolIdleDuration = 1f;
@@ -28,6 +28,9 @@ public class EnemyEditorData
     public float EnemyAlramLimitTime = 2f;
     public float EnemyChaseDistance = 9f;
     public bool DetectThroughWall = false;
+    public bool CanFireProjectile = false;
+    public Transform ProjectileFirePos;
+    public GameObject ProjectilePrefab;
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -123,7 +126,7 @@ public class Enemy : MonoBehaviour
             transform.rotation = look;
         }
 
-        if(_navMeshAgent.velocity.magnitude > 0.1f)
+        if (_navMeshAgent.velocity.magnitude > 0.1f)
         {
             _animator.SetBool("IsMoving", true);
         }
@@ -224,12 +227,26 @@ public class Enemy : MonoBehaviour
         {
             ChargeAttack(_editorData.ChargeAttackForce);
         }
+        else if (_editorData.CanFireProjectile)
+        {
+            FireProjectile();
+        }
         else
         {
             Attack();
         }
         return true;
     }
+
+    private void FireProjectile()
+    {
+        GameObject projectile = Instantiate(_editorData.ProjectilePrefab, _editorData.ProjectileFirePos.position, _editorData.ProjectileFirePos.rotation);
+        EnemyProjectile enemyProjectile = projectile.GetComponent<EnemyProjectile>();
+        enemyProjectile.Init(_editorData.ProjectileFirePos);
+        enemyProjectile.Fire();
+        StartCoroutine(AttackEnd(1f));
+    }
+
     private void ChargeAttack(float force)
     {
         Vector3 dir = _detector.GetPosition() + Vector3.up - transform.position;
@@ -251,6 +268,11 @@ public class Enemy : MonoBehaviour
                 break;
             }
         }
+    }
+    private IEnumerator AttackEnd(float delay)
+    {
+        yield return new WaitForFixedUpdate();
+        IsMovable = true;
     }
     private void Attack()
     {
@@ -320,7 +342,7 @@ public class Enemy : MonoBehaviour
     {
         SetEnableAllCollision(false);
         _animator.SetTrigger("Dead");
-        _animator.SetBool("IsDead",true);
+        _animator.SetBool("IsDead", true);
         _isMovable = false;
         StartCoroutine(DelayedDisable());
     }
@@ -344,7 +366,7 @@ public class Enemy : MonoBehaviour
         _navMeshAgent.velocity = Vector3.zero;
         _rigidbody.isKinematic = !condition;
 
-        if(condition)
+        if (condition)
         {
             _navMeshAgent.updatePosition = false;
         }
@@ -397,7 +419,7 @@ public class Enemy : MonoBehaviour
 
     private Color GetColorByState(AIState state)
     {
-        if(_currentAttackTime > 0f)
+        if (_currentAttackTime > 0f)
         {
             return Color.red;
         }

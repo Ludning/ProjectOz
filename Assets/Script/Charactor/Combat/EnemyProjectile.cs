@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour
 {
     private Rigidbody _rigidbody;
     [SerializeField] private Transform _firePos;
@@ -14,7 +14,11 @@ public class Projectile : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Fire()
+    public void Init(Transform firePos)
+    {
+        _firePos = firePos;
+    }
+    public void Fire()
     {
         Vector3 dir = _firePos.forward;
         _rigidbody.velocity = dir * _speed;
