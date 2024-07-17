@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 3265366612223112527}
   - component: {fileID: 5633290320481398914}
   - component: {fileID: 5236318171550696614}
+  - component: {fileID: 3463290384698729047}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -84,7 +85,7 @@ MonoBehaviour:
   dashForce: 40
   dashDistance: 10
   dashCooldown: 1
-  jumpForce: 10
+  jumpForce: 40
   dashLayerMask:
     serializedVersion: 2
     m_Bits: 3072
@@ -406,6 +407,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!75 &3463290384698729047
+ConstantForce:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902790095006344572}
+  m_Enabled: 1
+  m_Force: {x: 0, y: -30, z: 0}
+  m_RelativeForce: {x: 0, y: 0, z: 0}
+  m_Torque: {x: 0, y: 0, z: 0}
+  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!1 &3447393052553555546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1166,7 +1179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 5016133849406154776}
   rb: {fileID: 5236318171550696614}
-  _rushForce: 40
+  _rushForce: 100
   _rushDistance: 0
   _rushCoolDown: 0
   _rushCoolDownHit: 0
@@ -1193,5 +1206,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.3, z: 1}
+  m_Size: {x: 1, y: 2.5, z: 1}
   m_Center: {x: 0, y: 1.2, z: 0}

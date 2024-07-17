@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 737461602}
   m_Layer: 10
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -497,7 +497,7 @@ GameObject:
   - component: {fileID: 828269641}
   m_Layer: 10
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -600,16 +600,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2181803010954681357, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: _rushForce
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: dashForce
-      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7554309651453514861, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}

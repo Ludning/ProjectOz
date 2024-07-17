@@ -44,19 +44,15 @@ public class MageControl : MonoBehaviour, IControl
         
     }
 
-    
 
+    private bool afterFire = false;
     public void OnAnimation_Enter()
     {
         Debug.Log("Enter!");
         _inputTimer = 0;
-        animator.SetFloat(AttackClipSpeed, 0.2f);
-    }
-    public void OnAnimation_Exit()
-    {
-        Debug.Log("Exit!");
-        _inputTimer = 0;
-        animator.SetFloat(AttackClipSpeed, 1f);
+        if(keyDown == true)
+            animator.SetFloat(AttackClipSpeed, 0.2f);
+        afterFire = false;
     }
     public void OnAnimation_Fire()
     {
@@ -68,7 +64,17 @@ public class MageControl : MonoBehaviour, IControl
             _inputTimer = 0;
             ChargeAttack();
         }
+
+        afterFire = true;
     }
+    public void OnAnimation_Exit()
+    {
+        Debug.Log("Exit!");
+        _inputTimer = 0;
+        animator.SetFloat(AttackClipSpeed, 1f);
+        afterFire = false;
+    }
+    
     public void OnInput(KeyType type)
     {
         switch (type)
@@ -89,7 +95,8 @@ public class MageControl : MonoBehaviour, IControl
     {
         keyDown = true;
         animator.SetBool(HashAttack, true);
-        animator.SetFloat(AttackClipSpeed, 0.2f);
+        if(afterFire == false)
+            animator.SetFloat(AttackClipSpeed, 0.2f);
     }
     private void EndAttack()
     {
