@@ -79,9 +79,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterMediator: {fileID: 5016133849406154776}
   Rigidbody: {fileID: 5236318171550696614}
-  BoxCollider: {fileID: 3265366612223112527}
+  DashCollider: {fileID: 5633290320481398914}
   airSpeed: 5
-  dashForce: 20
+  dashForce: 40
   dashDistance: 10
   dashCooldown: 1
   jumpForce: 10
@@ -483,7 +483,7 @@ Transform:
   m_GameObject: {fileID: 5431851355662672972}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.953, z: 0.995}
+  m_LocalPosition: {x: 0, y: 1.85, z: 2.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -820,6 +820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1235818208901131548}
   firePosition: {fileID: 7990062489203696157}
+  CharacterMediator: {fileID: 5016133849406154776}
 --- !u!4 &1235818208893862554 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182,
