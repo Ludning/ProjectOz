@@ -4,6 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
+public enum AIState
+{
+    Idle,
+    Patrol,
+    Wait,
+    Chase,
+    JustLostTarget,
+    Attack,
+    Dead
+}
+
 [Serializable]
 public class EnemyEditorData
 {
@@ -61,6 +73,8 @@ public class Enemy : MonoBehaviour
     private DamageBox _attackCollider;
     public event Action OnKnockbackEnd;
     private bool _isFlying = false;
+
+    private AIState _aiState = AIState.Idle;
 
     private void Awake()
     {
@@ -139,7 +153,7 @@ public class Enemy : MonoBehaviour
         _behaviorTree.SetVariable("DetectRange", detectRange);
         _behaviorTree.SetVariable("EnemyAlramLimitTime", enemyAlramLimitTime);
         _behaviorTree.SetVariable("EnemyPatrolIdleDuration", enemyPatrolIdleDuration);
-        _behaviorTree.SetVariable("EnemyChaseDistance", enemyChaseDistance);
+        _behaviorTree.SetVariable("ChaseRange", enemyChaseDistance);
 
     }
     private void ResetEnemy()
@@ -193,7 +207,7 @@ public class Enemy : MonoBehaviour
     }
     private void ChargeAttack(float force)
     {
-        Vector3 dir = _detector.GetPosition()+ Vector3.up - transform.position;
+        Vector3 dir = _detector.GetPosition() + Vector3.up - transform.position;
         SetEnableRigidbody(true);
         dir.z = 0f;
         dir = dir.normalized;
@@ -299,7 +313,70 @@ public class Enemy : MonoBehaviour
         return _detector.IsTargetVisible();
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyChaseDistance);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _editorData.AttackRange);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
 
+
+        AIState state = _aiState;
+        Gizmos.color = GetColorByState(state);
+        Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyChaseDistance);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _editorData.AttackRange);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
+
+        AIState state = _aiState;
+        Gizmos.color = GetColorByState(state);
+        Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(_leftPatrolPoint.position, 1f);
+        Gizmos.DrawSphere(_rightPatrolPoint.position, 1f);
+    }
+
+    private Color GetColorByState(AIState state)
+    {
+        if(_currentAttackTime > 0f)
+        {
+            return Color.red;
+        }
+        switch (state)
+        {
+            case AIState.Idle:
+                return Color.green;
+            case AIState.Patrol:
+                return Color.blue;
+            case AIState.Wait:
+                return Color.cyan;
+            case AIState.Chase:
+                return Color.yellow;
+            case AIState.JustLostTarget:
+                return Color.gray;
+            case AIState.Attack:
+                return Color.red;
+            case AIState.Dead:
+                return Color.black;
+            default:
+                return Color.white;
+        }
+    }
+
+    internal void SetState(AIState state)
+    {
+        _aiState = state;
+    }
 
     /* Not Used
     //public void KnockbackOnSurface(Vector3 direction, float force)
