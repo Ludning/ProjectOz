@@ -1,19 +1,19 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Check TargetIsNearOrEnable And Enable")]
-    [TaskCategory("Character")]
-    [TaskIcon("{SkinColor}ReflectionIcon.png")]
-    public class BTC_IsTargetNear : Conditional
+    public class BTA_SetMoveTarget : Action
     {
+        public SharedTransform target;
         public Enemy owner;
-        public SharedFloat range = 3f;
+        public bool isDynamicDestination = false;
 
         public override void OnAwake()
         {
             owner = GetComponent<Enemy>();
         }
+
         public override TaskStatus OnUpdate()
         {
             if (owner == null)
@@ -21,13 +21,8 @@ namespace BehaviorDesigner.Runtime.Tasks
                 Debug.LogWarning("Unable to compare field - compare value is null");
                 return TaskStatus.Failure;
             }
-
-            if (owner.IsTargetNear(range.Value))
-            {
-                return TaskStatus.Success;
-            }
-
-            return TaskStatus.Failure;
+            target.Value = owner.GetTarget();
+            return TaskStatus.Success;
         }
     }
 }

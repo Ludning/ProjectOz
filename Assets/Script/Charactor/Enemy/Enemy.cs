@@ -79,6 +79,10 @@ public class Enemy : MonoBehaviour
     private float _currentStateTime = 0f;
     public float CurrentStateTime => _currentStateTime;
 
+
+    private Collider _characterCollider;
+    private Collider _characterEnvCollider;
+
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -89,6 +93,9 @@ public class Enemy : MonoBehaviour
         _combat = GetComponent<Combat>();
         _animator = GetComponent<Animator>();
         _attackCollider = GetComponentInChildren<DamageBox>();
+
+        _characterCollider = GetComponent<Collider>();
+        _characterEnvCollider = GetComponentInChildren<Collider>();
 
         _navMeshAgent.updateRotation = false;
 
@@ -113,6 +120,15 @@ public class Enemy : MonoBehaviour
         {
 
             transform.rotation = look;
+        }
+
+        if(_navMeshAgent.velocity.magnitude > 0.1f)
+        {
+            _animator.SetBool("IsMoving", true);
+        }
+        else
+        {
+            _animator.SetBool("IsMoving", false);
         }
     }
     private void Init(EnemyData enemyData)
@@ -162,6 +178,10 @@ public class Enemy : MonoBehaviour
     }
     private void ResetEnemy()
     {
+        SetEnableAllCollision(true);
+        _animator.SetBool("IsDead", false);
+
+        _isMovable = true;
         _combat.ResetDead();
         gameObject.SetActive(true);
     }
@@ -297,6 +317,24 @@ public class Enemy : MonoBehaviour
 
     private void OnDead()
     {
+        SetEnableAllCollision(false);
+        _animator.SetTrigger("Dead");
+        _animator.SetBool("IsDead",true);
+        _isMovable = false;
+        StartCoroutine(DelayedDisable());
+    }
+    private void SetEnableAllCollision(bool condition)
+    {
+        _characterCollider.enabled = condition;
+
+        if (_characterEnvCollider != null)
+        {
+            _characterEnvCollider.enabled = condition;
+        }
+    }
+    private IEnumerator DelayedDisable()
+    {
+        yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
     }
 
@@ -314,6 +352,10 @@ public class Enemy : MonoBehaviour
 
     public bool IsTargetVisible()
     {
+        if (_editorData.DetectThroughWall)
+        {
+            return true;
+        }
         return _detector.IsTargetVisible();
     }
 

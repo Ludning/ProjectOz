@@ -12,7 +12,7 @@ public class Detector : MonoBehaviour
 
     public bool isPlayerInRange { get; private set; }
 
-    [SerializeField] private Transform Target
+    [SerializeField] private Collider Target
     {         
         get => _target;
         set
@@ -24,9 +24,9 @@ public class Detector : MonoBehaviour
             _target = value;
         }
     }
-    private Transform _target;
+    private Collider _target;
 
-    private Transform _lastTarget;
+    private Collider _lastTarget;
 
 
     public void Init(string targetTag, float detectionRadius, bool detectThroughWall)
@@ -38,7 +38,11 @@ public class Detector : MonoBehaviour
 
     public Transform GetTarget()
     {
-        return Target;
+        if(Target == null)
+        {
+            return null;
+        }
+        return Target.transform;
     }
 
     public void FixedUpdate()
@@ -48,18 +52,13 @@ public class Detector : MonoBehaviour
         //check overlap contains player taged
 
         Collider col = overlap.FirstOrDefault((col) => col.CompareTag("Player"));
-        if (col != null)
-        {
-            isPlayerInRange = _detectThroughWall ? true : IsTargetVisible();
-        }
-        else
-        {
-            isPlayerInRange = false;
-        }
+
+        isPlayerInRange = col != null;
+
         if(isPlayerInRange)
         {
-            Target = col.transform;
-            _lastValidPostion = Target.position;
+            Target = col;
+            _lastValidPostion = Target.bounds.center;
         }
         else
         {
@@ -74,16 +73,23 @@ public class Detector : MonoBehaviour
         }
         return IsTargetVisible(Target);
     }
-    public bool IsTargetVisible(Transform target)
+    public bool IsTargetVisible(Collider target)
     {
-        if (Physics.Raycast(transform.position, 
-            target.position - (transform.position),
+        Vector3 center = transform.position;
+        Vector3 targetCenter = target.bounds.center;
+        if (Physics.Raycast(center, 
+            targetCenter - (center),
             out RaycastHit hit, _detectionRadius))
         {
+            Debug.DrawLine(center, hit.point, Color.magenta);
             if (hit.collider.CompareTag("Player"))
             {
                 return true;
             }
+        }
+        else
+        {
+            Debug.DrawRay(center, targetCenter - (center), Color.green);
         }
         return false;
     }
@@ -101,6 +107,10 @@ public class Detector : MonoBehaviour
 
     public Transform GetLastTarget()
     {
-        return _lastTarget;
+        if(_lastTarget == null)
+        {
+            return null;
+        }
+        return _lastTarget.transform;
     }
 }

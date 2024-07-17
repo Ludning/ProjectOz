@@ -867,7 +867,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.036666665
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: ea574dca369209e4891ed5e6afa863e8, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1054902466
 Transform:
@@ -1277,7 +1277,7 @@ PrefabInstance:
     - target: {fileID: 340343623982832344, guid: 88d56bcf5560f48409f364fbfbfc0402,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -97.78375
+      value: -79.267685
       objectReference: {fileID: 0}
     - target: {fileID: 340343623982832344, guid: 88d56bcf5560f48409f364fbfbfc0402,
         type: 3}
@@ -1403,6 +1403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1001 &2121515146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1958,6 +1959,74 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &5545295139767311620
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -27.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8770236801416950081, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
+      propertyPath: m_Name
+      value: GroundEnemy_Spider (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4, type: 3}
 --- !u!4 &5820499533251595121
 Transform:
   m_ObjectHideFlags: 0
@@ -2029,3 +2098,4 @@ SceneRoots:
   - {fileID: 2121515146}
   - {fileID: 1242618567}
   - {fileID: 1054902466}
+  - {fileID: 5545295139767311620}
