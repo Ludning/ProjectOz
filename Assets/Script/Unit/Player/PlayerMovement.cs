@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private readonly int DashHash = Animator.StringToHash("IsDash");
     private readonly int DirectionYHash = Animator.StringToHash("DirectionY");
     private readonly int MoveHash = Animator.StringToHash("IsMove");
+    private readonly int RushSlashHash = Animator.StringToHash("IsAttack");
     #endregion
     
     
@@ -35,13 +36,20 @@ public class PlayerMovement : MonoBehaviour
     
     //[SerializeField] private float capsuleRadius = 0.5f;
     
+    private bool _isRushSlash = false;
     private bool _isDash = false;
     private float dashStartPositionX;
     private float currentDashCooldown = 0f;
+    private Vector2 rushStartPosition;
 
     public float stopDistance = 0.1f; // 멈출 때의 허용 오차
+    
+    public float _rushSlashDistance; // 돌진베기의 거리
 
+    public bool IsRushSlash => _isRushSlash;
     public bool IsDash => _isDash;
+
+    private event Action RushSlashEndEvent;
 
     private void Awake()
     {
@@ -50,7 +58,9 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        if (_isDash)
+        if (IsRushSlash)
+            OnUpdateRushSlash();
+        else if (_isDash)
             OnUpdateDash();
         else
             OnUpdateMove();
@@ -138,6 +148,12 @@ public class PlayerMovement : MonoBehaviour
         if (distanceTraveled >= dashDistance - stopDistance)
             EndDash();
     }
+    private void OnUpdateRushSlash()
+    {
+        float rushDistance = Vector2.Distance(rushStartPosition, transform.position);
+        if (rushDistance >= _rushSlashDistance - stopDistance)
+            RushSlashEndEvent?.Invoke();
+    }
 
     #endregion
     private void StartDash()
@@ -155,6 +171,24 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody.useGravity = true;
         Rigidbody.velocity = Vector3.zero;
         CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
+    }
+    public void StartRushSlash(Vector2 targetDirection, float rushForce, float distance, Action endEvent)
+    {
+        RushSlashEndEvent = endEvent;
+        rushStartPosition = transform.position;
+        _rushSlashDistance = distance;
+        _isRushSlash = true;
+        Rigidbody.useGravity = false;
+        Rigidbody.velocity = Vector3.zero;
+        CharacterMediator.PlayerAnimator.SetBool(RushSlashHash, true);
+        Rigidbody.AddForce(targetDirection * rushForce, ForceMode.Impulse);
+    }
+    public void EndRushSlash()
+    {
+        _isRushSlash = false;
+        Rigidbody.useGravity = true;
+        Rigidbody.velocity = Vector3.zero;
+        CharacterMediator.PlayerAnimator.SetBool(RushSlashHash, false);
     }
 
     private void OnTriggerStay(Collider other)

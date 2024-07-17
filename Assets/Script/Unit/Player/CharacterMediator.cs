@@ -6,14 +6,11 @@ using UnityEngine.Serialization;
 
 public class CharacterMediator : MonoBehaviour
 {
-    [SerializeField] public PlayerStat playerStat;
-
-    [SerializeField] private ScaleController ScaleController;
-    [SerializeField] private GroundChecker PlayerGroundChecker;
-
-    [SerializeField] private MageControl MageControl;
-    [SerializeField] private KnightControl knightControl;
-
+    public PlayerStat playerStat;
+    public ScaleController ScaleController;
+    public GroundChecker PlayerGroundChecker;
+    public MageControl MageControl;
+    public KnightControl knightControl;
     public PlayerMovement PlayerMovement;
     public PlayerModelController playerModelController;
     public IControl CurrentControl

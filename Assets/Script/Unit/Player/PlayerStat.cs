@@ -8,8 +8,8 @@ public enum AttackType
     None,
     NormalAttack,//일반공격
     ChargeAttack,//강공격
-    Meteor,//변신해제
-    TimeStop,//변신해제
+    Meteor,//메테오
+    TimeStop,//시간정지
     UndoTransformation,//변신해제
 }
 public class PlayerStat : MonoBehaviour
@@ -22,6 +22,8 @@ public class PlayerStat : MonoBehaviour
 
     [SerializeField] private CharacterMediator CharacterMediator;
     [SerializeField] private Combat _playerCombat;
+
+    private bool _isGageReduce = false;
 
     public float PlayerCurrentGage
     {
@@ -46,7 +48,6 @@ public class PlayerStat : MonoBehaviour
         _playerCombat.OnDamaged += OnDamage;
         _playerCombat.OnDead += OnDie;
     }
-
     private void Update()
     {
         //Todo 분노게이지 감소
@@ -58,13 +59,11 @@ public class PlayerStat : MonoBehaviour
         };
         MessageManager.Instance.InvokeCallback(msg);
     }
-
     private void OnDestroy()
     {
         _playerCombat.OnDead -= OnDie;
         _playerCombat.OnDamaged -= OnDamage;
     }
-
     public void OnDamage()
     {
         //MVVM업데이트
@@ -75,14 +74,12 @@ public class PlayerStat : MonoBehaviour
         };
         MessageManager.Instance.InvokeCallback(msg);
     }
-
     private void OnDie()
     {
         //사망처리
         gameObject.SetActive(false);
         _isDie = true;
     }
-
     public void ChangeGage(AttackType type)
     {
         switch (type)
@@ -108,15 +105,28 @@ public class PlayerStat : MonoBehaviour
     {
         if (PlayerCurrentGage >= 100)
         {
-            GageReduceStart();
+            _isGageReduce = true;
             CharacterMediator.playerModelController.OnInputSwitchModel(PlayerModelState.Knight);
-            
         }
     }
-
-
-    private void GageReduceStart()
+    private void ReduceGage()
     {
-
+        if (_isGageReduce == false)
+            return;
+        if (PlayerCurrentGage != 0)
+        {
+            PlayerCurrentGage -= Time.deltaTime;
+            return;
+        }
+        _isGageReduce = false;
+        CharacterMediator.playerModelController.OnInputSwitchModel(PlayerModelState.Mage);
+    }
+    private void OnEnable()
+    {
+        TimeManager.Instance.RegistCooldownAction(ReduceGage);
+    }
+    private void OnDisable()
+    {
+        TimeManager.Instance.DeregistCooldownAction(ReduceGage);
     }
 }
