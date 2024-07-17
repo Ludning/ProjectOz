@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 1004522874737238760}
   - component: {fileID: 212520457769849487}
   - component: {fileID: 2733142248285316563}
+  - component: {fileID: 8667799612201828577}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -130,10 +131,10 @@ MonoBehaviour:
   Rigidbody: {fileID: 5236318171550696614}
   capsuleCollider: {fileID: 3807371062329675756}
   airSpeed: 5
-  dashForce: 20
-  dashDistance: 10
+  dashForce: 100
+  dashDistance: 25
   dashCooldown: 1
-  jumpForce: 10
+  jumpForce: 28
   dashLayerMask:
     serializedVersion: 2
     m_Bits: 3072
@@ -405,6 +406,18 @@ CapsuleCollider:
   m_Height: 2.3
   m_Direction: 1
   m_Center: {x: 0, y: 1.2, z: 0.3}
+--- !u!75 &8667799612201828577
+ConstantForce:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902790095006344572}
+  m_Enabled: 1
+  m_Force: {x: 0, y: -30, z: 0}
+  m_RelativeForce: {x: 0, y: 0, z: 0}
+  m_Torque: {x: 0, y: 0, z: 0}
+  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!1 &3447393052553555546
 GameObject:
   m_ObjectHideFlags: 0
