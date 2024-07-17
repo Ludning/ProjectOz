@@ -73,11 +73,11 @@ MonoBehaviour:
   _editorData:
     AttackRange: 2
     AttackCooldown: 2
-    EnemyPatrolDistance: 4
+    EnemyPatrolDistance: 10
     EnemyPatrolIdleDuration: 1
-    EnemyAlramDistance: 6
+    EnemyAlramDistance: 20
     EnemyAlramLimitTime: 2
-    EnemyChaseDistance: 9
+    EnemyChaseDistance: 25
     DetectThroughWall: 1
   _rotateTarget: {fileID: 0}
 --- !u!114 &273844554212174829
@@ -146,8 +146,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!195 &9139807726154260487
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -391,7 +391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9634d16cb935305418074b3e8b07c73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 0}
 --- !u!1 &8770236801416950081
 GameObject:
   m_ObjectHideFlags: 0
