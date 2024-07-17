@@ -20,7 +20,8 @@ public enum AIState
 public class EnemyEditorData
 {
     public float AttackRange = 2f;
-    public float AttackCooldown = 2f;
+    public float AttackCooldown = 2f; 
+    public float ChargeAttackForce = 80f;
     public float EnemyPatrolDistance = 4f;
     public float EnemyPatrolIdleDuration = 1f;
     public float EnemyAlramDistance = 6f;
@@ -221,7 +222,7 @@ public class Enemy : MonoBehaviour
     {
         if (_isChargeAttack)
         {
-            ChargeAttack(25f);
+            ChargeAttack(_editorData.ChargeAttackForce);
         }
         else
         {
