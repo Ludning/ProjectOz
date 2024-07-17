@@ -4,6 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
+public enum AIState
+{
+    Idle,
+    Patrol,
+    Wait,
+    Chase,
+    JustLostTarget,
+    Attack,
+    Dead
+}
+
 [Serializable]
 public class EnemyEditorData
 {
@@ -62,6 +74,15 @@ public class Enemy : MonoBehaviour
     public event Action OnKnockbackEnd;
     private bool _isFlying = false;
 
+    private AIState _aiState = AIState.Idle;
+
+    private float _currentStateTime = 0f;
+    public float CurrentStateTime => _currentStateTime;
+
+
+    private Collider _characterCollider;
+    private Collider _characterEnvCollider;
+
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -73,6 +94,9 @@ public class Enemy : MonoBehaviour
         _animator = GetComponent<Animator>();
         _attackCollider = GetComponentInChildren<DamageBox>();
 
+        _characterCollider = GetComponent<Collider>();
+        _characterEnvCollider = GetComponentInChildren<Collider>();
+
         _navMeshAgent.updateRotation = false;
 
         Init(_enemyData);
@@ -80,6 +104,7 @@ public class Enemy : MonoBehaviour
     Quaternion look;
     private void Update()
     {
+        _currentStateTime += Time.deltaTime;
         if (_currentAttackTime > 0f)
         {
             _currentAttackTime -= Time.deltaTime;
@@ -95,6 +120,15 @@ public class Enemy : MonoBehaviour
         {
 
             transform.rotation = look;
+        }
+
+        if(_navMeshAgent.velocity.magnitude > 0.1f)
+        {
+            _animator.SetBool("IsMoving", true);
+        }
+        else
+        {
+            _animator.SetBool("IsMoving", false);
         }
     }
     private void Init(EnemyData enemyData)
@@ -139,11 +173,15 @@ public class Enemy : MonoBehaviour
         _behaviorTree.SetVariable("DetectRange", detectRange);
         _behaviorTree.SetVariable("EnemyAlramLimitTime", enemyAlramLimitTime);
         _behaviorTree.SetVariable("EnemyPatrolIdleDuration", enemyPatrolIdleDuration);
-        _behaviorTree.SetVariable("EnemyChaseDistance", enemyChaseDistance);
+        _behaviorTree.SetVariable("ChaseRange", enemyChaseDistance);
 
     }
     private void ResetEnemy()
     {
+        SetEnableAllCollision(true);
+        _animator.SetBool("IsDead", false);
+
+        _isMovable = true;
         _combat.ResetDead();
         gameObject.SetActive(true);
     }
@@ -193,7 +231,7 @@ public class Enemy : MonoBehaviour
     }
     private void ChargeAttack(float force)
     {
-        Vector3 dir = _detector.GetPosition()+ Vector3.up - transform.position;
+        Vector3 dir = _detector.GetPosition() + Vector3.up - transform.position;
         SetEnableRigidbody(true);
         dir.z = 0f;
         dir = dir.normalized;
@@ -279,6 +317,24 @@ public class Enemy : MonoBehaviour
 
     private void OnDead()
     {
+        SetEnableAllCollision(false);
+        _animator.SetTrigger("Dead");
+        _animator.SetBool("IsDead",true);
+        _isMovable = false;
+        StartCoroutine(DelayedDisable());
+    }
+    private void SetEnableAllCollision(bool condition)
+    {
+        _characterCollider.enabled = condition;
+
+        if (_characterEnvCollider != null)
+        {
+            _characterEnvCollider.enabled = condition;
+        }
+    }
+    private IEnumerator DelayedDisable()
+    {
+        yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
     }
 
@@ -296,10 +352,81 @@ public class Enemy : MonoBehaviour
 
     public bool IsTargetVisible()
     {
+        if (_editorData.DetectThroughWall)
+        {
+            return true;
+        }
         return _detector.IsTargetVisible();
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyChaseDistance);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _editorData.AttackRange);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
 
+
+        Gizmos.color = GetColorByState(_aiState);
+        Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyChaseDistance);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _editorData.AttackRange);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
+
+        Gizmos.color = GetColorByState(_aiState);
+        Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(_leftPatrolPoint.position, 1f);
+        Gizmos.DrawSphere(_rightPatrolPoint.position, 1f);
+    }
+
+    private Color GetColorByState(AIState state)
+    {
+        if(_currentAttackTime > 0f)
+        {
+            return Color.red;
+        }
+        switch (state)
+        {
+            case AIState.Idle:
+                return Color.green;
+            case AIState.Patrol:
+                return Color.blue;
+            case AIState.Wait:
+                return Color.cyan;
+            case AIState.Chase:
+                return Color.yellow;
+            case AIState.JustLostTarget:
+                return Color.gray;
+            case AIState.Attack:
+                return Color.red;
+            case AIState.Dead:
+                return Color.black;
+            default:
+                return Color.white;
+        }
+    }
+
+    internal void SetState(AIState state)
+    {
+        _aiState = state;
+        _currentStateTime = 0f;
+    }
+
+    public Transform GetLastTarget()
+    {
+        return _detector.GetLastTarget();
+    }
 
     /* Not Used
     //public void KnockbackOnSurface(Vector3 direction, float force)

@@ -9,7 +9,6 @@ namespace BehaviorDesigner.Runtime.Tasks
     {
         public Enemy owner;
         public SharedFloat range = 3f;
-        public SharedTransform currentTarget;
 
         public override void OnAwake()
         {
@@ -25,7 +24,6 @@ namespace BehaviorDesigner.Runtime.Tasks
 
             if (owner.IsTargetNear(range.Value))
             {
-                currentTarget.Value = owner.GetTarget();
                 return TaskStatus.Success;
             }
 
