@@ -5,8 +5,19 @@ using UnityEngine;
 public class DamageBox : MonoBehaviour
 {
     [SerializeField] private Combat _owner;
-    [SerializeField] private Vector3 _halfSize = new Vector3(1f,1f,1f);
-
+    [SerializeField] private Vector3 _halfSize = new Vector3(1f, 1f, 1f);
+    private Vector3 HalfSize
+    {
+        get
+        {
+            return new Vector3()
+            {
+                x = _halfSize.x * transform.lossyScale.x,
+                y = _halfSize.y * transform.lossyScale.y,
+                z = _halfSize.z * transform.lossyScale.z
+            };
+        }
+    }
     private float _damage;
 
     private void Awake()
@@ -19,7 +30,7 @@ public class DamageBox : MonoBehaviour
     }
     private void OnEnable()
     {
-        Collider[] result = Physics.OverlapBox(transform.position, _halfSize, transform.rotation);
+        Collider[] result = Physics.OverlapBox(transform.position, HalfSize, transform.rotation);
         
         foreach (Collider hit in result)
         {
@@ -45,7 +56,7 @@ public class DamageBox : MonoBehaviour
             return;
         }
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, _halfSize);
+        Gizmos.DrawWireCube(transform.position, HalfSize);
     }
 
     public void SetDamage(float damage)
