@@ -76,6 +76,9 @@ public class Enemy : MonoBehaviour
 
     private AIState _aiState = AIState.Idle;
 
+    private float _currentStateTime = 0f;
+    public float CurrentStateTime => _currentStateTime;
+
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -94,6 +97,7 @@ public class Enemy : MonoBehaviour
     Quaternion look;
     private void Update()
     {
+        _currentStateTime += Time.deltaTime;
         if (_currentAttackTime > 0f)
         {
             _currentAttackTime -= Time.deltaTime;
@@ -323,8 +327,7 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
 
 
-        AIState state = _aiState;
-        Gizmos.color = GetColorByState(state);
+        Gizmos.color = GetColorByState(_aiState);
         Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
     }
 
@@ -337,8 +340,7 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
 
-        AIState state = _aiState;
-        Gizmos.color = GetColorByState(state);
+        Gizmos.color = GetColorByState(_aiState);
         Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
 
         Gizmos.color = Color.yellow;
@@ -376,6 +378,12 @@ public class Enemy : MonoBehaviour
     internal void SetState(AIState state)
     {
         _aiState = state;
+        _currentStateTime = 0f;
+    }
+
+    public Transform GetLastTarget()
+    {
+        return _detector.GetLastTarget();
     }
 
     /* Not Used

@@ -3,21 +3,24 @@ using UnityEngine.AI;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    public class BTA_MoveTo : Action
+    public class BTA_MoveToLastTarget : Action
     {
-        public SharedTransform targetPostion;
+        public Enemy enemy;
         public NavMeshAgent agent;
         public bool isDynamicDestination = false;
+        Transform _lastTarget;
 
         public override void OnAwake()
         {
             agent = GetComponent<NavMeshAgent>();
+            enemy = GetComponent<Enemy>();
         }
 
         public override void OnStart()
         {
+            _lastTarget = enemy.GetLastTarget();
             SetMovable(agent, true);
-            MoveToTarget2D(agent, targetPostion.Value.position);
+            MoveToTarget2D(agent, _lastTarget.position);
         }
 
         public override TaskStatus OnUpdate()
@@ -33,7 +36,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             {
                 return TaskStatus.Success;
             }
-            MoveToTarget2D(agent, targetPostion.Value.position);
+            MoveToTarget2D(agent, _lastTarget.position);
             return TaskStatus.Running;
         }
         public override void OnEnd()
