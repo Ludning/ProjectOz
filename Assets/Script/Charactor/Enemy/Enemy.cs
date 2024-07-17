@@ -181,6 +181,7 @@ public class Enemy : MonoBehaviour
         SetEnableAllCollision(true);
         _animator.SetBool("IsDead", false);
 
+        _isMovable = true;
         _combat.ResetDead();
         gameObject.SetActive(true);
     }
@@ -318,7 +319,8 @@ public class Enemy : MonoBehaviour
     {
         SetEnableAllCollision(false);
         _animator.SetTrigger("Dead");
-
+        _animator.SetBool("IsDead",true);
+        _isMovable = false;
         StartCoroutine(DelayedDisable());
     }
     private void SetEnableAllCollision(bool condition)
