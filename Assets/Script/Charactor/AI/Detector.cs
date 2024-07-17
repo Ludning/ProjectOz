@@ -81,7 +81,7 @@ public class Detector : MonoBehaviour
             targetCenter - (center),
             out RaycastHit hit, _detectionRadius))
         {
-            Debug.DrawLine(center, hit.point, Color.magenta, .1f);
+            Debug.DrawLine(center, hit.point, Color.magenta);
             if (hit.collider.CompareTag("Player"))
             {
                 return true;
@@ -89,7 +89,7 @@ public class Detector : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(center, targetCenter - (center), Color.green, .1f);
+            Debug.DrawRay(center, targetCenter - (center), Color.green);
         }
         return false;
     }
