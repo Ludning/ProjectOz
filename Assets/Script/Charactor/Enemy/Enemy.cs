@@ -79,6 +79,10 @@ public class Enemy : MonoBehaviour
     private float _currentStateTime = 0f;
     public float CurrentStateTime => _currentStateTime;
 
+
+    private Collider _characterCollider;
+    private Collider _characterEnvCollider;
+
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -89,6 +93,9 @@ public class Enemy : MonoBehaviour
         _combat = GetComponent<Combat>();
         _animator = GetComponent<Animator>();
         _attackCollider = GetComponentInChildren<DamageBox>();
+
+        _characterCollider = GetComponent<Collider>();
+        _characterEnvCollider = GetComponentInChildren<Collider>();
 
         _navMeshAgent.updateRotation = false;
 
@@ -171,6 +178,9 @@ public class Enemy : MonoBehaviour
     }
     private void ResetEnemy()
     {
+        SetEnableAllCollision(true);
+        _animator.SetBool("IsDead", false);
+
         _combat.ResetDead();
         gameObject.SetActive(true);
     }
@@ -306,6 +316,23 @@ public class Enemy : MonoBehaviour
 
     private void OnDead()
     {
+        SetEnableAllCollision(false);
+        _animator.SetTrigger("Dead");
+
+        StartCoroutine(DelayedDisable());
+    }
+    private void SetEnableAllCollision(bool condition)
+    {
+        _characterCollider.enabled = condition;
+
+        if (_characterEnvCollider != null)
+        {
+            _characterEnvCollider.enabled = condition;
+        }
+    }
+    private IEnumerator DelayedDisable()
+    {
+        yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
     }
 
