@@ -5,7 +5,7 @@ using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class MageControl : MonoBehaviour
+public class MageControl : MonoBehaviour, IControl
 {
     #region Resource
     private IObjectPool<BallMove> _fireballPool;
@@ -26,6 +26,7 @@ public class MageControl : MonoBehaviour
 
     [SerializeField] private Animator animator;
     [SerializeField] private Transform firePosition;
+    [SerializeField] private CharacterMediator CharacterMediator;
     
     private readonly int HashAttack = Animator.StringToHash("IsAttack");
     private static readonly int AttackClipSpeed = Animator.StringToHash("AttackClipSpeed");
@@ -43,14 +44,7 @@ public class MageControl : MonoBehaviour
         
     }
 
-    private void OnEnable()
-    {
-        TimeManager.Instance.RegistCooldownAction(ReflashInputTime);
-    }
-    private void OnDisable()
-    {
-        TimeManager.Instance.DeregistCooldownAction(ReflashInputTime);
-    }
+    
 
     public void OnAnimation_Enter()
     {
@@ -115,6 +109,7 @@ public class MageControl : MonoBehaviour
     private void NormalAttack()
     {
         SpawnObject(_fireballPool);
+        CharacterMediator.playerStat.ChangeGage(AttackType.NormalAttack);
     }
     private void ChargeAttack()
     {
@@ -122,10 +117,12 @@ public class MageControl : MonoBehaviour
         if (_chargingValue >= _percentOzMagic)
         {
             SpawnObject(_flameballPool);
+            CharacterMediator.playerStat.ChangeGage(AttackType.ChargeAttack);
         }
         else
         {
-            OzMagicManager.Instance.Execute();
+            AttackType type = OzMagicManager.Instance.Execute();
+            CharacterMediator.playerStat.ChangeGage(type);
             Debug.Log("OzMagic");
         }
     }
@@ -165,7 +162,7 @@ public class MageControl : MonoBehaviour
     #endregion
 
     #region Update Action
-    private void ReflashInputTime()
+    private void RefreshInputTime()
     {
         if (keyDown == false)
             return;
@@ -179,4 +176,12 @@ public class MageControl : MonoBehaviour
         }
     }
     #endregion
+    private void OnEnable()
+    {
+        TimeManager.Instance.RegistCooldownAction(RefreshInputTime);
+    }
+    private void OnDisable()
+    {
+        TimeManager.Instance.DeregistCooldownAction(RefreshInputTime);
+    }
 }
