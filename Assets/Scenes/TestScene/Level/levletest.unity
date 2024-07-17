@@ -3326,7 +3326,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundEnemy_Spider
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3783523886011759655, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

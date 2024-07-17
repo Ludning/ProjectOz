@@ -114,6 +114,15 @@ public class Enemy : MonoBehaviour
 
             transform.rotation = look;
         }
+
+        if(_navMeshAgent.velocity.magnitude > 0.1f)
+        {
+            _animator.SetBool("IsMoving", true);
+        }
+        else
+        {
+            _animator.SetBool("IsMoving", false);
+        }
     }
     private void Init(EnemyData enemyData)
     {
