@@ -13,9 +13,35 @@ public class CharacterMediator : MonoBehaviour
     [SerializeField] private ScaleController ScaleController;
     [SerializeField] private GroundChecker PlayerGroundChecker;
 
+    [SerializeField] private MageControl mageControl;
+    //[SerializeField] private KnightControl knightControl;
+
+    public MageControl CurrentControl
+    {
+        get
+        {
+            switch (playerModelController.CurrentModelState)
+            {
+                case PlayerModelState.Mage:
+                    return mageControl;
+                case PlayerModelState.Knight:
+                    return mageControl;
+            }
+            return mageControl;
+        }
+    }
+
     public Animator PlayerAnimator => playerModelController.CurrentAnimator;
     public bool IsGround => PlayerGroundChecker.IsGrounded();
 
+    public void OnKeyDownAttackButton()
+    {
+        CurrentControl.OnKeyDown();
+    }
+    public void OnKeyUpAttackButton()
+    {
+        CurrentControl.OnKeyUp();
+    }
     public void MovementDash()
     {
         playerMovement.OnInputDash();

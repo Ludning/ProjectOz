@@ -46,7 +46,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            
+            CharacterMediator.OnKeyDownAttackButton();
         }
         else if (context.performed)
         {
@@ -54,7 +54,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
         else if(context.canceled)
         {
-            
+            CharacterMediator.OnKeyUpAttackButton();
         }
     }
     public void OnLook(InputAction.CallbackContext context)
