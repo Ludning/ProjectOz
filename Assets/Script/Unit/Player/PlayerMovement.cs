@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private LayerMask dashLayerMask;     // 대시 경로에서 충돌을 감지할 레이어
     
-    [SerializeField] private float capsuleRadius = 0.5f;
+    //[SerializeField] private float capsuleRadius = 0.5f;
     
     private bool _isDash = false;
     private float dashStartPositionX;
@@ -78,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
         if(CharacterMediator.IsGround == true)
             Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
     }
-
     public void OnInputDash()
     {
         if (currentDashCooldown <= 0f)
@@ -87,10 +86,7 @@ public class PlayerMovement : MonoBehaviour
             currentDashCooldown = dashCooldown;
         }
     }
-
     #endregion
-    
-    
     private void RotationCharacter(Vector2 direction)
     {
         switch (direction.x)
@@ -103,9 +99,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
-
     #region OnUpdate
-
     private void OnUpdateCooldown()
     {
         if (currentDashCooldown > 0f)
@@ -150,7 +144,6 @@ public class PlayerMovement : MonoBehaviour
         distanceTraveled = 0;
         Rigidbody.AddForce(_lastDirection * dashForce, ForceMode.Impulse);
         dashStartPositionX = transform.position.x;
-
     }
     private void EndDash()
     {
@@ -162,13 +155,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        // 충돌한 오브젝트의 레이어를 가져옴
-        int otherLayer = other.gameObject.layer;
-
-        // LayerMask를 사용하여 충돌한 오브젝트가 dashLayerMask에 속하는지 확인
-        if ((dashLayerMask.value & (1 << otherLayer)) > 0)
+        if (_isDash == true)
         {
-            EndDash();
+            // 충돌한 오브젝트의 레이어를 가져옴
+            int otherLayer = other.gameObject.layer;
+
+            // LayerMask를 사용하여 충돌한 오브젝트가 dashLayerMask에 속하는지 확인
+            if ((dashLayerMask.value & (1 << otherLayer)) > 0)
+            {
+                EndDash();
+            }
         }
     }
 
