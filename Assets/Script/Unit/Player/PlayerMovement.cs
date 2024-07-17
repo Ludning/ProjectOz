@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CharacterMediator CharacterMediator;
     [SerializeField] private Rigidbody Rigidbody;
 
-    public PlayerModelState _currentState;
-    public PcData CurrentData => _currentState == PlayerModelState.Knight ? _knightData : _mageData;
+    private PlayerModelState _currentState;
+    private PcData CurrentData => _currentState == PlayerModelState.Knight ? _knightData : _mageData;
     
 
 
@@ -34,13 +34,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashCooldown = 1f;     // 대시 쿨다운 시간
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private LayerMask dashLayerMask;     // 대시 경로에서 충돌을 감지할 레이어
-    [SerializeField] private bool _isDash = false;
     
-    [SerializeField] private float moveInput;
-    [SerializeField] private float lastDashTime;
-    [SerializeField] private Vector2 dashStartPosition;
-    [SerializeField] private Vector2 dashTargetPosition;
-
+    private bool _isDash = false;
+    private Vector2 dashStartPosition;
+    private Vector2 dashTargetPosition;
     private float _colliderHeight;
 
     private void Awake()
@@ -80,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
     public void OnInputDash()
     {
         _isDash = true;
-        lastDashTime = Time.time;
         Rigidbody.useGravity = false;
         Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, 0);
         CharacterMediator.PlayerAnimator.SetBool(DashHash, true);
