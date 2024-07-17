@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private CharacterMediator CharacterMediator;
     [SerializeField] private Rigidbody Rigidbody;
+    [SerializeField] private CapsuleCollider capsuleCollider;
 
     private PlayerModelState _currentState;
     private PcData CurrentData => _currentState == PlayerModelState.Knight ? _knightData : _mageData;
@@ -39,11 +40,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 dashTargetPosition;
     private float _colliderHeight;
 
+    private float currentDashDistance = 0f;
+
     private void Awake()
     {
         _mageData = DataManager.Instance.GetGameData<PcData>("C101");
         _knightData = DataManager.Instance.GetGameData<PcData>("C102");
-        _colliderHeight = GetWorldHeight(GetComponent<CapsuleCollider>());
+        _colliderHeight = GetWorldHeight();
+        currentDashDistance = dashDistance;
     }
     private void Update()
     {
@@ -74,12 +78,10 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnInputDash()
     {
-        _isDash = true;
-        Rigidbody.useGravity = false;
-        Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, 0);
-        CharacterMediator.PlayerAnimator.SetBool(DashHash, true);
-        dashStartPosition = Rigidbody.position;
-        dashTargetPosition = dashStartPosition + _lastDirection * dashDistance;
+        StartDash();
+        
+        //dashStartPosition = Rigidbody.position;
+        //dashTargetPosition = dashStartPosition + _lastDirection * dashDistance;
     }
     #endregion
     
@@ -114,32 +116,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnUpdateDash()
     {
-        Vector3 nextPosition = Vector3.MoveTowards(Rigidbody.position, dashTargetPosition, dashSpeed * Time.fixedDeltaTime);
-
-        Vector3 capsuleStart = transform.position;
-        Vector3 capsuleEnd = transform.position + Vector3.up * _colliderHeight;
-        if (CheckWall())
-            EndDash();
-        
-        Rigidbody.MovePosition(nextPosition);
-        if (((Vector2)Rigidbody.position - dashStartPosition).magnitude >= dashDistance)
+        currentDashDistance -= Time.deltaTime;
+        if (currentDashDistance < 0)
         {
-            _isDash = false;
-            Rigidbody.useGravity = true;
-            CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
+            currentDashDistance = dashDistance;
+            EndDash();
         }
     }
     #endregion
 
+    private void StartDash()
+    {
+        _isDash = true;
+        Rigidbody.useGravity = false;
+        Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, 0);
+        CharacterMediator.PlayerAnimator.SetBool(DashHash, true);
+        Rigidbody.AddForce(_lastDirection * dashSpeed, ForceMode.Impulse);
+    }
     private void EndDash()
     {
         _isDash = false;
         Rigidbody.useGravity = true;
+        Rigidbody.velocity = Vector3.zero;
         CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
     }
 
     
-    float GetWorldHeight(CapsuleCollider capsuleCollider)
+    float GetWorldHeight()
     {
         float localHeight = capsuleCollider.height;
         int direction = capsuleCollider.direction;
@@ -159,10 +162,5 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
         return worldHeight;
-    }
-
-    private bool CheckWall()
-    {
-        return true;
     }
 }

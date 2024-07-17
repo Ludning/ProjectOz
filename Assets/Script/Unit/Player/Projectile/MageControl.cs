@@ -19,6 +19,12 @@ public class MageControl : MonoBehaviour
     private float _inputTimer = 0;
     
     private float _inputChargingTimer;
+
+    private bool keyDown = false;
+    private bool keyUp = false;
+
+    [SerializeField] private Animator animator;
+    private readonly int HashAttack = Animator.StringToHash("IsAttack");
     
     private void Awake()
     {
@@ -34,33 +40,70 @@ public class MageControl : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (keyDown)
         {
             _inputTimer += Time.deltaTime;
             if (_inputTimer >= _inputChargingTimer)
             {
-                ChargingAttack();
+                animator.SetTrigger(HashAttack);
                 _inputTimer = 0;
             }
         }
-        if(Input.GetMouseButtonUp(0))
+    }
+
+    public void OnKeyDown()
+    {
+        animator.SetTrigger(HashAttack);
+        keyDown = true;
+        keyUp = false;
+    }
+
+    public void OnKeyUp()
+    {
+        keyDown = false;
+        keyUp = true;
+        if(_inputTimer < _inputChargingTimer)
         {
-            if(_inputTimer < _inputChargingTimer)
-            {
-                OnAttack(_fireballPool);
-            }
-            _inputTimer = 0f;
+            animator.SetTrigger(HashAttack);
+        }
+        _inputTimer = 0f;
+    }
+
+    public void OnAttack()
+    {
+        if(_inputTimer < _inputChargingTimer)
+            NormalAttack();
+        else
+            ChargeAttack();
+    }
+    private void NormalAttack()
+    {
+        SpawnObject(_fireballPool);
+    }
+    private void ChargeAttack()
+    {
+        RandomChargingValue();
+        Debug.Log(_chargingValue);
+
+        if (_chargingValue >= _percentOzMagic)
+        {
+            SpawnObject(_flameballPool);
+        }
+        else
+        {
+            OzMagicManager.Instance.Execute();
+            Debug.Log("OzMagic");
         }
     }
 
-    private void OnAttack(IObjectPool<BallMove> ballPool)
+    private void SpawnObject(IObjectPool<BallMove> pool)
     {
-        var ball = ballPool.Get();
+        var ball = pool.Get();
         ball.transform.position = transform.position;
         ball.transform.rotation = transform.rotation;
         ball.Shoot();
     }
-
+    
     private BallMove CreateBall(GameObject prefab, IObjectPool<BallMove> pool)
     {
         var ball = Instantiate(prefab, transform.position, transform.rotation).GetComponent<BallMove>();
@@ -85,19 +128,5 @@ public class MageControl : MonoBehaviour
         _chargingValue = UnityEngine.Random.Range(1, 101);
     }
 
-    private void ChargingAttack()
-    {
-        RandomChargingValue();
-        Debug.Log(_chargingValue);
-
-        if (_chargingValue >= _percentOzMagic)
-        {
-            OnAttack(_flameballPool);
-        }
-        else
-        {
-            OzMagicManager.Instance.Execute();
-            Debug.Log("OzMagic");
-        }
-    }
+    
 }
