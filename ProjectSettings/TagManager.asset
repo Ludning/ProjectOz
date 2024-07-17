@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Undefined
   - Enemy
+  - Guts
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Terrain_Passable
   - 
   - 
-  - 
+  - Character_Collider
   - Enemy_Env_Collider
   - Enemy_Combat_Collider
   - 
