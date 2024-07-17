@@ -381,6 +381,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4016216618349255265, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
         type: 3}
+      propertyPath: _editorData.DetectThroughWall
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016216618349255265, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
+        type: 3}
       propertyPath: _editorData.EnemyAlramDistance
       value: 20
       objectReference: {fileID: 0}
@@ -448,11 +453,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GroundEnemy_Spider
-      objectReference: {fileID: 0}
-    - target: {fileID: 8770236801416950081, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

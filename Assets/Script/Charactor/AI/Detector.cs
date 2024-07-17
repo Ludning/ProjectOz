@@ -28,12 +28,13 @@ public class Detector : MonoBehaviour
 
     private Collider _lastTarget;
 
-
+    private int _characterColliderLayer;
     public void Init(string targetTag, float detectionRadius, bool detectThroughWall)
     {
         _targetTag = targetTag;
         _detectionRadius = detectionRadius;
         _detectThroughWall = detectThroughWall;
+        _characterColliderLayer = LayerMask.GetMask("Character_Collider");
     }
 
     public Transform GetTarget()
@@ -73,13 +74,15 @@ public class Detector : MonoBehaviour
         }
         return IsTargetVisible(Target);
     }
+
+
     public bool IsTargetVisible(Collider target)
     {
         Vector3 center = transform.position;
         Vector3 targetCenter = target.bounds.center;
         if (Physics.Raycast(center, 
             targetCenter - (center),
-            out RaycastHit hit, _detectionRadius))
+            out RaycastHit hit, _detectionRadius, _characterColliderLayer))
         {
             Debug.DrawLine(center, hit.point, Color.magenta);
             if (hit.collider.CompareTag("Player"))
