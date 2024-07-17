@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212520457769849487}
   - component: {fileID: 2733142248285316563}
   - component: {fileID: 8667799612201828577}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -352,7 +352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1229ba06306ba41a653b9fbf57dbb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ozMagicPercentage: 0
   playerMovement: {fileID: 6777130721489702383}
+  ozTimestopChainDuration: 5
+  ozTimestopRate: 0.1
 --- !u!114 &1004522874737238760
 MonoBehaviour:
   m_ObjectHideFlags: 0
