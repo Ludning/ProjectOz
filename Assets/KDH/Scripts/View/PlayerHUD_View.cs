@@ -39,10 +39,15 @@ public class PlayerHUD_View : ViewBase<PlayerHUD_ViewModel, PlayerHUD_Message>
     {
         for (int i = 0; i < hp_List.Count; i++)
         {
+            
             if (i < currentHp)
-                hp_List[i].SetActive(true);
+            {
+                hp_List[i].transform.GetChild(1).gameObject.SetActive(true);
+            }
             else
-                hp_List[i].SetActive(false);
+            {
+                hp_List[i].transform.GetChild(1).gameObject.SetActive(false);
+            }
         }
     }
 
