@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 939282728260279377}
   - component: {fileID: 1622184637121969576}
   - component: {fileID: 7676777724143174206}
-  - component: {fileID: 1067543431504858915}
   - component: {fileID: 1004522874737238760}
   - component: {fileID: 212520457769849487}
   m_Layer: 0
@@ -110,7 +109,7 @@ MonoBehaviour:
   playerMovement: {fileID: 6777130721489702383}
   playerModelController: {fileID: 1622184637121969576}
   playerStat: {fileID: 7676777724143174206}
-  ScaleController: {fileID: 1067543431504858915}
+  ScaleController: {fileID: 0}
   PlayerGroundChecker: {fileID: 2333123253030120768}
   mageControl: {fileID: 8614521561026935310}
 --- !u!114 &6777130721489702383
@@ -338,19 +337,6 @@ MonoBehaviour:
   _isDie: 0
   CharacterMediator: {fileID: 5016133849406154776}
   _playerCombat: {fileID: 212520457769849487}
---- !u!114 &1067543431504858915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902790095006344572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb1229ba06306ba41a653b9fbf57dbb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovement: {fileID: 6777130721489702383}
 --- !u!114 &1004522874737238760
 MonoBehaviour:
   m_ObjectHideFlags: 0
