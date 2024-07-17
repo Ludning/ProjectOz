@@ -31,15 +31,11 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            CharacterMediator.MovementJump();
-        }
-        else if (context.performed)
-        {
-            
+            CharacterMediator.OnKeyDownMovementJump();
         }
         else if(context.canceled)
         {
-            
+            CharacterMediator.OnKeyUpMovementJump();
         }
     }
     public void OnAttack(InputAction.CallbackContext context)
@@ -47,10 +43,6 @@ public class PlayerInputHandler : MonoBehaviour
         if (context.started)
         {
             CharacterMediator.OnKeyDownAttackButton();
-        }
-        else if (context.performed)
-        {
-            
         }
         else if(context.canceled)
         {

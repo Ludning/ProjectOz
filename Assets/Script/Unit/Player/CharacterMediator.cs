@@ -46,9 +46,13 @@ public class CharacterMediator : MonoBehaviour
     {
         playerMovement.OnInputDash();
     }
-    public void MovementJump()
+    public void OnKeyDownMovementJump()
     {
-        playerMovement.OnInputJump();
+        playerMovement.OnKeyDownJump();
+    }
+    public void OnKeyUpMovementJump()
+    {
+        playerMovement.OnKeyUpJump();
     }
     public void SetMovementDirection(Vector2 direction)
     {

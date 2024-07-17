@@ -17,9 +17,11 @@ GameObject:
   - component: {fileID: 939282728260279377}
   - component: {fileID: 1622184637121969576}
   - component: {fileID: 7676777724143174206}
+  - component: {fileID: 1067543431504858915}
   - component: {fileID: 1004522874737238760}
   - component: {fileID: 212520457769849487}
-  m_Layer: 14
+  - component: {fileID: 2733142248285316563}
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -36,8 +38,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1235818208893862554}
   - {fileID: 2499155618696286679}
@@ -64,9 +66,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 2.4
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!54 &5236318171550696614
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -109,7 +111,7 @@ MonoBehaviour:
   playerMovement: {fileID: 6777130721489702383}
   playerModelController: {fileID: 1622184637121969576}
   playerStat: {fileID: 7676777724143174206}
-  ScaleController: {fileID: 0}
+  ScaleController: {fileID: 1067543431504858915}
   PlayerGroundChecker: {fileID: 2333123253030120768}
   mageControl: {fileID: 8614521561026935310}
 --- !u!114 &6777130721489702383
@@ -127,15 +129,15 @@ MonoBehaviour:
   CharacterMediator: {fileID: 5016133849406154776}
   Rigidbody: {fileID: 5236318171550696614}
   capsuleCollider: {fileID: 3807371062329675756}
-  airSpeed: 7
-  dashSpeed: 20
-  dashDistance: 5
+  airSpeed: 5
+  dashForce: 20
+  dashDistance: 10
   dashCooldown: 1
   jumpForce: 10
   dashLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  capsuleRadius: 0.5
+    m_Bits: 3072
+  stopDistance: 0.1
 --- !u!114 &2333123253030120768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,12 +150,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a3d6d58c5d0a04d972e613d31cd24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spherePosition: {x: 0, y: 0.4, z: 0}
-  maxDistance: 0.45
+  spherePosition: {x: 0, y: 0.6, z: 0}
+  maxDistance: 0.7
   groundLayer:
     serializedVersion: 2
     m_Bits: 3072
-  drawGizmo: 0
+  drawGizmo: 1
 --- !u!114 &939282728260279377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +339,19 @@ MonoBehaviour:
   _isDie: 0
   CharacterMediator: {fileID: 5016133849406154776}
   _playerCombat: {fileID: 212520457769849487}
+--- !u!114 &1067543431504858915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902790095006344572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1229ba06306ba41a653b9fbf57dbb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 6777130721489702383}
 --- !u!114 &1004522874737238760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +382,29 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+--- !u!136 &2733142248285316563
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902790095006344572}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.2, z: 0.3}
 --- !u!1 &3447393052553555546
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,9 +457,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.53
-  m_Height: 1.9
+  m_Height: 2.3
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!1 &5431851355662672972
 GameObject:
   m_ObjectHideFlags: 0
