@@ -96,6 +96,12 @@ public class PlayerStat : MonoBehaviour
             case AttackType.UndoTransformation:
                 PlayerCurrentGage -= _resourceData.gagePenalty;
                 break;
+            case AttackType.Meteor:
+                PlayerCurrentGage += DataManager.Instance.GetGameData<OzmagicData>("O101").gageGainOz;
+                break;
+            case AttackType.TimeStop:
+                PlayerCurrentGage += DataManager.Instance.GetGameData<OzmagicData>("O201").gageGainOz;
+                break;
         }
     }
     public void ChangeTransformation()

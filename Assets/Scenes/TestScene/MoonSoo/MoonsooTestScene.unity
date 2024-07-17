@@ -588,6 +588,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &907690737 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5016133849406154776, guid: 04e035dc20d97f540a0158227cd74cf1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1053908425463619621}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4166ca5ab2140d458c1a9f2e794d3b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &907690742 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 5633290320481398914, guid: 04e035dc20d97f540a0158227cd74cf1,
@@ -607,6 +619,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5200768494668992135, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: CharacterMediator
+      value: 
+      objectReference: {fileID: 907690737}
     - target: {fileID: 5633290320481398914, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
       propertyPath: m_Center.x
