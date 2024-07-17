@@ -341,11 +341,15 @@ public class Enemy : MonoBehaviour
     private void SetEnableRigidbody(bool condition)
     {
         _navMeshAgent.velocity = Vector3.zero;
-        _navMeshAgent.updatePosition = !condition;
         _rigidbody.isKinematic = !condition;
-        _rigidbody.useGravity = false;
-        if (!condition)
+
+        if(condition)
         {
+            _navMeshAgent.updatePosition = false;
+        }
+        else
+        {
+            _navMeshAgent.updatePosition = true;
             _navMeshAgent.nextPosition = transform.position;
         }
     }
