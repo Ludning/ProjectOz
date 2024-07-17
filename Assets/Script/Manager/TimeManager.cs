@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class TimeManager : SingleTonMono<TimeManager>
 {
-    private event Action cooldownAction;
+    private event Action timeAction;
     private void Update()
     {
-        cooldownAction.Invoke();
+        timeAction.Invoke();
     }
 
     public void RegistCooldownAction(Action action)
     {
-        cooldownAction += action;
+        timeAction += action;
     }
     public void DeregistCooldownAction(Action action)
     {
-        cooldownAction -= action;
+        timeAction -= action;
     }
 }
