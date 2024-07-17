@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -27,8 +28,8 @@ public class PlayerMovement : MonoBehaviour
     
     
     [SerializeField] private float airSpeed = 7f;       // 공중 속도
-    [SerializeField] private float dashSpeed = 20f;       // 대시 속도
-    [SerializeField] private float dashDistance = 5f;     // 대시 거리
+    [SerializeField] private float dashForce = 20f;       // 대시 속도
+    [SerializeField] private float dashDistance = 3f;     // 대시 거리
     [SerializeField] private float dashCooldown = 1f;     // 대시 쿨다운 시간
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private LayerMask dashLayerMask;     // 대시 경로에서 충돌을 감지할 레이어
@@ -36,18 +37,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float capsuleRadius = 0.5f;
     
     private bool _isDash = false;
-    private Vector2 dashStartPosition;
-    private Vector2 dashTargetPosition;
+    private float dashStartPositionX;
     private float _colliderHeight;
 
-    private float currentDashDistance = 0f;
+    private float currentDashCooldown = 0f;
+    private float distanceTraveled;
+    public float stopDistance = 0.1f; // 멈출 때의 허용 오차
 
     private void Awake()
     {
         _mageData = DataManager.Instance.GetGameData<PcData>("C101");
         _knightData = DataManager.Instance.GetGameData<PcData>("C102");
         _colliderHeight = GetWorldHeight();
-        currentDashDistance = dashDistance;
     }
     private void Update()
     {
@@ -55,13 +56,12 @@ public class PlayerMovement : MonoBehaviour
             OnUpdateDash();
         else
             OnUpdateMove();
+
+        OnUpdateCooldown();
         
         CharacterMediator.PlayerAnimator.SetBool(MoveHash, (_direction.x != 0) ? true : false);
         CharacterMediator.PlayerAnimator.SetFloat(DirectionYHash, Rigidbody.velocity.y);
         CharacterMediator.PlayerAnimator.SetBool(GroundHash, CharacterMediator.IsGround);
-        
-        //CharacterMediator.PlayerAnimator.SetTrigger(IsAttack);
-        //CharacterMediator.PlayerAnimator.SetFloat(DirectionY, 0.1f);
     }
 
     #region OnInput
@@ -76,13 +76,16 @@ public class PlayerMovement : MonoBehaviour
         if(CharacterMediator.IsGround == true)
             Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
     }
+
     public void OnInputDash()
     {
-        StartDash();
-        
-        //dashStartPosition = Rigidbody.position;
-        //dashTargetPosition = dashStartPosition + _lastDirection * dashDistance;
+        if (currentDashCooldown <= 0f)
+        {
+            StartDash();
+            currentDashCooldown = dashCooldown;
+        }
     }
+
     #endregion
     
     
@@ -100,6 +103,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region OnUpdate
+
+    private void OnUpdateCooldown()
+    {
+        if (currentDashCooldown > 0f)
+        {
+            currentDashCooldown -= Time.deltaTime;
+            if (currentDashCooldown < 0f)
+                currentDashCooldown = 0f;
+        }
+    }
     private void OnUpdateMove()
     {
         if (CharacterMediator.IsGround == true)
@@ -116,22 +129,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnUpdateDash()
     {
-        currentDashDistance -= Time.deltaTime;
-        if (currentDashDistance < 0)
+        // 이동한 거리 계산
+        distanceTraveled = Mathf.Abs(dashStartPositionX - transform.position.x);
+
+        if (distanceTraveled >= dashDistance - stopDistance)
         {
-            currentDashDistance = dashDistance;
+            // 설정한 거리를 이동했을 때 대쉬 중지
             EndDash();
         }
     }
     #endregion
-
     private void StartDash()
     {
         _isDash = true;
         Rigidbody.useGravity = false;
-        Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, 0);
+        Rigidbody.velocity = Vector3.zero;
         CharacterMediator.PlayerAnimator.SetBool(DashHash, true);
-        Rigidbody.AddForce(_lastDirection * dashSpeed, ForceMode.Impulse);
+        distanceTraveled = 0;
+        Rigidbody.AddForce(_lastDirection * dashForce, ForceMode.Impulse);
+        dashStartPositionX = transform.position.x;
+
     }
     private void EndDash()
     {
@@ -141,7 +158,19 @@ public class PlayerMovement : MonoBehaviour
         CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
     }
 
-    
+    private void OnTriggerStay(Collider other)
+    {
+        // 충돌한 오브젝트의 레이어를 가져옴
+        int otherLayer = other.gameObject.layer;
+
+        // LayerMask를 사용하여 충돌한 오브젝트가 dashLayerMask에 속하는지 확인
+        if ((dashLayerMask.value & (1 << otherLayer)) > 0)
+        {
+            EndDash();
+        }
+    }
+
+
     float GetWorldHeight()
     {
         float localHeight = capsuleCollider.height;
