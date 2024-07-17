@@ -88,6 +88,7 @@ public class KnightControl : MonoBehaviour
         player.SetMovementDirection(_direction);
         _currentRushCoolDown = _rushCoolDown;
         isRush = true;
+        isOnCoolDown = true;
     }
 
     private void RushSlash()
@@ -97,7 +98,6 @@ public class KnightControl : MonoBehaviour
         if (Vector2.Distance(player.transform.position, _targetPos) < 0.1f)
         {
             isRush = false;
-            isOnCoolDown = true;
             rb.velocity = Vector3.zero; // 속도를 0으로 설정하여 이동 멈춤
             col.enabled = false;
             timer = 0f;
@@ -114,7 +114,6 @@ public class KnightControl : MonoBehaviour
         {
             //if (other.gameObject.layer == LayerMask.NameToLayer("Terrain_Impassable"))
             isRush = false;
-            isOnCoolDown = true;
             rb.velocity = Vector3.zero;
             col.enabled = false;
             timer = 0f;
