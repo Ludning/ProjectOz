@@ -49,11 +49,10 @@ public class FireballMove : BallMove
             }
 
             //if (other.gameObject.CompareTag("ground") || other.gameObject.CompareTag("platform"))
-            if (transform.position.y - other.gameObject.transform.position.y > other.gameObject.transform.lossyScale.y / 2f - 0.25f)
+            if (transform.position.y - other.gameObject.transform.position.y >= 0.25f)
                 _rb.velocity = new Vector3(_rb.velocity.x, 4.0f + _gravityValue, _rb.velocity.z) + _gravity;
             else
                 _rb.velocity = new Vector3(-_rb.velocity.x, _rb.velocity.y, -_rb.velocity.z);
-            Debug.Log(other.gameObject.transform.lossyScale.y / 2f - 0.25f + "aa");
         }
         if (other.CompareTag("Enemy"))
         {
