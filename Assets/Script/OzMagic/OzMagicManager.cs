@@ -5,6 +5,7 @@ using UnityEngine.Pool;
 public class OzMagicManager : SingleTonMono<OzMagicManager>
 {
     private IObjectPool<OzMagic> _meteorPool;
+    private IObjectPool<OzMagic> _timeStop;
 
     [SerializeField] private List<GameObject> Prefab_OzMagic = new List<GameObject>();
     [SerializeField] private List<float> _ozMagic_weights;
@@ -15,8 +16,11 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
     private void Awake()
     {
         Prefab_OzMagic.Add(ResourceManager.Instance.LoadResource<GameObject>("Meteor"));
+        Prefab_OzMagic.Add(ResourceManager.Instance.LoadResource<GameObject>("TimeStop"));
 
         _ozMagic_weights = new List<float>(new float[Prefab_OzMagic.Count]);
+
+
 
         for (int i = 0; i < Prefab_OzMagic.Count; i++)
         {
@@ -26,6 +30,7 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         //_ozMagic_weights.Add(1f);
 
         _meteorPool = new ObjectPool<OzMagic>(() => CreateBall(Prefab_OzMagic[0], _meteorPool), OnGetBall, OnReleaseBall, OnDestroyBall);
+        _timeStop = new ObjectPool<OzMagic>(() => CreateBall(Prefab_OzMagic[1], _timeStop), OnGetBall, OnReleaseBall, OnDestroyBall);
     }
 
     public void Execute()
@@ -35,6 +40,9 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         {
             case 0:
                 OnExcute(_meteorPool);
+                break;
+            case 1:
+                OnExcute(_timeStop);
                 break;
         }      
     }

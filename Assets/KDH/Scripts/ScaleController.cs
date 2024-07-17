@@ -4,19 +4,25 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-public class ScaleController : MonoBehaviour
+public class ScaleController : OzMagic
 {
-    [SerializeField] private PlayerMovement playerMovement;
-    
     Rigidbody[] allRigidbodies;
     Animator[] allAnimators;
     NavMeshAgent[] allNavMeshAgents;
 
+    float ozTimestopDuration = 3f; //시간정지 오즈매직 지속시간
+    float ozTimestopRate = 0.1f; // 느려지는 애니메이션 배율
+    float gageGainOz; //시간정지 오즈매직 게이지 획득량
+    float ozSkillPercentage; //시간정지 오즈매직 발동 확률
+    //float ozTimestopTarget; 타겟 필요없어보이는걸?
+
     private bool _isStop = false;
+
+
+
     private void Start()
     {
         SearchAllMovement();
-        
     }
 
     public void SearchAllMovement()
@@ -38,6 +44,17 @@ public class ScaleController : MonoBehaviour
             ResumeAll();
             _isStop = !_isStop;
         }
+    }
+
+    public override void Excute()
+    {
+        Time.timeScale = ozTimestopRate;
+        Invoke(nameof(EndofTimeStop), ozTimestopDuration);
+    }
+
+    void EndofTimeStop()
+    {
+        Time.timeScale = 1f;
     }
 
     //해당 오브젝트를 제외한 것들의 정지.
