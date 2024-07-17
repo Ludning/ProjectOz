@@ -314,6 +314,10 @@ public class Enemy : MonoBehaviour
 
     public bool IsTargetVisible()
     {
+        if (_editorData.DetectThroughWall)
+        {
+            return true;
+        }
         return _detector.IsTargetVisible();
     }
 
