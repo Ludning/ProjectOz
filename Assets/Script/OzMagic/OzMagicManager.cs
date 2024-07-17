@@ -32,18 +32,19 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         _timeStop = new ObjectPool<OzMagic>(() => StopTime(Prefab_OzMagic[1], _timeStop));
     }
 
-    public void Execute()
+    public AttackType Execute()
     {
         RandomOzMagic();
         switch (_ozMagicIndex)
         {
             case 0:
                 OnExcute(_meteorPool);
-                break;
+                return AttackType.Meteor;
             case 1:
                 OnExcute(_timeStop);
-                break;
-        }      
+                return AttackType.TimeStop;
+        }
+        return AttackType.None;
     }
 
     private void RandomOzMagic()
