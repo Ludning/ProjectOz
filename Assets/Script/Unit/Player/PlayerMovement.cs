@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum JumpMode
@@ -18,11 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public PlayerModelState _currentState;
     public PcData CurrentData => _currentState == PlayerModelState.Knight ? _knightData : _mageData;
     
-    //임시 변수
-    [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private float dashForce = 100f;
 
-    [SerializeField] private bool _isDash = false;
 
     #region Animation Hash
     private readonly int GroundHash = Animator.StringToHash("IsGround");
@@ -32,14 +29,12 @@ public class PlayerMovement : MonoBehaviour
     #endregion
     
     
-    
-    
-    
-    
     [SerializeField] private float dashSpeed = 20f;       // 대시 속도
     [SerializeField] private float dashDistance = 5f;     // 대시 거리
     [SerializeField] private float dashCooldown = 1f;     // 대시 쿨다운 시간
+    [SerializeField] private float jumpForce = 10f;
     [SerializeField] private LayerMask dashLayerMask;     // 대시 경로에서 충돌을 감지할 레이어
+    [SerializeField] private bool _isDash = false;
     
     [SerializeField] private float moveInput;
     [SerializeField] private float lastDashTime;
@@ -119,8 +114,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 nextPosition = Vector3.MoveTowards(Rigidbody.position, dashTargetPosition, dashSpeed * Time.fixedDeltaTime);
 
-        Vector3 capsuleStart = transform.position - Vector3.up * _colliderHeight / 2;
-        Vector3 capsuleEnd = transform.position + Vector3.up * _colliderHeight / 2;
+        Vector3 capsuleStart = transform.position;
+        Vector3 capsuleEnd = transform.position + Vector3.up * _colliderHeight;
         if (Physics.CapsuleCast(capsuleStart, capsuleEnd, capsuleRadius, nextPosition - Rigidbody.position, out RaycastHit hit, dashSpeed * Time.fixedDeltaTime))
         {//nextPosition - Rigidbody.position   _lastDirection
             _isDash = false;
@@ -138,38 +133,11 @@ public class PlayerMovement : MonoBehaviour
                 CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
             }
         }
-        
-        
-        /*if (hit.collider != null)
-        {
-            Debug.Log("DashOff");
-            Rigidbody.MovePosition(hit.point);
-            _isDash = false;
-            Rigidbody.useGravity = true;
-            CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
-        }
-        else
-        {
-            Rigidbody.MovePosition(nextPosition);
-            if (((Vector2)Rigidbody.position - dashStartPosition).magnitude >= dashDistance)
-            {
-                Debug.Log("DashOff");
-                _isDash = false;
-                Rigidbody.useGravity = true;
-                CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
-            }
-        }*/
     }
     #endregion
 
-    [SerializeField] private LayerMask cheakLayer;
-
     [SerializeField] private float capsuleRadius = 0.5f;
-    /*private bool FrontCheaker(Vector2 direction)
-    {
-        
-        Physics.CapsuleCast(,,0.5f,direction, cheakLayer);
-    }*/
+    [SerializeField] private LayerMask checkLayer;
     float GetWorldHeight(CapsuleCollider capsuleCollider)
     {
         float localHeight = capsuleCollider.height;

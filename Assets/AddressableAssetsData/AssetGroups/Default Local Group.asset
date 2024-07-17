@@ -42,16 +42,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 642f074df1c342a47a60ef6617150851
-    m_Address: Assets/Resource/Prefab/Flameball.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5f93fddd2c1bc9948a3471a8b6df39d7
-    m_Address: Assets/Resource/Prefab/Fireball.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b00b35793c6d4545b005609c38218cc
     m_Address: Assets/Resource/Sprite/UISprite/Knight_Mode_UI.png
     m_ReadOnly: 0
@@ -73,7 +63,17 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b2ffd2a30a8ee9b4b9b10aaa1342b551
-    m_Address: Assets/Resource/Prefab/Meteor.prefab
+    m_Address: Assets/Resource/Prefab/Projectile/Meteor.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f93fddd2c1bc9948a3471a8b6df39d7
+    m_Address: Assets/Resource/Prefab/Projectile/Fireball.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 642f074df1c342a47a60ef6617150851
+    m_Address: Assets/Resource/Prefab/Projectile/Flameball.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
