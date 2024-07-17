@@ -73,7 +73,12 @@ public class PlayerMovement : MonoBehaviour
         if (direction != Vector2.zero) _lastDirection = direction;
         RotationCharacter(direction);
     }
-    public void OnInputJump()
+    public void OnKeyDownJump()
+    {
+        if(CharacterMediator.IsGround == true)
+            Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+    }
+    public void OnKeyUpJump()
     {
         if(CharacterMediator.IsGround == true)
             Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);

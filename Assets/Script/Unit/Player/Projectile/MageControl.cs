@@ -50,14 +50,12 @@ public class MageControl : MonoBehaviour
             }
         }
     }
-
     public void OnKeyDown()
     {
         animator.SetTrigger(HashAttack);
         keyDown = true;
         keyUp = false;
     }
-
     public void OnKeyUp()
     {
         keyDown = false;
