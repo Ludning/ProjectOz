@@ -67,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
     #region OnInput
     public void OnInputSetDirection(Vector2 direction)
     {
+        if (_isDash == true)
+            return;
         _direction = direction;
         if (direction != Vector2.zero) _lastDirection = direction;
         RotationCharacter(direction);
