@@ -29,12 +29,16 @@ public class Detector : MonoBehaviour
     private Collider _lastTarget;
 
     private int _characterColliderLayer;
+    private int _passableGroundLayer;
+    private int _impassableGroundLayer;
     public void Init(string targetTag, float detectionRadius, bool detectThroughWall)
     {
         _targetTag = targetTag;
         _detectionRadius = detectionRadius;
         _detectThroughWall = detectThroughWall;
         _characterColliderLayer = LayerMask.GetMask("Character_Collider");
+        _passableGroundLayer = LayerMask.GetMask("Terrain_Passable");
+        _impassableGroundLayer = LayerMask.GetMask("Terrain_Impassable");
     }
 
     public Transform GetTarget()
@@ -82,7 +86,7 @@ public class Detector : MonoBehaviour
         Vector3 targetCenter = target.bounds.center;
         if (Physics.Raycast(center, 
             targetCenter - (center),
-            out RaycastHit hit, _detectionRadius, _characterColliderLayer))
+            out RaycastHit hit, _detectionRadius, _characterColliderLayer | _passableGroundLayer | _impassableGroundLayer))
         {
             Debug.DrawLine(center, hit.point, Color.magenta);
             if (hit.collider.CompareTag("Player"))

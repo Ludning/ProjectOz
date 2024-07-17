@@ -146,11 +146,6 @@ PrefabInstance:
       propertyPath: m_WarningMessage
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 3447393052553555546, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 5236318171550696614, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
       propertyPath: m_Drag
