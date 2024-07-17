@@ -26,7 +26,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             {
                 return TaskStatus.Failure;
             }
-            bool isLostTarget = !owner.IsTargetNear(detectRange.Value + .1f);
+            bool isLostTarget = !owner.IsTargetNear(detectRange.Value);
             if(target.Value.CompareTag("Player") && isLostTarget)
             {
                 target.Value = null;
