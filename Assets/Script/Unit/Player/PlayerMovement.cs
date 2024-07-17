@@ -1,10 +1,6 @@
 using System;
 using UnityEngine;
 
-public enum JumpMode
-{
-    
-}
 public class PlayerMovement : MonoBehaviour
 {
     private Vector2 _direction;
@@ -29,11 +25,14 @@ public class PlayerMovement : MonoBehaviour
     #endregion
     
     
+    [SerializeField] private float airSpeed = 7f;       // 공중 속도
     [SerializeField] private float dashSpeed = 20f;       // 대시 속도
     [SerializeField] private float dashDistance = 5f;     // 대시 거리
     [SerializeField] private float dashCooldown = 1f;     // 대시 쿨다운 시간
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private LayerMask dashLayerMask;     // 대시 경로에서 충돌을 감지할 레이어
+    
+    [SerializeField] private float capsuleRadius = 0.5f;
     
     private bool _isDash = false;
     private Vector2 dashStartPosition;
@@ -44,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _mageData = DataManager.Instance.GetGameData<PcData>("C101");
         _knightData = DataManager.Instance.GetGameData<PcData>("C102");
-        
         _colliderHeight = GetWorldHeight(GetComponent<CapsuleCollider>());
     }
     private void Update()
@@ -102,8 +100,16 @@ public class PlayerMovement : MonoBehaviour
     #region OnUpdate
     private void OnUpdateMove()
     {
-        Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
-        Rigidbody.velocity = velocity;
+        if (CharacterMediator.IsGround == true)
+        {
+            Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
+            Rigidbody.velocity = velocity;
+        }
+        else
+        {
+            Vector3 velocity = new Vector3(_direction.x * airSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
+            Rigidbody.velocity = velocity;
+        }
     }
 
     private void OnUpdateDash()
@@ -112,28 +118,27 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 capsuleStart = transform.position;
         Vector3 capsuleEnd = transform.position + Vector3.up * _colliderHeight;
-        if (Physics.CapsuleCast(capsuleStart, capsuleEnd, capsuleRadius, nextPosition - Rigidbody.position, out RaycastHit hit, dashSpeed * Time.fixedDeltaTime))
-        {//nextPosition - Rigidbody.position   _lastDirection
+        if (CheckWall())
+            EndDash();
+        
+        Rigidbody.MovePosition(nextPosition);
+        if (((Vector2)Rigidbody.position - dashStartPosition).magnitude >= dashDistance)
+        {
             _isDash = false;
             Rigidbody.useGravity = true;
             CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
         }
-        else
-        {
-            // 충돌이 발생하지 않으면 다음 위치로 이동
-            Rigidbody.MovePosition(nextPosition);
-            if (((Vector2)Rigidbody.position - dashStartPosition).magnitude >= dashDistance)
-            {
-                _isDash = false;
-                Rigidbody.useGravity = true;
-                CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
-            }
-        }
     }
     #endregion
 
-    [SerializeField] private float capsuleRadius = 0.5f;
-    [SerializeField] private LayerMask checkLayer;
+    private void EndDash()
+    {
+        _isDash = false;
+        Rigidbody.useGravity = true;
+        CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
+    }
+
+    
     float GetWorldHeight(CapsuleCollider capsuleCollider)
     {
         float localHeight = capsuleCollider.height;
@@ -154,5 +159,10 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
         return worldHeight;
+    }
+
+    private bool CheckWall()
+    {
+        return true;
     }
 }

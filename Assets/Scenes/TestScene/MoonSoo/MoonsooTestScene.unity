@@ -728,6 +728,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
+      propertyPath: airSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
       propertyPath: _frontCheaker
       value: 
       objectReference: {fileID: 0}
