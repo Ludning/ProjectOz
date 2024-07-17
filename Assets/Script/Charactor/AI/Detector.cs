@@ -12,7 +12,21 @@ public class Detector : MonoBehaviour
 
     public bool isPlayerInRange { get; private set; }
 
-    [SerializeField] private Transform _target;
+    [SerializeField] private Transform Target
+    {         
+        get => _target;
+        set
+        {
+            if(value != null)
+            {
+                _lastTarget = _target;
+            }
+            _target = value;
+        }
+    }
+    private Transform _target;
+
+    private Transform _lastTarget;
 
 
     public void Init(string targetTag, float detectionRadius, bool detectThroughWall)
@@ -24,7 +38,7 @@ public class Detector : MonoBehaviour
 
     public Transform GetTarget()
     {
-        return _target;
+        return Target;
     }
 
     public void FixedUpdate()
@@ -44,21 +58,21 @@ public class Detector : MonoBehaviour
         }
         if(isPlayerInRange)
         {
-            _target = col.transform;
-            _lastValidPostion = _target.position;
+            Target = col.transform;
+            _lastValidPostion = Target.position;
         }
         else
         {
-            _target = null;
+            Target = null;
         }
     }
     public bool IsTargetVisible()
     {
-        if(_target == null)
+        if(Target == null)
         {
             return false;
         }
-        return IsTargetVisible(_target);
+        return IsTargetVisible(Target);
     }
     public bool IsTargetVisible(Transform target)
     {
@@ -83,5 +97,10 @@ public class Detector : MonoBehaviour
     public Vector3 GetPosition()
     {
         return _lastValidPostion;
+    }
+
+    public Transform GetLastTarget()
+    {
+        return _lastTarget;
     }
 }
