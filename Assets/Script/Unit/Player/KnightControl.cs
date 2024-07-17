@@ -85,7 +85,8 @@ public class KnightControl : MonoBehaviour
 
         _direction = (_changedWorldPos - (Vector2)player.transform.position).normalized;
         _targetPos = (Vector2)player.transform.position + _direction * _rushDistance;
-        player.SetMovementDirection(_direction);
+        player.playerModelController.OnInputSetDirection(_direction);
+        player.PlayerMovement.OnInputSetDirection(_direction);
         _currentRushCoolDown = _rushCoolDown;
         isRush = true;
     }
