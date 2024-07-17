@@ -8,13 +8,14 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private CharacterMediator CharacterMediator;
     
     #region Input Function
+
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>().normalized;
-        Debug.Log(direction);
-        if(CharacterMediator.PlayerMovement.OnInputSetDirection(direction) == true)
-            CharacterMediator.playerModelController.OnInputSetDirection(direction);
+        CharacterMediator.PlayerMovement.OnInputSetDirection(direction);
+        CharacterMediator.playerModelController.OnInputSetDirection(direction);
     }
+
     public void OnDash(InputAction.CallbackContext context)
     {
         if (context.started)

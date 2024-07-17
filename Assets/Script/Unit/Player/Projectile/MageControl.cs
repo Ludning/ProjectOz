@@ -28,7 +28,8 @@ public class MageControl : MonoBehaviour
     [SerializeField] private Transform firePosition;
     
     private readonly int HashAttack = Animator.StringToHash("IsAttack");
-    
+    private static readonly int AttackClipSpeed = Animator.StringToHash("AttackClipSpeed");
+
     private void Awake()
     {
         _inputChargingTimer = DataManager.Instance.GetGameData<SkillData>("S102").value1;
@@ -51,8 +52,21 @@ public class MageControl : MonoBehaviour
         TimeManager.Instance.DeregistCooldownAction(ReflashInputTime);
     }
 
+    public void OnAnimation_Enter()
+    {
+        Debug.Log("Enter!");
+        _inputTimer = 0;
+        animator.SetFloat(AttackClipSpeed, 0.2f);
+    }
+    public void OnAnimation_Exit()
+    {
+        Debug.Log("Exit!");
+        _inputTimer = 0;
+        animator.SetFloat(AttackClipSpeed, 1f);
+    }
     public void OnAnimation_Fire()
     {
+        Debug.Log("Fire!");
         if(_inputTimer < _inputChargingTimer)
             NormalAttack();
         else
@@ -80,15 +94,18 @@ public class MageControl : MonoBehaviour
     private void StartAttack()
     {
         keyDown = true;
-        animator.SetTrigger(HashAttack);
+        animator.SetBool(HashAttack, true);
+        animator.SetFloat(AttackClipSpeed, 0.2f);
     }
     private void EndAttack()
     {
         keyDown = false;
+        animator.SetBool(HashAttack, false);
         if (_inputTimer < _inputChargingTimer)
         {
             //TODO
             //애니메이션 진행도를 활성화해야함, 약공격
+            animator.SetFloat(AttackClipSpeed, 1f);
         }
         _inputTimer = 0f;
     }
@@ -158,7 +175,7 @@ public class MageControl : MonoBehaviour
         {
             //TODO
             //애니메이션 진행도를 활성화해야함, 강공격
-            _inputTimer = 0;
+            animator.SetFloat(AttackClipSpeed, 1f);
         }
     }
     #endregion

@@ -52,6 +52,8 @@ public class PlayerModelController : MonoBehaviour
     }
     public void OnInputSetDirection(Vector2 direction)
     {
+        if (CharacterMediator.PlayerMovement.IsDash == true)
+            return;
         switch (direction.x)
         {
             case > 0:

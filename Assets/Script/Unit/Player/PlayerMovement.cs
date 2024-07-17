@@ -37,9 +37,11 @@ public class PlayerMovement : MonoBehaviour
     
     private bool _isDash = false;
     private float dashStartPositionX;
-
     private float currentDashCooldown = 0f;
+
     public float stopDistance = 0.1f; // 멈출 때의 허용 오차
+
+    public bool IsDash => _isDash;
 
     private void Awake()
     {
@@ -67,14 +69,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region OnInput
-    public bool OnInputSetDirection(Vector2 direction)
+    public void OnInputSetDirection(Vector2 direction)
     {
-        if (_isDash == true)
-            return false;
         _direction = direction;
+        /*if (_isDash == true)
+            return;
         if (direction != Vector2.zero) _lastDirection = direction;
-        RotationCharacter(direction);
-        return true;
+        RotationCharacter(direction);*/
     }
 
     public void OnInputJump(KeyType type)
@@ -115,6 +116,10 @@ public class PlayerMovement : MonoBehaviour
     #region OnUpdate
     private void OnUpdateMove()
     {
+        if (_direction != Vector2.zero) 
+            _lastDirection = _direction;
+        RotationCharacter(_direction);
+        CharacterMediator.playerModelController.OnInputSetDirection(_direction);
         if (CharacterMediator.IsGround == true)
         {
             Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
