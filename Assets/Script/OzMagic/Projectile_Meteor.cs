@@ -37,7 +37,7 @@ public class Projectile_Meteor : OzMagic
         base.OnEnable();
 
         _camera = Camera.main;
-        _spawnPos = _camera.gameObject.transform.position + new Vector3(0.0f, _camera.orthographicSize, -_camera.gameObject.transform.position.z);
+        _spawnPos = _camera.gameObject.transform.position + new Vector3(0.0f, _camera.orthographicSize + transform.lossyScale.y / 2, -_camera.gameObject.transform.position.z);
         transform.position = _spawnPos;
         _damageTimer = 0f;
         CancelInvoke(nameof(DestroyOzMagic));
