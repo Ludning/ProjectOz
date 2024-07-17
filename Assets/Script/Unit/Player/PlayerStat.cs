@@ -5,8 +5,11 @@ using UnityEngine;
 
 public enum AttackType
 {
+    None,
     NormalAttack,//일반공격
     ChargeAttack,//강공격
+    Meteor,//변신해제
+    TimeStop,//변신해제
     UndoTransformation,//변신해제
 }
 public class PlayerStat : MonoBehaviour

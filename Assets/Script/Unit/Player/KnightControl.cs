@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnightControl : MonoBehaviour
+public class KnightControl : MonoBehaviour, IControl
 {
     private SkillData _rushSlashData_Skill;
 
@@ -45,25 +45,6 @@ public class KnightControl : MonoBehaviour
         _rushCoolDown = _rushSlashData_Skill.skillCooltime;
         _rushCoolDownHit = _rushSlashData_Skill.value1;
         _damage = _rushSlashData_Skill.skillPowerRate;
-    }
-
-    private void Update()
-    {
-        //Debug.Log(Vector2.Distance(transform.position, _targetPos));
-
-        if (isOnCoolDown)
-        {
-            _currentRushCoolDown -= Time.unscaledDeltaTime;
-            if (_currentRushCoolDown <= 0f)
-            {
-                isOnCoolDown = false;
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0) && !isOnCoolDown && !isRush)
-        {
-            SettingTargetPos();
-        }
     }
     private void FixedUpdate()
     {  
@@ -120,5 +101,34 @@ public class KnightControl : MonoBehaviour
             col.enabled = false;
             timer = 0f;
         }
+    }
+
+    public void OnInput(KeyType type)
+    {
+        if (type == KeyType.KeyDown && !isOnCoolDown && !isRush)
+        {
+            SettingTargetPos();
+        }
+    }
+    #region Update Action
+    private void RefreshInputTime()
+    {
+        if (isOnCoolDown)
+        {
+            _currentRushCoolDown -= Time.unscaledDeltaTime;
+            if (_currentRushCoolDown <= 0f)
+            {
+                isOnCoolDown = false;
+            }
+        }
+    }
+    #endregion
+    private void OnEnable()
+    {
+        TimeManager.Instance.RegistCooldownAction(RefreshInputTime);
+    }
+    private void OnDisable()
+    {
+        TimeManager.Instance.DeregistCooldownAction(RefreshInputTime);
     }
 }

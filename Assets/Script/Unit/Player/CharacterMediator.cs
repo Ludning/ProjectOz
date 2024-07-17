@@ -16,7 +16,7 @@ public class CharacterMediator : MonoBehaviour
 
     public PlayerMovement PlayerMovement;
     public PlayerModelController playerModelController;
-    public MageControl CurrentControl
+    public IControl CurrentControl
     {
         get
         {
@@ -25,9 +25,9 @@ public class CharacterMediator : MonoBehaviour
                 case PlayerModelState.Mage:
                     return MageControl;
                 case PlayerModelState.Knight:
-                    return MageControl;
+                    return knightControl;
             }
-            return MageControl;
+            return null;
         }
     }
     public Animator PlayerAnimator => playerModelController.CurrentAnimator;

@@ -36,9 +36,9 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
-            CharacterMediator.CurrentControl.OnInput(KeyType.KeyDown);
+            CharacterMediator.CurrentControl?.OnInput(KeyType.KeyDown);
         else if(context.canceled)
-            CharacterMediator.CurrentControl.OnInput(KeyType.KeyUp);
+            CharacterMediator.CurrentControl?.OnInput(KeyType.KeyUp);
     }
     public void OnLook(InputAction.CallbackContext context)
     {
