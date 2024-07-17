@@ -71,7 +71,7 @@ MonoBehaviour:
   _detector: {fileID: 7108113485211713750}
   _isChargeAttack: 0
   _editorData:
-    AttackRange: 2
+    AttackRange: 4.66
     AttackCooldown: 2
     EnemyPatrolDistance: 10
     EnemyPatrolIdleDuration: 1
@@ -146,8 +146,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!195 &9139807726154260487
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -265,9 +265,9 @@ Transform:
   m_GameObject: {fileID: 323076606982476425}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.69, z: 1.92}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0.23, z: 1.92}
+  m_LocalScale: {x: 2.22, y: 2.22, z: 2.22}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8234726306974131267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
