@@ -2,14 +2,12 @@ using UnityEngine;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Check Is Enemy Just Loss Target")]
+    [TaskDescription("Check Is Enemy can see target")]
     [TaskCategory("Character")]
     [TaskIcon("{SkinColor}ReflectionIcon.png")]
-    public class BTC_IsJustLossTarget : Conditional
+    public class BTC_IsVisible : Conditional
     {
         public Enemy owner;
-        public SharedTransform target;
-        public SharedFloat detectRange;
 
         public override void OnAwake()
         {
@@ -22,17 +20,10 @@ namespace BehaviorDesigner.Runtime.Tasks
             {
                 return TaskStatus.Failure;
             }
-            if(target.Value == null)
+            if(owner.IsTargetVisible())
             {
-                return TaskStatus.Failure;
-            }
-            bool isLostTarget = !owner.IsTargetNear(detectRange.Value + .1f);
-            if(target.Value.CompareTag("Player") && isLostTarget)
-            {
-                target.Value = null;
                 return TaskStatus.Success;
             }
-
             return TaskStatus.Failure;
         }
     }

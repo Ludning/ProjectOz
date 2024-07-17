@@ -378,6 +378,67 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &300782478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 300782479}
+  - component: {fileID: 300782480}
+  m_Layer: 0
+  m_Name: FrictionCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &300782479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300782478}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 506130708}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &300782480
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300782478}
+  m_Material: {fileID: 13400000, guid: 4cfd1c8d49ff11f4e9f6449ab51c3f6f, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.53
+  m_Height: 1.9
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!4 &506130708 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7554309651453514861, guid: 04e035dc20d97f540a0158227cd74cf1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1053908425463619621}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &737461601
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +538,7 @@ Transform:
   m_GameObject: {fileID: 737461601}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 52.3, y: 2.9, z: 0}
+  m_LocalPosition: {x: 52.3, y: 1.8, z: 0}
   m_LocalScale: {x: 100, y: 1, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -655,6 +716,36 @@ PrefabInstance:
       propertyPath: maxDistance
       value: 0.45
       objectReference: {fileID: 0}
+    - target: {fileID: 2499155618687270481, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2fe852efa9bedb74aba7a4374aac0636, type: 2}
+    - target: {fileID: 2499155618687270481, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: _frontCheaker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: capsuleHeight
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: capsuleRadius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: obstacleLayer.m_Bits
+      value: 3072
+      objectReference: {fileID: 0}
     - target: {fileID: 7554309651453514861, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -709,6 +800,10 @@ PrefabInstance:
     - {fileID: 285965494101870882, guid: 04e035dc20d97f540a0158227cd74cf1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7554309651453514861, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 300782479}
     - targetCorrespondingSourceObject: {fileID: 1235818208893862554, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
       insertIndex: -1
