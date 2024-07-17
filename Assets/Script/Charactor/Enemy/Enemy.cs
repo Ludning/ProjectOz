@@ -7,12 +7,14 @@ using UnityEngine.AI;
 [Serializable]
 public class EnemyEditorData
 {
-    public float AttackRange;
-    public float AttackCooldown;
-    public float AttackDamage;
-    public float EnemyPatrolDistance;
-    public float EnemyPatrolDuration;
-    public float EnemyAlramDistance;
+    public float AttackRange = 2f;
+    public float AttackCooldown = 2f;
+    public float EnemyPatrolDistance = 4f;
+    public float EnemyPatrolIdleDuration = 1f;
+    public float EnemyAlramDistance = 6f;
+    public float EnemyAlramLimitTime = 2f;
+    public float EnemyChaseDistance = 9f;
+    public bool DetectThroughWall = false;
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -54,7 +56,8 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private NavMeshAgent _navMeshAgent;
     private BehaviorTree _behaviorTree;
-    private float _damage;
+    private float _attackDamage;
+    private float _colDamage;
     private DamageBox _attackCollider;
     public event Action OnKnockbackEnd;
     private bool _isFlying = false;
@@ -104,32 +107,40 @@ public class Enemy : MonoBehaviour
 
         _isFlying = enemyData.enemyMoveType == "movetype_enemy_flying";
 
-        _damage = enemyData.enemyColDamage * enemyData.enemyBasePower;
-        //_attackCooldown = enemyData.enemyAttackCooldown;
-        //_navMeshAgent.speed = enemyData.enemySpeed;
-        //float moveRange = enemyData.enemyPatrolDistance;
-        float moveRange = 3f;
+        _colDamage = enemyData.enemyColDamage * enemyData.enemyBasePower;
+        _attackDamage = enemyData.enemyBasePower;
+        _attackCooldown = _editorData.AttackCooldown;
+
+        float moveRange = _editorData.EnemyPatrolDistance;
         _leftPatrolPoint.position = transform.position + moveRange * Vector3.right;
         _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
 
-        //_detector.SetRadius(enemyData.noticeDistance);
-        _detector.Init("Player", 6f);
+        _detector.Init("Player",
+            _editorData.EnemyChaseDistance,
+            _editorData.DetectThroughWall);
         SharedTransformList targetList = new SharedTransformList();
         targetList.Value = new List<Transform>();
         targetList.Value.Add(_leftPatrolPoint);
         targetList.Value.Add(_rightPatrolPoint);
 
-        if (gameObject.CompareTag("Player"))
-        {
-            return;
-        }
         SharedFloat attackRange = new SharedFloat();
-        attackRange.Value = 2f;
+        attackRange.Value = _editorData.AttackRange;
         SharedFloat detectRange = new SharedFloat();
-        detectRange.Value = 6f;
+        detectRange.Value = _editorData.EnemyAlramDistance;
+        SharedFloat enemyAlramLimitTime = new SharedFloat();
+        enemyAlramLimitTime.Value = _editorData.EnemyAlramLimitTime;
+        SharedFloat enemyPatrolIdleDuration = new SharedFloat();
+        enemyPatrolIdleDuration.Value = _editorData.EnemyPatrolIdleDuration;
+        SharedFloat enemyChaseDistance = new SharedFloat();
+        enemyChaseDistance.Value = _editorData.EnemyChaseDistance;
+
         _behaviorTree.SetVariable("TargetList", targetList);
         _behaviorTree.SetVariable("AttackRange", attackRange);
         _behaviorTree.SetVariable("DetectRange", detectRange);
+        _behaviorTree.SetVariable("EnemyAlramLimitTime", enemyAlramLimitTime);
+        _behaviorTree.SetVariable("EnemyPatrolIdleDuration", enemyPatrolIdleDuration);
+        _behaviorTree.SetVariable("EnemyChaseDistance", enemyChaseDistance);
+
     }
     private void ResetEnemy()
     {
@@ -182,7 +193,7 @@ public class Enemy : MonoBehaviour
     }
     private void ChargeAttack(float force)
     {
-        Vector3 dir = _detector.GetTarget().position + Vector3.up - transform.position;
+        Vector3 dir = _detector.GetPosition()+ Vector3.up - transform.position;
         SetEnableRigidbody(true);
         dir.z = 0f;
         dir = dir.normalized;
@@ -208,7 +219,7 @@ public class Enemy : MonoBehaviour
         StartCoroutine(AttackEnd());
         if (_attackCollider == null)
             return;
-        _attackCollider.SetDamage(_damage);
+        _attackCollider.SetDamage(_attackDamage);
         _attackCollider.enabled = true;
     }
 
@@ -249,7 +260,7 @@ public class Enemy : MonoBehaviour
                 Debug.Assert(false, "Player has no Combat component");
                 return;
             }
-            target.Damaged(_damage);
+            target.Damaged(_colDamage);
             return;
         }
     }
@@ -281,6 +292,11 @@ public class Enemy : MonoBehaviour
         {
             _navMeshAgent.nextPosition = transform.position;
         }
+    }
+
+    public bool IsTargetVisible()
+    {
+        return _detector.IsTargetVisible();
     }
 
 

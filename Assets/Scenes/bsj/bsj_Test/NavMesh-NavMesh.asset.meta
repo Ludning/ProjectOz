@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Models/poisondartfrog/ToxicFrogs/ToxicFrogSampleScene.unity.meta
+guid: 9891a994dfdfb744a96620fb8efbe42b
+DefaultImporter:
+========
 guid: 6b80fd40fe047c141a6c4cfaaa5c3dcf
 NativeFormatImporter:
+>>>>>>>> master:Assets/Scenes/bsj/bsj_Test/NavMesh-NavMesh.asset.meta
   externalObjects: {}
   mainObjectFileID: 23800000
   userData: 
