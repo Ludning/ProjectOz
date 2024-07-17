@@ -11,48 +11,37 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>().normalized;
-        CharacterMediator.SetMovementDirection(direction);
+        Debug.Log(direction);
+        if(CharacterMediator.PlayerMovement.OnInputSetDirection(direction) == true)
+            CharacterMediator.playerModelController.OnInputSetDirection(direction);
     }
     public void OnDash(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
-            CharacterMediator.MovementDash();
-        }
+            CharacterMediator.PlayerMovement.OnInputDash();
     }
     public void OnStateChange(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
-            CharacterMediator.PlayerSwitchTransformation();
-        }
+            CharacterMediator.playerStat.ChangeTransformation();
     }
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
-            CharacterMediator.OnKeyDownMovementJump();
-        }
+            CharacterMediator.PlayerMovement.OnInputJump(KeyType.KeyDown);
         else if(context.canceled)
-        {
-            CharacterMediator.OnKeyUpMovementJump();
-        }
+            CharacterMediator.PlayerMovement.OnInputJump(KeyType.KeyUp);
     }
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
-            CharacterMediator.OnKeyDownAttackButton();
-        }
+            CharacterMediator.CurrentControl.OnInput(KeyType.KeyDown);
         else if(context.canceled)
-        {
-            CharacterMediator.OnKeyUpAttackButton();
-        }
+            CharacterMediator.CurrentControl.OnInput(KeyType.KeyUp);
     }
     public void OnLook(InputAction.CallbackContext context)
     {
         Vector2 mousePosition = context.ReadValue<Vector2>();
-        //Debug.Log($"mousePosition {mousePosition}");
     }
     #endregion
 }

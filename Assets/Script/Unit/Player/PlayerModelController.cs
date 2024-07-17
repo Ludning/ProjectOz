@@ -50,6 +50,20 @@ public class PlayerModelController : MonoBehaviour
                 break;
         }
     }
+    public void OnInputSetDirection(Vector2 direction)
+    {
+        switch (direction.x)
+        {
+            case > 0:
+                _mageModel.transform.rotation = Quaternion.Euler(0, 90, 0);
+                _knightModel.transform.rotation = Quaternion.Euler(0, 90, 0);
+                break;
+            case < 0:
+                _mageModel.transform.rotation = Quaternion.Euler(0, -90, 0);
+                _knightModel.transform.rotation = Quaternion.Euler(0, -90, 0);
+                break;
+        }
+    }
     
     private void ChangeUI_Icon()
     {

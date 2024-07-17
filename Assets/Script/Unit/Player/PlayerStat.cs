@@ -100,7 +100,8 @@ public class PlayerStat : MonoBehaviour
         if (PlayerCurrentGage >= 100)
         {
             GageReduceStart();
-            CharacterMediator.PlayerSwitchModel(PlayerModelState.Knight);
+            CharacterMediator.playerModelController.OnInputSwitchModel(PlayerModelState.Knight);
+            
         }
     }
 
