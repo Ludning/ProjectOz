@@ -26,17 +26,17 @@ public class GenerateHP : MonoBehaviour
             
             obj.name = "HP";
 
+            var obj_HPEmptyImage = Instantiate(nullObj, obj.transform);
+            obj_HPEmptyImage.name = "HP_Empty";
+            Image emptyImg = obj_HPEmptyImage.AddComponent<Image>();
+            emptyImg.rectTransform.localScale = Vector3.one * 0.5f;
+            emptyImg.sprite = ResourceManager.Instance.LoadResource<Sprite>("Hp_UI_Del");
+
             var obj_HPFullImage = Instantiate(nullObj, obj.transform);
             obj_HPFullImage.name = "HP_Full";
             Image fullImg = obj_HPFullImage.AddComponent<Image>();
             fullImg.rectTransform.localScale = Vector3.one * 0.5f;
             fullImg.sprite = ResourceManager.Instance.LoadResource<Sprite>("Hp_UI");
-
-            var obj_HPEmptyImage = Instantiate(nullObj, obj.transform);
-            obj_HPEmptyImage.name = "HP_Empty";
-            Image emptyImg = obj_HPEmptyImage.AddComponent<Image>();
-            emptyImg.sprite = ResourceManager.Instance.LoadResource<Sprite>("Hp_UI_Del");
-            obj_HPEmptyImage.SetActive(false);
 
             hp_List.Add(obj);
         }

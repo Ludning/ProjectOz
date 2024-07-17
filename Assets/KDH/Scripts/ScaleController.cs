@@ -7,7 +7,25 @@ using UnityEngine.Serialization;
 public class ScaleController : MonoBehaviour
 {
     [SerializeField] private PlayerMovement playerMovement;
+    
+    Rigidbody[] allRigidbodies;
+    Animator[] allAnimators;
+    NavMeshAgent[] allNavMeshAgents;
+
     private bool _isStop = false;
+    private void Start()
+    {
+        SearchAllMovement();
+        
+    }
+
+    public void SearchAllMovement()
+    {
+        allRigidbodies = FindObjectsOfType<Rigidbody>();
+        allAnimators = FindObjectsOfType<Animator>();
+        allNavMeshAgents = FindObjectsOfType<NavMeshAgent>();
+    }
+
     public void OnStop()
     {
         if (!_isStop)
@@ -26,7 +44,6 @@ public class ScaleController : MonoBehaviour
     private void PauseAllExceptPlayer(GameObject gameObject)
     {
         // Rigidbody ÄÄÆ÷³ÍÆ®¸¦ ¸ØÃã
-        Rigidbody[] allRigidbodies = FindObjectsOfType<Rigidbody>();
         foreach (Rigidbody rb in allRigidbodies)
         {
             if (rb.gameObject != gameObject)
@@ -38,7 +55,6 @@ public class ScaleController : MonoBehaviour
         }
 
         // Animator ÄÄÆ÷³ÍÆ®¸¦ ¸ØÃã
-        Animator[] allAnimators = FindObjectsOfType<Animator>();
         foreach (Animator animator in allAnimators)
         {
             if (animator.gameObject != gameObject)
@@ -48,7 +64,6 @@ public class ScaleController : MonoBehaviour
         }
 
         // NavMeshAgent ÄÄÆ÷³ÍÆ®¸¦ ¸ØÃã
-        NavMeshAgent[] allNavMeshAgents = FindObjectsOfType<NavMeshAgent>();
         foreach (NavMeshAgent agent in allNavMeshAgents)
         {
             if (agent.gameObject != gameObject)
@@ -61,21 +76,16 @@ public class ScaleController : MonoBehaviour
     private void ResumeAll()
     {
         // Rigidbody ÄÄÆ÷³ÍÆ®¸¦ ´Ù½Ã ½ÃÀÛ
-        Rigidbody[] allRigidbodies = FindObjectsOfType<Rigidbody>();
         foreach (Rigidbody rb in allRigidbodies)
         {
             rb.isKinematic = false;
         }
 
-        // Animator ÄÄÆ÷³ÍÆ®¸¦ ´Ù½Ã ½ÃÀÛ
-        Animator[] allAnimators = FindObjectsOfType<Animator>();
         foreach (Animator animator in allAnimators)
         {
             animator.enabled = true;
         }
 
-        // NavMeshAgent ÄÄÆ÷³ÍÆ®¸¦ ´Ù½Ã ½ÃÀÛ
-        NavMeshAgent[] allNavMeshAgents = FindObjectsOfType<NavMeshAgent>();
         foreach (NavMeshAgent agent in allNavMeshAgents)
         {
             agent.isStopped = false;
