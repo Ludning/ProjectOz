@@ -527,14 +527,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.5052631
-        functionName: "\uD55C\uAE00\uB85C\uC791\uB3D9\uD558\uACE0\uC2F6\uC740\uAE30\uB2A5\uBA85"
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
