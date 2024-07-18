@@ -475,6 +475,11 @@ public class Enemy : MonoBehaviour
         return _detector.GetPosition();
     }
 
+    internal Vector3 GetLastTargetPosition()
+    {
+        return _detector.GetLastPosition();
+    }
+
     /* Not Used
     //public void KnockbackOnSurface(Vector3 direction, float force)
     //{

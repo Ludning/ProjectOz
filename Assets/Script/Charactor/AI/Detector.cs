@@ -128,4 +128,9 @@ public class Detector : MonoBehaviour
         }
         return _lastTarget.transform;
     }
+
+    internal Vector3 GetLastPosition()
+    {
+        return _lastTarget.bounds.center;
+    }
 }
