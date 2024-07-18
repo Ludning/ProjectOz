@@ -532,7 +532,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.4195652
+      - time: 0.41849586
+        functionName: "\uD22C\uC0AC\uCCB4\uBC1C\uC0AC\uC2DC\uC810\uC5D0\uC624\uC988\uB9E4\uC9C1\uC774\uB098\uC624\uBA74PlayerMage111_VFX0.3\uAC04\uC801\uC6A9"
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.42130435
         functionName: OnAnimation_Fire
         data: 
         objectReferenceParameter: {instanceID: 0}
