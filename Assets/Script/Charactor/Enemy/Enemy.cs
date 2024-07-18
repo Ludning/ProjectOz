@@ -105,6 +105,7 @@ public class Enemy : MonoBehaviour
 
         Init(_enemyData);
     }
+
     Quaternion look;
     private void Update()
     {
@@ -115,9 +116,20 @@ public class Enemy : MonoBehaviour
         }
         Vector3 dir = _navMeshAgent.destination - transform.position;
         dir = dir.normalized;
-        if(_detector.GetTarget() != null)
+        if (_detector.GetTarget() != null)
         {
-            transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
+            if (_isFlying)
+            {
+                transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
+            }
+            else
+            {
+                Vector3 orig = transform.position; 
+                Vector3 target = _detector.GetPosition();
+                orig.y = 0;
+                target.y = 0;
+                transform.rotation = Quaternion.LookRotation(target - orig, Vector3.up);
+            }
         }
         else if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
         {
@@ -157,8 +169,8 @@ public class Enemy : MonoBehaviour
         _leftPatrolPoint.position = transform.position + moveRange * Vector3.right;
         _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
 
-        _detector.Init("Player",
-            _editorData.EnemyChaseDistance,
+        _detector.Init(this, "Player",
+            _editorData.EnemyAlramDistance,
             _editorData.DetectThroughWall);
         SharedTransformList targetList = new SharedTransformList();
         targetList.Value = new List<Transform>();
@@ -174,7 +186,8 @@ public class Enemy : MonoBehaviour
         SharedFloat enemyPatrolIdleDuration = new SharedFloat();
         enemyPatrolIdleDuration.Value = _editorData.EnemyPatrolIdleDuration;
         SharedFloat enemyChaseDistance = new SharedFloat();
-        enemyChaseDistance.Value = _editorData.EnemyChaseDistance;
+        //enemyChaseDistance.Value = _editorData.EnemyChaseDistance;
+        enemyChaseDistance.Value = 9999f;
 
         _behaviorTree.SetVariable("TargetList", targetList);
         _behaviorTree.SetVariable("AttackRange", attackRange);
@@ -303,7 +316,8 @@ public class Enemy : MonoBehaviour
         {
             return false;
         }
-        if (Vector3.Distance(target.position, transform.position) <= range)
+        float dist = Vector3.Distance(_detector.GetPosition(), transform.position);
+        if (dist <= range)
         {
             return true;
         }
@@ -384,6 +398,24 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnDrawGizmosSelected()
+    {
+        EnemyDebug();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_debug)
+        {
+            EnemyDebug();
+            _debug = false;
+        }
+    }
+    private bool _debug = false;
+    public void EnableDebug()
+    {
+        _debug = true;
+    }
+    private void EnemyDebug()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(_detector.transform.position, _editorData.AttackRange);

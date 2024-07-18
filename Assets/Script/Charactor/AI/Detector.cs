@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Detector : MonoBehaviour
 {
+    [SerializeField] private Enemy _owner;
     private string _targetTag;
     private float _detectionRadius;
     private bool _detectThroughWall;
@@ -31,14 +32,23 @@ public class Detector : MonoBehaviour
     private int _characterColliderLayer;
     private int _passableGroundLayer;
     private int _impassableGroundLayer;
-    public void Init(string targetTag, float detectionRadius, bool detectThroughWall)
+    public void Init(Enemy owner ,string targetTag, float detectionRadius, bool detectThroughWall)
     {
+        _owner = owner;
         _targetTag = targetTag;
         _detectionRadius = detectionRadius;
         _detectThroughWall = detectThroughWall;
         _characterColliderLayer = LayerMask.GetMask("Character_Collider");
         _passableGroundLayer = LayerMask.GetMask("Terrain_Passable");
         _impassableGroundLayer = LayerMask.GetMask("Terrain_Impassable");
+    }
+
+    private void OnValidate()
+    {
+        if (_owner == null)
+        {
+            _owner = transform.parent.GetComponent<Enemy>();
+        }
     }
 
     public Transform GetTarget()
@@ -99,6 +109,11 @@ public class Detector : MonoBehaviour
             Debug.DrawRay(center, targetCenter - (center), Color.green);
         }
         return false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        _owner.EnableDebug();
     }
     public Vector3 GetPosition()
     {
