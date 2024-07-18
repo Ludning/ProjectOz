@@ -66,6 +66,7 @@ public class Projectile_Meteor : OzMagic
         if (other.gameObject.CompareTag("Ground"))
         {
             DestroyOzMagic();
+            //OzMagicManager.Instance.MeteorExplosion.is
         }
         if (other.CompareTag("Enemy")|| other.gameObject.CompareTag("Player"))
         {
