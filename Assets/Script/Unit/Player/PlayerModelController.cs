@@ -16,9 +16,10 @@ public class PlayerModelController : MonoBehaviour
     [SerializeField, ReadOnly] private Animator _currentAnimator;
     [SerializeField] private CharacterMediator CharacterMediator;
 
+    public PlayerModelState CurrentModelState => _currentModelState;
     public Animator CurrentAnimator => _currentAnimator;
     
-    private readonly int IsAttack = Animator.StringToHash("IsAttack");
+    
 
     private void Start()
     {
@@ -49,6 +50,22 @@ public class PlayerModelController : MonoBehaviour
                 break;
         }
     }
+    public void OnInputSetDirection(Vector2 direction)
+    {
+        if (CharacterMediator.PlayerMovement.IsDash == true)
+            return;
+        switch (direction.x)
+        {
+            case > 0:
+                _mageModel.transform.rotation = Quaternion.Euler(0, 90, 0);
+                _knightModel.transform.rotation = Quaternion.Euler(0, 90, 0);
+                break;
+            case < 0:
+                _mageModel.transform.rotation = Quaternion.Euler(0, -90, 0);
+                _knightModel.transform.rotation = Quaternion.Euler(0, -90, 0);
+                break;
+        }
+    }
     
     private void ChangeUI_Icon()
     {
@@ -62,6 +79,6 @@ public class PlayerModelController : MonoBehaviour
 
     public void Attack()
     {
-        CharacterMediator.PlayerAnimator.SetTrigger(IsAttack);
+        
     }
 }

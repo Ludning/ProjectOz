@@ -37,4 +37,11 @@ public class DataPostprocessor : AssetPostprocessor
             Debug.Log("Domain has been reloaded");
         }
     }
+
+    [MenuItem("Xlsx/LoadXlsx")]
+    public static void OnLoadXlsx()
+    {
+        DataConverter.LoadExcel<GameData>(dataXlsxPath, dataJsonPath, typeof(GameDataType));
+        DataConverter.LoadExcel<AssetAddressData>(addressXlsxPath, addressJsonPath, typeof(AssetAddressType));
+    }
 }

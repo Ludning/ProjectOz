@@ -5,23 +5,49 @@ using UnityEngine;
 public class Detector : MonoBehaviour
 {
     private string _targetTag;
-
     private float _detectionRadius;
+    private bool _detectThroughWall;
+
+    private Vector3 _lastValidPostion;
 
     public bool isPlayerInRange { get; private set; }
 
-    [SerializeField] private Transform _target;
+    [SerializeField] private Collider Target
+    {         
+        get => _target;
+        set
+        {
+            if(value != null)
+            {
+                _lastTarget = _target;
+            }
+            _target = value;
+        }
+    }
+    private Collider _target;
 
-    public void Init(string targetTag, float detectionRadius)
+    private Collider _lastTarget;
+
+    private int _characterColliderLayer;
+    private int _passableGroundLayer;
+    private int _impassableGroundLayer;
+    public void Init(string targetTag, float detectionRadius, bool detectThroughWall)
     {
-
         _targetTag = targetTag;
         _detectionRadius = detectionRadius;
+        _detectThroughWall = detectThroughWall;
+        _characterColliderLayer = LayerMask.GetMask("Character_Collider");
+        _passableGroundLayer = LayerMask.GetMask("Terrain_Passable");
+        _impassableGroundLayer = LayerMask.GetMask("Terrain_Impassable");
     }
 
     public Transform GetTarget()
     {
-        return _target;
+        if(Target == null)
+        {
+            return null;
+        }
+        return Target.transform;
     }
 
     public void FixedUpdate()
@@ -31,24 +57,46 @@ public class Detector : MonoBehaviour
         //check overlap contains player taged
 
         Collider col = overlap.FirstOrDefault((col) => col.CompareTag("Player"));
-        if (col != null)
+
+        isPlayerInRange = col != null;
+
+        if(isPlayerInRange)
         {
-            IsPlayerVisible(col.transform);
-            _target = col.transform;
+            Target = col;
+            _lastValidPostion = Target.bounds.center;
         }
         else
         {
-            isPlayerInRange = false;
+            Target = null;
         }
     }
-    private bool IsPlayerVisible(Transform target)
+    public bool IsTargetVisible()
     {
-        if (Physics.Raycast(target.position + transform.up, transform.position - target.position + transform.up, out RaycastHit hit, _detectionRadius))
+        if(Target == null)
         {
-            if (hit.collider.CompareTag("Player") && target.CompareTag("Player"))
+            return false;
+        }
+        return IsTargetVisible(Target);
+    }
+
+
+    public bool IsTargetVisible(Collider target)
+    {
+        Vector3 center = transform.position;
+        Vector3 targetCenter = target.bounds.center;
+        if (Physics.Raycast(center, 
+            targetCenter - (center),
+            out RaycastHit hit, _detectionRadius, _characterColliderLayer | _passableGroundLayer | _impassableGroundLayer))
+        {
+            Debug.DrawLine(center, hit.point, Color.magenta);
+            if (hit.collider.CompareTag("Player"))
             {
                 return true;
             }
+        }
+        else
+        {
+            Debug.DrawRay(center, targetCenter - (center), Color.green);
         }
         return false;
     }
@@ -57,5 +105,19 @@ public class Detector : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _detectionRadius);
+    }
+
+    public Vector3 GetPosition()
+    {
+        return _lastValidPostion;
+    }
+
+    public Transform GetLastTarget()
+    {
+        if(_lastTarget == null)
+        {
+            return null;
+        }
+        return _lastTarget.transform;
     }
 }

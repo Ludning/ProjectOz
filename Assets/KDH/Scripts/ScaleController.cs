@@ -4,10 +4,48 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-public class ScaleController : MonoBehaviour
+public class ScaleController : OzMagic
 {
     [SerializeField] private PlayerMovement playerMovement;
+    
+    Rigidbody[] allRigidbodies;
+    Animator[] allAnimators;
+    NavMeshAgent[] allNavMeshAgents;
+
+    [SerializeField] float ozTimestopChainDuration = 5f;
+    [SerializeField] float ozTimestopRate = 0.1f;
+
     private bool _isStop = false;
+
+    private void Start()
+    {
+        SearchAllMovement();
+    }
+
+    public void SearchAllMovement()
+    {
+        allRigidbodies = FindObjectsOfType<Rigidbody>();
+        allAnimators = FindObjectsOfType<Animator>();
+        allNavMeshAgents = FindObjectsOfType<NavMeshAgent>();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        CancelInvoke(nameof(DestroyOzMagic));
+    }
+
+    public override void Excute()
+    {
+        Time.timeScale = ozTimestopRate;
+        Invoke(nameof(InitTimeScale), _lifeTime);
+    }
+    
+    void InitTimeScale()
+    {
+        Time.timeScale = 1f;
+    }
+
     public void OnStop()
     {
         if (!_isStop)
@@ -26,7 +64,6 @@ public class ScaleController : MonoBehaviour
     private void PauseAllExceptPlayer(GameObject gameObject)
     {
         // Rigidbody ÄÄÆ÷³ÍÆ®¸¦ ¸ØÃã
-        Rigidbody[] allRigidbodies = FindObjectsOfType<Rigidbody>();
         foreach (Rigidbody rb in allRigidbodies)
         {
             if (rb.gameObject != gameObject)
@@ -38,7 +75,6 @@ public class ScaleController : MonoBehaviour
         }
 
         // Animator ÄÄÆ÷³ÍÆ®¸¦ ¸ØÃã
-        Animator[] allAnimators = FindObjectsOfType<Animator>();
         foreach (Animator animator in allAnimators)
         {
             if (animator.gameObject != gameObject)
@@ -48,7 +84,6 @@ public class ScaleController : MonoBehaviour
         }
 
         // NavMeshAgent ÄÄÆ÷³ÍÆ®¸¦ ¸ØÃã
-        NavMeshAgent[] allNavMeshAgents = FindObjectsOfType<NavMeshAgent>();
         foreach (NavMeshAgent agent in allNavMeshAgents)
         {
             if (agent.gameObject != gameObject)
@@ -61,21 +96,16 @@ public class ScaleController : MonoBehaviour
     private void ResumeAll()
     {
         // Rigidbody ÄÄÆ÷³ÍÆ®¸¦ ´Ù½Ã ½ÃÀÛ
-        Rigidbody[] allRigidbodies = FindObjectsOfType<Rigidbody>();
         foreach (Rigidbody rb in allRigidbodies)
         {
             rb.isKinematic = false;
         }
 
-        // Animator ÄÄÆ÷³ÍÆ®¸¦ ´Ù½Ã ½ÃÀÛ
-        Animator[] allAnimators = FindObjectsOfType<Animator>();
         foreach (Animator animator in allAnimators)
         {
             animator.enabled = true;
         }
 
-        // NavMeshAgent ÄÄÆ÷³ÍÆ®¸¦ ´Ù½Ã ½ÃÀÛ
-        NavMeshAgent[] allNavMeshAgents = FindObjectsOfType<NavMeshAgent>();
         foreach (NavMeshAgent agent in allNavMeshAgents)
         {
             agent.isStopped = false;

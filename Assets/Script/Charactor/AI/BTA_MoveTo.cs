@@ -52,7 +52,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         private void MoveToTarget2D(NavMeshAgent agent, Vector3 target)
         {
             target.z = 0f;
-            agent.destination = targetPostion.Value.position;
+            agent.destination = target;
         }
     }
 }
