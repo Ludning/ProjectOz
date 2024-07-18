@@ -26,8 +26,8 @@ public class KnightControl : MonoBehaviour, IControl
     private float _damage;
     private float timer;
 
-    private int _defaultLayer;
-    private int _rushSlashLayer;
+    [SerializeField] private LayerMask _defaultLayerMask;
+    [SerializeField] private LayerMask _rushSlashLayerMask;
 
     [SerializeField] private bool isRush = false;
     [SerializeField] private bool isOnCoolDown = false;
@@ -79,6 +79,7 @@ public class KnightControl : MonoBehaviour, IControl
         //rb.AddForce(_direction * _rushForce, ForceMode.Impulse);
 
         player.PlayerMovement.StartRushSlash(_direction, _rushForce, _rushDistance, EndRushSlash);
+
     }
     /*private void OnUpdateRushSlash()
     {
