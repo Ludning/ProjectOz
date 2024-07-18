@@ -26,7 +26,7 @@ public class EnemyEditorData
     public float EnemyPatrolIdleDuration = 1f;
     public float EnemyAlramDistance = 6f;
     public float EnemyAlramLimitTime = 2f;
-    public float EnemyChaseDistance = 9f;
+    //public float EnemyChaseDistance = 9f;
     public bool DetectThroughWall = false;
     public bool CanFireProjectile = false;
     public Transform ProjectileFirePos;
