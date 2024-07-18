@@ -52,7 +52,7 @@ public class Detector : MonoBehaviour
 
     public void FixedUpdate()
     {
-        Collider[] overlap = Physics.OverlapSphere(transform.position, _detectionRadius);
+        Collider[] overlap = Physics.OverlapSphere(transform.position, _detectionRadius, LayerMask.GetMask("Character_Collider"));
 
         //check overlap contains player taged
 
@@ -100,13 +100,6 @@ public class Detector : MonoBehaviour
         }
         return false;
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _detectionRadius);
-    }
-
     public Vector3 GetPosition()
     {
         return _lastValidPostion;

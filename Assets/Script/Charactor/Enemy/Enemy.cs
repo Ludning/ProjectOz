@@ -383,28 +383,12 @@ public class Enemy : MonoBehaviour
         return _detector.IsTargetVisible();
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyChaseDistance);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _editorData.AttackRange);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
-
-
-        Gizmos.color = GetColorByState(_aiState);
-        Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
-    }
-
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyChaseDistance);
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _editorData.AttackRange);
+        Gizmos.DrawWireSphere(_detector.transform.position, _editorData.AttackRange);
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
+        Gizmos.DrawWireSphere(_detector.transform.position, _editorData.EnemyAlramDistance);
 
         Gizmos.color = GetColorByState(_aiState);
         Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
