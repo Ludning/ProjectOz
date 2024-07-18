@@ -333,25 +333,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+    - target: {fileID: 1235818208893837178, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
-      propertyPath: _frictionCol
-      value: 
-      objectReference: {fileID: 516484522}
-    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: dashDistance
-      value: 20
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
-    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+    - target: {fileID: 2499155618696776755, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
-      propertyPath: _defaultLayerMask.m_Bits
-      value: 16384
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
-    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+    - target: {fileID: 2499155618696776759, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
-      propertyPath: _rushSlashLayerMask.m_Bits
-      value: 8192
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2499155618696776763, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2499155618696777165, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2499155618696777187, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2499155618696777211, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627436103112426785, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7554309651453514861, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
@@ -402,6 +422,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8597989818601634072, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1112,7 +1137,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -1433,7 +1458,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -2644,7 +2669,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -2884,12 +2909,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 9dd406e9a9190bb418c7fb8af16123ed,
     type: 3}
   m_PrefabInstance: {fileID: 1433015311}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &516484522 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3447393052553555546, guid: 04e035dc20d97f540a0158227cd74cf1,
-    type: 3}
-  m_PrefabInstance: {fileID: 36331814}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &518745410
 PrefabInstance:
@@ -3181,7 +3200,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -3474,7 +3493,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -8919,7 +8938,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -13299,7 +13318,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -14104,7 +14123,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -14911,7 +14930,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -15825,7 +15844,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -16268,7 +16287,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -18920,7 +18939,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80.05
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4

@@ -83,12 +83,19 @@ MonoBehaviour:
   DashCollider: {fileID: 5633290320481398914}
   airSpeed: 5
   dashForce: 75
-  dashDistance: 15
+  dashDistance: 20
   dashCooldown: 1
   dashLayerMask:
     serializedVersion: 2
     m_Bits: 3072
   JumpForce: 25
+  _frictionCol: {fileID: 3447393052553555546}
+  _defaultLayerMask:
+    serializedVersion: 2
+    m_Bits: 16384
+  _rushSlashLayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
   stopDistance: 0.1
   _rushSlashDistance: 0
 --- !u!114 &2333123253030120768
@@ -305,9 +312,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ozMagicPercentage: 0
-  playerMovement: {fileID: 6777130721489702383}
-  ozTimestopChainDuration: 5
+  ozTimestopDuration: 0
   ozTimestopRate: 0.1
+  ozTimestopChainDuration: 5
 --- !u!114 &1004522874737238760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,14 +839,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackChargingSpeed: 0.2
-  _attackFireSpeed: 2.5
-  _jumpInputMaxTimer: 0.5
-  _flyMaxTimer: 1
-  flyValue: 10
   animator: {fileID: 1235818208901131548}
   firePosition: {fileID: 7990062489203696157}
-  player: {fileID: 5016133849406154776}
+  CharacterMediator: {fileID: 5016133849406154776}
   rb: {fileID: 5236318171550696614}
 --- !u!4 &1235818208893862554 stripped
 Transform:

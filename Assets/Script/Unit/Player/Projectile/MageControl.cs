@@ -27,10 +27,13 @@ public class MageControl : MonoBehaviour, IControl
     [SerializeField] private Animator animator;
     [SerializeField] private Transform firePosition;
     [SerializeField] private CharacterMediator CharacterMediator;
+    [SerializeField] private Rigidbody rb;
     
     private readonly int HashAttack = Animator.StringToHash("IsAttack");
     private static readonly int AttackClipSpeed = Animator.StringToHash("AttackClipSpeed");
 
+    private int _jumpCount;
+    
     private void Awake()
     {
         _inputChargingTimer = DataManager.Instance.GetGameData<SkillData>("S102").value1;
@@ -43,7 +46,14 @@ public class MageControl : MonoBehaviour, IControl
         
         
     }
-
+    private void Update()
+    {
+        if (_jumpCount > 0)
+        {
+            if (CharacterMediator.IsGround == true)
+                _jumpCount = 0;
+        }
+    }
 
     private bool afterFire = false;
     public void OnAnimation_Enter()
@@ -89,8 +99,24 @@ public class MageControl : MonoBehaviour, IControl
         if(type == KeyType.KeyDown)
             StartJump();
     }
-    
 
+    #region Jump
+    private void StartJump()
+    {
+        if (CharacterMediator.IsGround == true && _jumpCount < 2)
+        {
+            rb.velocity = Vector3.zero;
+            rb.AddForce(Vector2.up * CharacterMediator.PlayerMovement.JumpForce, ForceMode.Impulse);
+            _jumpCount = 1;
+        }
+        else if (CharacterMediator.IsGround == false && _jumpCount < 2)
+        {
+            rb.velocity = Vector3.zero;
+            rb.AddForce(Vector2.up * CharacterMediator.PlayerMovement.JumpForce, ForceMode.Impulse);
+            _jumpCount = 2;
+        }
+    }
+    #endregion
     #region Attack
     private void StartAttack()
     {
