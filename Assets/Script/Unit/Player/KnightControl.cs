@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,9 +28,6 @@ public class KnightControl : MonoBehaviour, IControl
     private float _damage;
     private float timer;
 
-    [SerializeField] private LayerMask _defaultLayerMask;
-    [SerializeField] private LayerMask _rushSlashLayerMask;
-
     [SerializeField] private bool isRush = false;
     [SerializeField] private bool isOnCoolDown = false;
     [SerializeField] private Animator knightAnimator;
@@ -47,6 +46,7 @@ public class KnightControl : MonoBehaviour, IControl
         _rushCoolDownHit = _rushSlashData_Skill.value1;
         _damage = _rushSlashData_Skill.skillPowerRate;
     }
+
     private void FixedUpdate()
     {  
         if(isRush)
@@ -138,9 +138,12 @@ public class KnightControl : MonoBehaviour, IControl
         }
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Wall"))
         {
-            //if (other.gameObject.layer == LayerMask.NameToLayer("Terrain_Impassable"))
-            isOnCoolDown = true;
-            EndRushSlash();
+            if (other.gameObject.layer == LayerMask.NameToLayer("Terrain_Impassable"))
+            {
+                isOnCoolDown = true;
+                EndRushSlash();
+                Debug.Log("ธÞที");
+            }
         }
     }
 
