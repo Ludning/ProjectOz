@@ -31,6 +31,7 @@ public class EnemyEditorData
     public bool CanFireProjectile = false;
     public Transform ProjectileFirePos;
     public GameObject ProjectilePrefab;
+    public bool CustomPatrolPoint = false;
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -63,6 +64,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private EnemyEditorData _editorData;
     [SerializeField] private Transform _rotateTarget;
+
 
     private static float positionZ = 0;
 
@@ -168,9 +170,12 @@ public class Enemy : MonoBehaviour
         _attackDamage = enemyData.enemyBasePower;
         _attackCooldown = _editorData.AttackCooldown;
 
-        float moveRange = _editorData.EnemyPatrolDistance;
-        _leftPatrolPoint.position = transform.position + moveRange * Vector3.right;
-        _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
+        if(_editorData.CustomPatrolPoint == false)
+        {
+            float moveRange = _editorData.EnemyPatrolDistance;
+            _leftPatrolPoint.position = transform.position + moveRange * Vector3.right;
+            _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
+        }
 
         _detector.Init(this, "Player",
             _editorData.EnemyAlramDistance,
