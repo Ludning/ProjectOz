@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spherePosition: {x: 0, y: 0.4, z: 0}
-  boxSize: {x: 1.5, y: 1, z: 1.5}
+  boxSize: {x: 1.55, y: 1, z: 1.5}
   groundLayer:
     serializedVersion: 2
     m_Bits: 3072
