@@ -1,30 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 public class ScaleController : OzMagic
 {
+    private OzmagicData _timeStopData_OzMagic;
+
+    PlayerStat pStat;
     Rigidbody[] allRigidbodies;
     Animator[] allAnimators;
-    NavMeshAgent[] allNavMeshAgents;
+    NavMeshAgent[] allNavMeshAgents;    
 
-    float ozTimestopDuration = 3f; //�ð����� ������� ���ӽð�
-    float ozTimestopRate = 0.1f; // �������� �ִϸ��̼� ����
-    float gageGainOz; //�ð����� ������� ������ ȹ�淮
-    float ozSkillPercentage; //�ð����� ������� �ߵ� Ȯ��
-    //float ozTimestopTarget; Ÿ�� �ʿ����̴°�?
+    [SerializeField] float ozTimestopDuration;
+    [SerializeField] float ozTimestopRate;
+    [SerializeField] float ozTimestopChainDuration;
 
     private bool _isStop = false;
 
-
-
-    private void Start()
+    private void Awake()
     {
+        _timeStopData_OzMagic = DataManager.Instance.GetGameData<OzmagicData>("O201");
+
+        _ozMagicPercentage = _timeStopData_OzMagic.ozSkillPercentage;
+        ozTimestopDuration = _timeStopData_OzMagic.value1;
+        ozTimestopRate = _timeStopData_OzMagic.value2;
+        ozTimestopChainDuration = _timeStopData_OzMagic.value3;
+
         SearchAllMovement();
     }
-
+    
     public void SearchAllMovement()
     {
         allRigidbodies = FindObjectsOfType<Rigidbody>();
@@ -35,16 +42,17 @@ public class ScaleController : OzMagic
     protected override void OnEnable()
     {
         base.OnEnable();
+        pStat = FindFirstObjectByType<PlayerStat>();
         CancelInvoke(nameof(DestroyOzMagic));
     }
 
     public override void Excute()
     {
         Time.timeScale = ozTimestopRate;
-        Invoke(nameof(InitTimeScale), _lifeTime);
+        Invoke(nameof(EndofTimeStop), ozTimestopDuration * ozTimestopRate);
     }
     
-    void InitTimeScale()
+    void EndofTimeStop()
     {
         Time.timeScale = 1f;
     }
@@ -63,21 +71,9 @@ public class ScaleController : OzMagic
         }
     }
 
-    public override void Excute()
-    {
-        Time.timeScale = ozTimestopRate;
-        Invoke(nameof(EndofTimeStop), ozTimestopDuration);
-    }
-
-    void EndofTimeStop()
-    {
-        Time.timeScale = 1f;
-    }
-
-    //�ش� ������Ʈ�� ������ �͵��� ����.
     private void PauseAllExceptPlayer(GameObject gameObject)
     {
-        // Rigidbody ������Ʈ�� ����
+        // Rigidbody 
         foreach (Rigidbody rb in allRigidbodies)
         {
             if (rb.gameObject != gameObject)
@@ -88,7 +84,7 @@ public class ScaleController : OzMagic
             }
         }
 
-        // Animator ������Ʈ�� ����
+        // Animator 
         foreach (Animator animator in allAnimators)
         {
             if (animator.gameObject != gameObject)

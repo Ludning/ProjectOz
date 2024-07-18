@@ -16,6 +16,7 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
     private void Awake()
     {
         Prefab_OzMagic.Add(ResourceManager.Instance.LoadResource<GameObject>("Meteor"));
+        Prefab_OzMagic.Add(ResourceManager.Instance.LoadResource<GameObject>("TimeStop"));
 
         _ozMagic_weights = new List<float>(new float[Prefab_OzMagic.Count]);
 
@@ -29,7 +30,7 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         _meteorPool = new ObjectPool<OzMagic>(() => CreateBall(Prefab_OzMagic[0], _meteorPool), OnGetBall, OnReleaseBall, OnDestroyBall);
 
         //[todo]
-        _timeStop = new ObjectPool<OzMagic>(() => StopTime(Prefab_OzMagic[1], _timeStop));
+        _timeStop = new ObjectPool<OzMagic>(() => StopTime(Prefab_OzMagic[1], _timeStop), OnGetBall, OnReleaseBall, OnDestroyBall);
     }
 
     public AttackType Execute()
@@ -38,11 +39,12 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         switch (_ozMagicIndex)
         {
             case 0:
-                OnExcute(_meteorPool);
-                return AttackType.Meteor;
-            case 1:
                 OnExcute(_timeStop);
                 return AttackType.TimeStop;
+            case 1:
+                OnExcute(_meteorPool);
+                return AttackType.Meteor;
+                
         }
         return AttackType.None;
     }
