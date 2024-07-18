@@ -19,8 +19,6 @@ public class PlayerModelController : MonoBehaviour
     public PlayerModelState CurrentModelState => _currentModelState;
     public Animator CurrentAnimator => _currentAnimator;
     
-    
-
     private void Start()
     {
         _mageModel.SetActive(true);

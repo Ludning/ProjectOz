@@ -77,6 +77,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 295b179335b094540ad20f10ea32887b
+    m_Address: Assets/Resource/Prefab/Projectile/TimeStop.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 440a990e58ac86b439090a3b4e6af67f, type: 2}
   m_SchemaSet:

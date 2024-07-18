@@ -191,7 +191,7 @@
       "value3": 75.0,
       "chainProjectileID": "P2012",
       "chainPowerRate": 50.0,
-      "prefabName": "Meteor"
+      "prefabName": "-"
     },
     "O103": {
       "ozMagicSet": "a",
@@ -207,7 +207,7 @@
       "value3": 75.0,
       "chainProjectileID": "P2012",
       "chainPowerRate": 50.0,
-      "prefabName": "Meteor"
+      "prefabName": "-"
     },
     "O104": {
       "ozMagicSet": "a",
@@ -223,7 +223,7 @@
       "value3": 75.0,
       "chainProjectileID": "P2012",
       "chainPowerRate": 50.0,
-      "prefabName": "Meteor"
+      "prefabName": "-"
     },
     "O201": {
       "ozMagicSet": "a",

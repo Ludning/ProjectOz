@@ -56,14 +56,15 @@ public class MageControl : MonoBehaviour, IControl
     }
     public void OnAnimation_Fire()
     {
-        Debug.Log("Fire!");
+        ChargeAttack();
+        /*Debug.Log("Fire!");
         if(_inputTimer < _inputChargingTimer)
             NormalAttack();
         else
         {
             _inputTimer = 0;
             ChargeAttack();
-        }
+        }*/
 
         afterFire = true;
     }
