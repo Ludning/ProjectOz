@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
         }
         Vector3 dir = _navMeshAgent.destination - transform.position;
         dir = dir.normalized;
-        if (_detector.GetTarget() != null)
+        if (_detector.GetTarget() != null && _aiState == AIState.Chase)
         {
             if (_isFlying)
             {
