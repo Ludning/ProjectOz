@@ -115,7 +115,11 @@ public class Enemy : MonoBehaviour
         }
         Vector3 dir = _navMeshAgent.destination - transform.position;
         dir = dir.normalized;
-        if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
+        if(_detector.GetTarget() != null)
+        {
+            transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
+        }
+        else if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
         {
             look = Quaternion.LookRotation(dir, Vector3.up);
             transform.rotation = look;
@@ -208,6 +212,7 @@ public class Enemy : MonoBehaviour
 
     public void StartAttackAnimation()
     {
+        transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
         IsMovable = false;
         _currentAttackTime = _attackCooldown;
         _animator.SetTrigger("Attack");
@@ -240,11 +245,11 @@ public class Enemy : MonoBehaviour
 
     private void FireProjectile()
     {
+
         GameObject projectile = Instantiate(_editorData.ProjectilePrefab, _editorData.ProjectileFirePos.position, _editorData.ProjectileFirePos.rotation);
         EnemyProjectile enemyProjectile = projectile.GetComponent<EnemyProjectile>();
         enemyProjectile.Init(_editorData.ProjectileFirePos);
         enemyProjectile.Fire();
-        StartCoroutine(AttackEnd(1f));
     }
 
     private void ChargeAttack(float force)
@@ -276,8 +281,8 @@ public class Enemy : MonoBehaviour
     }
     private void Attack()
     {
-        IsMovable = false;
-        StartCoroutine(AttackEnd());
+        StartCoroutine(AttackEnd(.4f));
+
         if (_attackCollider == null)
             return;
         _attackCollider.SetDamage(_attackDamage);
@@ -324,14 +329,6 @@ public class Enemy : MonoBehaviour
             target.Damaged(_colDamage);
             return;
         }
-    }
-    private void OnAttack(GameObject taget, float damage)
-    {
-        if (!taget.TryGetComponent(out Combat targetCombat))
-        {
-            return;
-        }
-        targetCombat.Damaged(damage);
     }
 
     private void OnDamaged()

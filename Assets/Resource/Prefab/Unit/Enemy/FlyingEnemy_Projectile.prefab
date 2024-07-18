@@ -132,16 +132,16 @@ MonoBehaviour:
     enemyColDamage: 0
   _isMovable: 1
   _detector: {fileID: 13238077122672407}
-  _isChargeAttack: 1
+  _isChargeAttack: 0
   _editorData:
-    AttackRange: 6
+    AttackRange: 33.15
     AttackCooldown: 2
     ChargeAttackForce: 80
     EnemyPatrolDistance: 3
     EnemyPatrolIdleDuration: 1
-    EnemyAlramDistance: 6
+    EnemyAlramDistance: 45
     EnemyAlramLimitTime: 2
-    EnemyChaseDistance: 9
+    EnemyChaseDistance: 45
     DetectThroughWall: 1
     CanFireProjectile: 1
     ProjectileFirePos: {fileID: 2864088680874731397}
@@ -442,8 +442,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -18.91, y: 8.31, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8730620420472637584}
   - {fileID: 8457559940111015293}
