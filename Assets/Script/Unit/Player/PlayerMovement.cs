@@ -56,12 +56,18 @@ public class PlayerMovement : MonoBehaviour
             OnUpdateDash();
         else
             OnUpdateMove();
-
-        OnUpdateCooldown();
-        
         CharacterMediator.PlayerAnimator.SetBool(MoveHash, (_direction.x != 0) ? true : false);
         CharacterMediator.PlayerAnimator.SetFloat(DirectionYHash, Rigidbody.velocity.y);
         CharacterMediator.PlayerAnimator.SetBool(GroundHash, CharacterMediator.IsGround);
+    }
+
+    private void OnEnable()
+    {
+        TimeManager.Instance.RegistCooldownAction(RefreshCooldown);
+    }
+    private void OnDisable()
+    {
+        TimeManager.Instance.DeregistCooldownAction(RefreshCooldown);
     }
 
     #region OnInput
@@ -105,15 +111,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     #region OnUpdate
-    private void OnUpdateCooldown()
-    {
-        if (currentDashCooldown > 0f)
-        {
-            currentDashCooldown -= Time.deltaTime;
-            if (currentDashCooldown < 0f)
-                currentDashCooldown = 0f;
-        }
-    }
     private void OnUpdateMove()
     {
         if (CharacterMediator.IsGround == true)
@@ -195,4 +192,16 @@ public class PlayerMovement : MonoBehaviour
         }
         return worldHeight;
     }
+
+    #region Time
+    private void RefreshCooldown()
+    {
+        if (currentDashCooldown > 0f)
+        {
+            currentDashCooldown -= Time.deltaTime;
+            if (currentDashCooldown < 0f)
+                currentDashCooldown = 0f;
+        }
+    }
+    #endregion
 }

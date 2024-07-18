@@ -21,9 +21,9 @@ public class MageControl : MonoBehaviour
     private float _inputChargingTimer;
 
     private bool keyDown = false;
-    private bool keyUp = false;
 
     [SerializeField] private Animator animator;
+    
     private readonly int HashAttack = Animator.StringToHash("IsAttack");
     
     private void Awake()
@@ -38,6 +38,11 @@ public class MageControl : MonoBehaviour
         _percentOzMagic = DataManager.Instance.GetGameData<SkillData>("S102").value2;
     }
 
+    public void UseMageController()
+    {
+        OnAttack();
+    }
+    
     private void Update()
     {
         if (keyDown)
@@ -54,20 +59,17 @@ public class MageControl : MonoBehaviour
     {
         animator.SetTrigger(HashAttack);
         keyDown = true;
-        keyUp = false;
     }
     public void OnKeyUp()
     {
         keyDown = false;
-        keyUp = true;
         if(_inputTimer < _inputChargingTimer)
         {
             animator.SetTrigger(HashAttack);
         }
         _inputTimer = 0f;
     }
-
-    public void OnAttack()
+    private void OnAttack()
     {
         if(_inputTimer < _inputChargingTimer)
             NormalAttack();
