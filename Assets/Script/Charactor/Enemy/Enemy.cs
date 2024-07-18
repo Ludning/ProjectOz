@@ -31,6 +31,7 @@ public class EnemyEditorData
     public bool CanFireProjectile = false;
     public Transform ProjectileFirePos;
     public GameObject ProjectilePrefab;
+    public bool CustomPatrolPoint = false;
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -43,7 +44,6 @@ public class Enemy : MonoBehaviour
     [Header("AI_Patrol")]
     [SerializeField] private Transform _leftPatrolPoint;
     [SerializeField] private Transform _rightPatrolPoint;
-
 
     [SerializeField] private string _enemyId;
     [SerializeField] private EnemyData _enemyData;
@@ -64,6 +64,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private EnemyEditorData _editorData;
     [SerializeField] private Transform _rotateTarget;
+
 
     private static float positionZ = 0;
 
@@ -137,12 +138,18 @@ public class Enemy : MonoBehaviour
         }
         else if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
         {
-            look = Quaternion.LookRotation(dir, Vector3.up);
+            Vector3 orig = transform.position;
+            Vector3 target = _navMeshAgent.destination;
+            if (!_isFlying)
+            {
+                orig.y = 0;
+                target.y = 0;
+            }
+            look = Quaternion.LookRotation(target - orig, Vector3.up);
             transform.rotation = look;
         }
         else
         {
-
             transform.rotation = look;
         }
 
@@ -169,9 +176,12 @@ public class Enemy : MonoBehaviour
         _attackDamage = enemyData.enemyBasePower;
         _attackCooldown = _editorData.AttackCooldown;
 
-        float moveRange = _editorData.EnemyPatrolDistance;
-        _leftPatrolPoint.position = transform.position + moveRange * Vector3.right;
-        _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
+        if(_editorData.CustomPatrolPoint == false)
+        {
+            float moveRange = _editorData.EnemyPatrolDistance;
+            _leftPatrolPoint.position = transform.position + moveRange * Vector3.right;
+            _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
+        }
 
         _detector.Init(this, "Player",
             _editorData.EnemyAlramDistance,
@@ -245,6 +255,7 @@ public class Enemy : MonoBehaviour
 
     public bool CharacterAttack()
     {
+        StartCoroutine(AttackEnd(.4f));
         if (_isChargeAttack)
         {
             ChargeAttack(_editorData.ChargeAttackForce);
@@ -298,8 +309,6 @@ public class Enemy : MonoBehaviour
     }
     private void Attack()
     {
-        StartCoroutine(AttackEnd(.4f));
-
         if (_attackCollider == null)
             return;
         _attackCollider.SetDamage(_attackDamage);
@@ -470,6 +479,16 @@ public class Enemy : MonoBehaviour
     public Transform GetLastTarget()
     {
         return _detector.GetLastTarget();
+    }
+
+    internal Vector3 GetTargetPosition()
+    {
+        return _detector.GetPosition();
+    }
+
+    internal Vector3 GetLastTargetPosition()
+    {
+        return _detector.GetLastPosition();
     }
 
     /* Not Used

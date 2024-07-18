@@ -44,7 +44,7 @@ public class FireballMove : BallMove
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Wall"))
+        if (collision.collider.CompareTag("Ground") || collision.collider.CompareTag("Platform") || collision.collider.CompareTag("Wall"))
         {
             _bounceCount++;
 
