@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -218,13 +218,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 5a0170e23c055da45a20ca01d860aaf1,
+      objectReference: {fileID: 23800000, guid: f499c2a1d03f31b4486c486602dffea7,
         type: 2}
     - target: {fileID: 2204252103034471305, guid: a6c1159ed14d3294899d809e8a656a80,
         type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 64f9c93563bba164199b5e6a61e6f0ef,
+      objectReference: {fileID: 23800000, guid: cc3a4f52886f62940b85151088b57573,
         type: 2}
     - target: {fileID: 2281105252123774760, guid: a6c1159ed14d3294899d809e8a656a80,
         type: 3}
@@ -232,6 +232,11 @@ PrefabInstance:
       value: NavMesh Wall
       objectReference: {fileID: 0}
     - target: {fileID: 2281105252123774760, guid: a6c1159ed14d3294899d809e8a656a80,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301776185299646833, guid: a6c1159ed14d3294899d809e8a656a80,
         type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -330,8 +335,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
+      propertyPath: _frictionCol
+      value: 
+      objectReference: {fileID: 516484522}
+    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
       propertyPath: dashDistance
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: _defaultLayerMask.m_Bits
+      value: 16384
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: _rushSlashLayerMask.m_Bits
+      value: 8192
       objectReference: {fileID: 0}
     - target: {fileID: 7554309651453514861, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
@@ -1103,6 +1123,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &177776726
 Animator:
   serializedVersion: 5
@@ -1230,8 +1251,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &177776731
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1423,6 +1444,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &200454104
 Animator:
   serializedVersion: 5
@@ -1550,8 +1572,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &200454109
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2633,6 +2655,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &481417620
 Animator:
   serializedVersion: 5
@@ -2760,8 +2783,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &481417625
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2861,6 +2884,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 9dd406e9a9190bb418c7fb8af16123ed,
     type: 3}
   m_PrefabInstance: {fileID: 1433015311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &516484522 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3447393052553555546, guid: 04e035dc20d97f540a0158227cd74cf1,
+    type: 3}
+  m_PrefabInstance: {fileID: 36331814}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &518745410
 PrefabInstance:
@@ -3163,6 +3192,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &562606218
 Animator:
   serializedVersion: 5
@@ -3290,8 +3320,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &562606223
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3455,6 +3485,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &598499463
 Animator:
   serializedVersion: 5
@@ -3582,8 +3613,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &598499468
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3689,6 +3720,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &617656186
 Animator:
   serializedVersion: 5
@@ -3829,8 +3861,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &617656191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8898,6 +8930,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1114689608
 Animator:
   serializedVersion: 5
@@ -9025,8 +9058,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1114689613
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10286,6 +10319,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1276769821
 Animator:
   serializedVersion: 5
@@ -10426,8 +10460,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1276769826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11376,6 +11410,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1365875458
 Animator:
   serializedVersion: 5
@@ -11516,8 +11551,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1365875463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13275,6 +13310,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1491309753
 Animator:
   serializedVersion: 5
@@ -13402,8 +13438,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1491309758
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13597,6 +13633,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1506137166
 Animator:
   serializedVersion: 5
@@ -13737,8 +13774,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1506137171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14078,6 +14115,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1554272201
 Animator:
   serializedVersion: 5
@@ -14205,8 +14243,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1554272206
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -14313,6 +14351,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1560492206
 Animator:
   serializedVersion: 5
@@ -14453,8 +14492,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1560492211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14883,6 +14922,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1598822038
 Animator:
   serializedVersion: 5
@@ -15010,8 +15050,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1598822043
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15286,6 +15326,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1637108428
 Animator:
   serializedVersion: 5
@@ -15426,8 +15467,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1637108433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15795,6 +15836,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1741143972
 Animator:
   serializedVersion: 5
@@ -15922,8 +15964,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1741143977
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -16237,6 +16279,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1780653129
 Animator:
   serializedVersion: 5
@@ -16364,8 +16407,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1780653134
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -18888,6 +18931,7 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &2068157482
 Animator:
   serializedVersion: 5
@@ -19015,8 +19059,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &2068157487
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
 
 public class MageControl : MonoBehaviour, IControl
 {
@@ -15,74 +14,52 @@ public class MageControl : MonoBehaviour, IControl
     private GameObject _flameballPrefab;
     #endregion
     
-    [Header("공격차징중 속도")]
-    [SerializeField] private float _attackChargingSpeed = 0.2f;
-    [Header("공격발생시 속도")]
-    [SerializeField] private float _attackFireSpeed = 1f;
-    [Space]
-    
-    [Header("상승까지의 점프 Press 요구시간")]
-    [SerializeField] private float _jumpInputMaxTimer;
-    [Header("상승상태의 지속시간")]
-    [SerializeField] private float _flyMaxTimer;
-    [Header("상승상태의 힘")]
-    [SerializeField] private float flyValue = 1f;
-    [Space]
-    
 
     private float _chargingValue;
     private float _percentOzMagic;
 
-    private float _attackInputTimer = 0;
-    private float _jumpInputTimer = 0;
-    private float _flyInputTimer = 0;
+    private float _inputTimer = 0;
     
-    private float _attackInputChargingTimer;
-    
+    private float _inputChargingTimer;
 
-    private bool attackKeyDown = false;
-    private bool jumpKeyDown = false;
-    private bool _isFly = false;
-    
-    
+    private bool keyDown = false;
 
     [SerializeField] private Animator animator;
     [SerializeField] private Transform firePosition;
-    [SerializeField] private CharacterMediator player;
-    [SerializeField] private Rigidbody rb;
+    [SerializeField] private CharacterMediator CharacterMediator;
     
     private readonly int HashAttack = Animator.StringToHash("IsAttack");
     private static readonly int AttackClipSpeed = Animator.StringToHash("AttackClipSpeed");
 
     private void Awake()
     {
-        _attackInputChargingTimer = DataManager.Instance.GetGameData<SkillData>("S102").value1;
+        _inputChargingTimer = DataManager.Instance.GetGameData<SkillData>("S102").value1;
         _percentOzMagic = DataManager.Instance.GetGameData<SkillData>("S102").value2;
         _fireballPrefab = ResourceManager.Instance.LoadResource<GameObject>("Fireball");
         _flameballPrefab = ResourceManager.Instance.LoadResource<GameObject>("Flameball");
         
         _fireballPool = new ObjectPool<BallMove>(() => CreateBall(_fireballPrefab, _fireballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
         _flameballPool = new ObjectPool<BallMove>(() => CreateBall(_flameballPrefab, _flameballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
+        
+        
     }
 
 
     private bool afterFire = false;
     public void OnAnimation_Enter()
     {
-        Debug.Log("Enter!");
-        _attackInputTimer = 0;
-        if(attackKeyDown == true)
-            animator.SetFloat(AttackClipSpeed, _attackChargingSpeed);
+        _inputTimer = 0;
+        if(keyDown == true)
+            animator.SetFloat(AttackClipSpeed, 0.2f);
         afterFire = false;
     }
     public void OnAnimation_Fire()
     {
-        Debug.Log("Fire!");
-        if(_attackInputTimer < _attackInputChargingTimer)
+        if(_inputTimer < _inputChargingTimer)
             NormalAttack();
         else
         {
-            _attackInputTimer = 0;
+            _inputTimer = 0;
             ChargeAttack();
         }
 
@@ -90,9 +67,8 @@ public class MageControl : MonoBehaviour, IControl
     }
     public void OnAnimation_Exit()
     {
-        Debug.Log("Exit!");
-        _attackInputTimer = 0;
-        animator.SetFloat(AttackClipSpeed, _attackFireSpeed);
+        _inputTimer = 0;
+        animator.SetFloat(AttackClipSpeed, 1f);
         afterFire = false;
     }
     
@@ -108,55 +84,32 @@ public class MageControl : MonoBehaviour, IControl
                 break;
         }
     }
-
     public void OnInputJump(KeyType type)
     {
-        switch (type)
-        {
-            case KeyType.KeyDown:
-                StartJump();
-                break;
-            case KeyType.KeyUp:
-                EndJump();
-                break;
-        }
+        if(type == KeyType.KeyDown)
+            StartJump();
     }
     
-    #region Jump
 
-    public void StartJump()
-    {
-        jumpKeyDown = true;
-        if (player.IsGround == true)
-            rb.AddForce(Vector2.up * player.PlayerMovement.JumpForce, ForceMode.Impulse);
-    }
-    public void EndJump()
-    {
-        jumpKeyDown = false;
-        _isFly = false;
-        _jumpInputTimer = 0f;
-        _flyInputTimer = 0f;
-    }
-    #endregion
     #region Attack
     private void StartAttack()
     {
-        attackKeyDown = true;
+        keyDown = true;
         animator.SetBool(HashAttack, true);
         if(afterFire == false)
-            animator.SetFloat(AttackClipSpeed, _attackChargingSpeed);
+            animator.SetFloat(AttackClipSpeed, 0.2f);
     }
     private void EndAttack()
     {
-        attackKeyDown = false;
+        keyDown = false;
         animator.SetBool(HashAttack, false);
-        if (_attackInputTimer < _attackInputChargingTimer)
+        if (_inputTimer < _inputChargingTimer)
         {
             //TODO
             //애니메이션 진행도를 활성화해야함, 약공격
-            animator.SetFloat(AttackClipSpeed, _attackFireSpeed);
+            animator.SetFloat(AttackClipSpeed, 1f);
         }
-        _attackInputTimer = 0f;
+        _inputTimer = 0f;
     }
     #endregion
 
@@ -164,7 +117,7 @@ public class MageControl : MonoBehaviour, IControl
     private void NormalAttack()
     {
         SpawnObject(_fireballPool);
-        player.playerStat.ChangeGage(AttackType.NormalAttack);
+        CharacterMediator.playerStat.ChangeGage(AttackType.NormalAttack);
     }
     private void ChargeAttack()
     {
@@ -172,12 +125,12 @@ public class MageControl : MonoBehaviour, IControl
         if (_chargingValue >= _percentOzMagic)
         {
             SpawnObject(_flameballPool);
-            player.playerStat.ChangeGage(AttackType.ChargeAttack);
+            CharacterMediator.playerStat.ChangeGage(AttackType.ChargeAttack);
         }
         else
         {
             AttackType type = OzMagicManager.Instance.Execute();
-            player.playerStat.ChangeGage(type);
+            CharacterMediator.playerStat.ChangeGage(type);
             Debug.Log("OzMagic");
         }
     }
@@ -217,54 +170,26 @@ public class MageControl : MonoBehaviour, IControl
     #endregion
 
     #region Update Action
-    private void RefreshAttackInputTime()
+    private void RefreshInputTime()
     {
-        if (attackKeyDown == false)
+        if (keyDown == false)
             return;
-        _attackInputTimer += Time.deltaTime;
+        _inputTimer += Time.deltaTime;
         
-        if (_attackInputTimer >= _attackInputChargingTimer)
+        if (_inputTimer >= _inputChargingTimer)
         {
             //TODO
             //애니메이션 진행도를 활성화해야함, 강공격
-            animator.SetFloat(AttackClipSpeed, _attackFireSpeed);
-        }
-    }
-    private void RefreshJumpInputTime()
-    {
-        if (jumpKeyDown == false && _isFly == false)
-            return;
-        _jumpInputTimer += Time.deltaTime;
-        if (_jumpInputTimer >= _jumpInputMaxTimer)
-        {
-            _isFly = true;
-        }
-    }
-    private void RefreshFlyTime()
-    {
-        if (_isFly == false)
-            return;
-        _flyInputTimer += Time.deltaTime;
-        if (_flyInputTimer < _flyMaxTimer)
-        {
-            player.PlayerMovement.OnFly(flyValue);
-        }
-        else
-        {
-            _isFly = false;
+            animator.SetFloat(AttackClipSpeed, 1f);
         }
     }
     #endregion
     private void OnEnable()
     {
-        TimeManager.Instance.RegistCooldownAction(RefreshAttackInputTime);
-        TimeManager.Instance.RegistCooldownAction(RefreshJumpInputTime);
-        TimeManager.Instance.RegistCooldownAction(RefreshFlyTime);
+        TimeManager.Instance.RegistCooldownAction(RefreshInputTime);
     }
     private void OnDisable()
     {
-        TimeManager.Instance.DeregistCooldownAction(RefreshAttackInputTime);
-        TimeManager.Instance.DeregistCooldownAction(RefreshJumpInputTime);
-        TimeManager.Instance.DeregistCooldownAction(RefreshFlyTime);
+        TimeManager.Instance.DeregistCooldownAction(RefreshInputTime);
     }
 }
