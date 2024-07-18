@@ -737,7 +737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100102, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 100106, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_TagString
@@ -839,9 +839,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackChargingSpeed: 0.2
+  _attackFireSpeed: 1
+  _jumpInputMaxTimer: 0.5
+  _flyMaxTimer: 2
+  flyValue: 5
   animator: {fileID: 1235818208901131548}
   firePosition: {fileID: 7990062489203696157}
-  CharacterMediator: {fileID: 5016133849406154776}
+  player: {fileID: 5016133849406154776}
   rb: {fileID: 5236318171550696614}
 --- !u!4 &1235818208893862554 stripped
 Transform:
@@ -866,7 +871,7 @@ PrefabInstance:
     - target: {fileID: -3027268988800683479, guid: 417a287abb2cab94889f1f1ddd91f928,
         type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
@@ -954,7 +959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100042, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 100044, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
@@ -970,7 +975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100050, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 100052, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
@@ -1054,7 +1059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100092, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 100094, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
@@ -1066,7 +1071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100098, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 100100, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
@@ -1082,11 +1087,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100102, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 100106, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 400102, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1139,7 +1144,7 @@ PrefabInstance:
     - target: {fileID: 7104776223192239632, guid: 417a287abb2cab94889f1f1ddd91f928,
         type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
