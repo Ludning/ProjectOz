@@ -103,14 +103,17 @@ MonoBehaviour:
   _detector: {fileID: 13238077122672407}
   _isChargeAttack: 1
   _editorData:
-    AttackRange: 6
+    AttackRange: 37.57
     AttackCooldown: 2
+    ChargeAttackForce: 80.94
     EnemyPatrolDistance: 3
     EnemyPatrolIdleDuration: 1
-    EnemyAlramDistance: 6
+    EnemyAlramDistance: 36.4
     EnemyAlramLimitTime: 2
-    EnemyChaseDistance: 9
     DetectThroughWall: 0
+    CanFireProjectile: 0
+    ProjectileFirePos: {fileID: 0}
+    ProjectilePrefab: {fileID: 0}
   _rotateTarget: {fileID: 0}
 --- !u!135 &1158408487328004987
 SphereCollider:
@@ -131,7 +134,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.7
+  m_Radius: 2.08
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7913477194828120235
 MonoBehaviour:
@@ -380,6 +383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9634d16cb935305418074b3e8b07c73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 2436297448786757211}
 --- !u!1 &8537793689398807008
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,8 +410,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -18.91, y: 8.31, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8730620420472637584}
   - {fileID: 8457559940111015293}
@@ -453,7 +457,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8658347697744452388}
-  m_Material: {fileID: 13400000, guid: 4e5f05c5e6ae8114c98c0b04d351bd64, type: 2}
+  m_Material: {fileID: 13400000, guid: b7afc8e91a437314f8b6f0006b55d913, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -465,7 +469,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.7
+  m_Radius: 1.48
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7347746089161404905
 PrefabInstance:
