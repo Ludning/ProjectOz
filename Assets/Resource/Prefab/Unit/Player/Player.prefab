@@ -82,8 +82,8 @@ MonoBehaviour:
   Rigidbody: {fileID: 5236318171550696614}
   DashCollider: {fileID: 5633290320481398914}
   airSpeed: 5
-  dashForce: 100
-  dashDistance: 25
+  dashForce: 75
+  dashDistance: 15
   dashCooldown: 1
   dashLayerMask:
     serializedVersion: 2
@@ -833,7 +833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackChargingSpeed: 0.2
-  _attackFireSpeed: 1
+  _attackFireSpeed: 2.5
   _jumpInputMaxTimer: 0.5
   _flyMaxTimer: 1
   flyValue: 10
@@ -1186,7 +1186,7 @@ MonoBehaviour:
   player: {fileID: 5016133849406154776}
   rb: {fileID: 5236318171550696614}
   _rushForce: 100
-  _rushDistance: 0
+  _rushDistance: 25
   _rushCoolDown: 0
   _rushCoolDownHit: 0
   _currentRushCoolDown: 0
