@@ -21,12 +21,16 @@ public class EnemyEditorData
 {
     public float AttackRange = 2f;
     public float AttackCooldown = 2f;
+    public float ChargeAttackForce = 80f;
     public float EnemyPatrolDistance = 4f;
     public float EnemyPatrolIdleDuration = 1f;
     public float EnemyAlramDistance = 6f;
     public float EnemyAlramLimitTime = 2f;
     public float EnemyChaseDistance = 9f;
     public bool DetectThroughWall = false;
+    public bool CanFireProjectile = false;
+    public Transform ProjectileFirePos;
+    public GameObject ProjectilePrefab;
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -111,7 +115,11 @@ public class Enemy : MonoBehaviour
         }
         Vector3 dir = _navMeshAgent.destination - transform.position;
         dir = dir.normalized;
-        if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
+        if(_detector.GetTarget() != null)
+        {
+            transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
+        }
+        else if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
         {
             look = Quaternion.LookRotation(dir, Vector3.up);
             transform.rotation = look;
@@ -122,7 +130,7 @@ public class Enemy : MonoBehaviour
             transform.rotation = look;
         }
 
-        if(_navMeshAgent.velocity.magnitude > 0.1f)
+        if (_navMeshAgent.velocity.magnitude > 0.1f)
         {
             _animator.SetBool("IsMoving", true);
         }
@@ -204,6 +212,7 @@ public class Enemy : MonoBehaviour
 
     public void StartAttackAnimation()
     {
+        transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
         IsMovable = false;
         _currentAttackTime = _attackCooldown;
         _animator.SetTrigger("Attack");
@@ -221,7 +230,11 @@ public class Enemy : MonoBehaviour
     {
         if (_isChargeAttack)
         {
-            ChargeAttack(25f);
+            ChargeAttack(_editorData.ChargeAttackForce);
+        }
+        else if (_editorData.CanFireProjectile)
+        {
+            FireProjectile();
         }
         else
         {
@@ -229,6 +242,16 @@ public class Enemy : MonoBehaviour
         }
         return true;
     }
+
+    private void FireProjectile()
+    {
+
+        GameObject projectile = Instantiate(_editorData.ProjectilePrefab, _editorData.ProjectileFirePos.position, _editorData.ProjectileFirePos.rotation);
+        EnemyProjectile enemyProjectile = projectile.GetComponent<EnemyProjectile>();
+        enemyProjectile.Init(_editorData.ProjectileFirePos);
+        enemyProjectile.Fire();
+    }
+
     private void ChargeAttack(float force)
     {
         Vector3 dir = _detector.GetPosition() + Vector3.up - transform.position;
@@ -251,10 +274,15 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    private IEnumerator AttackEnd(float delay)
+    {
+        yield return new WaitForFixedUpdate();
+        IsMovable = true;
+    }
     private void Attack()
     {
-        IsMovable = false;
-        StartCoroutine(AttackEnd());
+        StartCoroutine(AttackEnd(.4f));
+
         if (_attackCollider == null)
             return;
         _attackCollider.SetDamage(_attackDamage);
@@ -302,14 +330,6 @@ public class Enemy : MonoBehaviour
             return;
         }
     }
-    private void OnAttack(GameObject taget, float damage)
-    {
-        if (!taget.TryGetComponent(out Combat targetCombat))
-        {
-            return;
-        }
-        targetCombat.Damaged(damage);
-    }
 
     private void OnDamaged()
     {
@@ -319,7 +339,7 @@ public class Enemy : MonoBehaviour
     {
         SetEnableAllCollision(false);
         _animator.SetTrigger("Dead");
-        _animator.SetBool("IsDead",true);
+        _animator.SetBool("IsDead", true);
         _isMovable = false;
         StartCoroutine(DelayedDisable());
     }
@@ -341,11 +361,15 @@ public class Enemy : MonoBehaviour
     private void SetEnableRigidbody(bool condition)
     {
         _navMeshAgent.velocity = Vector3.zero;
-        _navMeshAgent.updatePosition = !condition;
         _rigidbody.isKinematic = !condition;
-        _rigidbody.useGravity = false;
-        if (!condition)
+
+        if (condition)
         {
+            _navMeshAgent.updatePosition = false;
+        }
+        else
+        {
+            _navMeshAgent.updatePosition = true;
             _navMeshAgent.nextPosition = transform.position;
         }
     }
@@ -392,7 +416,7 @@ public class Enemy : MonoBehaviour
 
     private Color GetColorByState(AIState state)
     {
-        if(_currentAttackTime > 0f)
+        if (_currentAttackTime > 0f)
         {
             return Color.red;
         }

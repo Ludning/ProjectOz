@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1625411338502928221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2864088680874731397}
+  m_Layer: 14
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2864088680874731397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625411338502928221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.581}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8730620420472637584}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1801950774347067091
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,7 +101,7 @@ Transform:
   - {fileID: 7347746089161534315}
   - {fileID: 3935554598478112769}
   - {fileID: 1035350336642485519}
-  - {fileID: 651247719455470368}
+  - {fileID: 2864088680874731397}
   m_Father: {fileID: 547216153497781872}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2436297448786757211
@@ -101,16 +132,21 @@ MonoBehaviour:
     enemyColDamage: 0
   _isMovable: 1
   _detector: {fileID: 13238077122672407}
-  _isChargeAttack: 1
+  _isChargeAttack: 0
   _editorData:
-    AttackRange: 6
+    AttackRange: 33.15
     AttackCooldown: 2
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 3
     EnemyPatrolIdleDuration: 1
-    EnemyAlramDistance: 6
+    EnemyAlramDistance: 45
     EnemyAlramLimitTime: 2
-    EnemyChaseDistance: 9
-    DetectThroughWall: 0
+    EnemyChaseDistance: 45
+    DetectThroughWall: 1
+    CanFireProjectile: 1
+    ProjectileFirePos: {fileID: 2864088680874731397}
+    ProjectilePrefab: {fileID: 8431727877300358046, guid: 0432778c88527f64f8c765646d6017e7,
+      type: 3}
   _rotateTarget: {fileID: 0}
 --- !u!135 &1158408487328004987
 SphereCollider:
@@ -390,7 +426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 547216153497781872}
   m_Layer: 0
-  m_Name: FlyingEnemy
+  m_Name: FlyingEnemy_Projectile
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,67 +442,14 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -18.91, y: 8.31, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8730620420472637584}
   - {fileID: 8457559940111015293}
   - {fileID: 3963024630587359664}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8658347697744452388
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 651247719455470368}
-  - component: {fileID: 1149119805558844606}
-  m_Layer: 15
-  m_Name: Env Collider
-  m_TagString: Enemy
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &651247719455470368
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8658347697744452388}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8730620420472637584}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1149119805558844606
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8658347697744452388}
-  m_Material: {fileID: 13400000, guid: 4e5f05c5e6ae8114c98c0b04d351bd64, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.7
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7347746089161404905
 PrefabInstance:
   m_ObjectHideFlags: 0
