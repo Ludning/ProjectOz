@@ -31,9 +31,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashForce = 20f;       // 대시 속도
     [SerializeField] private float dashDistance = 3f;     // 대시 거리
     [SerializeField] private float dashCooldown = 1f;     // 대시 쿨다운 시간
-    [SerializeField] private float jumpForce = 10f;
     [SerializeField] private LayerMask dashLayerMask;     // 대시 경로에서 충돌을 감지할 레이어
     
+    public float JumpForce = 10f;
     //[SerializeField] private float capsuleRadius = 0.5f;
     
     private bool _isRushSlash = false;
@@ -218,14 +218,17 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
     
-    public void StartJump()
+    private void StartJump()
     {
-        if(CharacterMediator.IsGround == true)
-            Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+        CharacterMediator.CurrentControl.OnInputJump(KeyType.KeyDown);
     }
-    public void EndJump()
+    private void EndJump()
     {
-        if(CharacterMediator.IsGround == true)
-            Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+        CharacterMediator.CurrentControl.OnInputJump(KeyType.KeyUp);
+    }
+
+    public void OnFly(float flyValue)
+    {
+        Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, flyValue);
     }
 }

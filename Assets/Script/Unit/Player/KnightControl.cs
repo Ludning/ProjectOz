@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,7 @@ public class KnightControl : MonoBehaviour, IControl
 
     private int _defaultLayer;
     private int _rushSlashLayer;
+    private int _jumpCount;
 
     [SerializeField] private bool isRush = false;
     [SerializeField] private bool isOnCoolDown = false;
@@ -47,6 +49,16 @@ public class KnightControl : MonoBehaviour, IControl
         _rushCoolDownHit = _rushSlashData_Skill.value1;
         _damage = _rushSlashData_Skill.skillPowerRate;
     }
+
+    private void Update()
+    {
+        if (_jumpCount > 0)
+        {
+            if (player.IsGround == true)
+                _jumpCount = 0;
+        }
+    }
+
     private void FixedUpdate()
     {  
         if(isRush)
@@ -69,65 +81,21 @@ public class KnightControl : MonoBehaviour, IControl
         _targetPos = (Vector2)player.transform.position + _direction * _rushDistance;
         
         player.playerModelController.OnInputSetDirection(_direction);
-        //player.PlayerMovement.OnInputSetDirection(_direction);
         _currentRushCoolDown = _rushCoolDown;
         isRush = true;
         isOnCoolDown = true;
-        //knightAnimator.SetBool(HashAttack, true);
-        //rb.useGravity = false;
-        //rb.velocity = Vector3.zero;
-        //rb.AddForce(_direction * _rushForce, ForceMode.Impulse);
 
         player.PlayerMovement.StartRushSlash(_direction, _rushForce, _rushDistance, EndRushSlash);
     }
-    /*private void OnUpdateRushSlash()
-    {
-        float distance = Vector2.Distance(player.transform.position, _targetPos);
-        if (distance < 0.2f)
-            EndRushSlash();
-    }*/
 
     public void EndRushSlash()
     {
         isRush = false;
-        //rb.velocity = Vector3.zero; // 속도를 0으로 설정하여 이동 멈춤
-        //rb.useGravity = true;
         col.enabled = false;
         timer = 0f;
-        //knightAnimator.SetBool(HashAttack, false);
-        
         player.PlayerMovement.EndRushSlash();
     }
 
-    /*private void SettingTargetPos()
-    {
-        _mousePos = Input.mousePosition;
-        _changedWorldPos = Camera.main.ScreenToWorldPoint(_mousePos - new Vector2(0f, player.transform.lossyScale.y / 2));
-
-        _direction = (_changedWorldPos - (Vector2)player.transform.position).normalized;
-        _targetPos = (Vector2)player.transform.position + _direction * _rushDistance;
-        player.playerModelController.OnInputSetDirection(_direction);
-        player.PlayerMovement.OnInputSetDirection(_direction);
-        _currentRushCoolDown = _rushCoolDown;
-        isRush = true;
-        knightAnimator.SetBool(HashAttack, true);
-        //rb.AddForce();
-        rb.AddForce(_direction * _rushSpeed, ForceMode.Impulse);
-    }*/
-    /*private void RushSlash()
-    {
-        rb.velocity = _direction * _rushSpeed;
-
-        if (Vector2.Distance(player.transform.position, _targetPos) < 0.1f)
-        {
-            isRush = false;
-            isOnCoolDown = true;
-            rb.velocity = Vector3.zero; // 속도를 0으로 설정하여 이동 멈춤
-            col.enabled = false;
-            timer = 0f;
-            knightAnimator.SetBool(HashAttack, false);
-        }
-    }*/
 
     private void OnTriggerEnter(Collider other)
     {
@@ -143,13 +111,37 @@ public class KnightControl : MonoBehaviour, IControl
         }
     }
 
-    public void OnInput(KeyType type)
+    public void OnInputAttack(KeyType type)
     {
         if (type == KeyType.KeyDown && !isOnCoolDown && !isRush)
         {
             StartRushSlash();
         }
     }
+
+    public void OnInputJump(KeyType type)
+    {
+        if(type == KeyType.KeyDown)
+            StartJump();
+    }
+
+    #region Jump
+    private void StartJump()
+    {
+        if (player.IsGround == true && _jumpCount < 2)
+        {
+            rb.velocity = Vector3.zero;
+            rb.AddForce(Vector2.up * player.PlayerMovement.JumpForce, ForceMode.Impulse);
+            _jumpCount = 1;
+        }
+        else if (player.IsGround == false && _jumpCount < 2)
+        {
+            rb.velocity = Vector3.zero;
+            rb.AddForce(Vector2.up * player.PlayerMovement.JumpForce, ForceMode.Impulse);
+            _jumpCount = 2;
+        }
+    }
+    #endregion
     #region Update Action
     private void RefreshCoolDown()
     {

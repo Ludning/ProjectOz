@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IControl
 {
-    public void OnInput(KeyType type);
+    public void OnInputAttack(KeyType type);
+    public void OnInputJump(KeyType type);
 }
