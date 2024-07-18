@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -332,6 +332,21 @@ PrefabInstance:
         type: 3}
       propertyPath: dashDistance
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200768494668992135, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: flyValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200768494668992135, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: _flyMaxTimer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200768494668992135, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: _jumpInputMaxTimer
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7554309651453514861, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
@@ -1230,8 +1245,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &177776731
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1550,8 +1565,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &200454109
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2760,8 +2775,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &481417625
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3290,8 +3305,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &562606223
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3582,8 +3597,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &598499468
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3829,8 +3844,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &617656191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9030,8 +9045,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1114689613
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10431,8 +10446,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1276769826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11521,8 +11536,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1365875463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13407,8 +13422,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1491309758
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13742,8 +13757,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1506137171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14210,8 +14225,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1554272206
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -14458,8 +14473,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1560492211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15015,8 +15030,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1598822043
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15431,8 +15446,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1637108433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15927,8 +15942,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1741143977
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -16369,8 +16384,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &1780653134
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -19020,8 +19035,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!135 &2068157487
 SphereCollider:
   m_ObjectHideFlags: 0
