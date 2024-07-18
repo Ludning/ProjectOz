@@ -115,6 +115,8 @@ public class KnightControl : MonoBehaviour, IControl
             {
                 meteor.DestroyOzMagic();
                 Debug.Log("Oz매직 발동");
+                //TODO
+                //메테오 연계기 오브젝트 생성
             }
         }
         if (other.gameObject.CompareTag("Enemy") && isRush)
