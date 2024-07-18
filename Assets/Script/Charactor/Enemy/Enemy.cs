@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 public enum AIState
 {
@@ -65,6 +66,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyEditorData _editorData;
     [SerializeField] private Transform _rotateTarget;
 
+    [SerializeField] private GameObject _pooledHitVfxPrefab;
 
     private static float positionZ = 0;
 
@@ -88,6 +90,7 @@ public class Enemy : MonoBehaviour
     private Collider _characterCollider;
     private Collider _characterEnvCollider;
 
+    private IObjectPool<PooledVfx> _pooledHitVfx;
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -104,9 +107,30 @@ public class Enemy : MonoBehaviour
 
         _navMeshAgent.updateRotation = false;
 
+        _pooledHitVfxPrefab = ResourceManager.Instance.LoadResourceWithCaching<GameObject>("Hit_vfx");
+
         Init(_enemyData);
+
+        _pooledHitVfx = new ObjectPool<PooledVfx>( CreatePool,
+            OnGetPool, OnReleasePool, OnDestroyPool);
     }
 
+    public PooledVfx CreatePool()
+    {
+        return Instantiate(_pooledHitVfxPrefab).GetComponent<PooledVfx>();
+    }
+    public void OnGetPool(PooledVfx vfx)
+    {
+        vfx.gameObject.SetActive(true);
+    }
+    public void OnReleasePool(PooledVfx vfx)
+    {
+        vfx.gameObject.SetActive(false);
+    }
+    public void OnDestroyPool(PooledVfx vfx)
+    {
+        Destroy(vfx.gameObject);
+    }
     Quaternion look;
     private void Update()
     {
@@ -360,6 +384,14 @@ public class Enemy : MonoBehaviour
 
     private void OnDamaged()
     {
+        PooledVfx pooled = _pooledHitVfx.Get();
+        pooled.Play(transform.position);
+    }
+
+    private IEnumerator DeledRealease(PooledVfx vfx)
+    {
+        yield return new WaitForSeconds(2f);
+        _pooledHitVfx.Release(vfx);
     }
 
     private void OnDead()
