@@ -4,26 +4,26 @@ using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private PcData _mageData;
+    private PcData _knightData;
+    
     private Vector2 _direction;
     private Vector2 _lastDirection;
     
-    private PcData _mageData;
-    private PcData _knightData;
-
     [SerializeField] private CharacterMediator CharacterMediator;
     [SerializeField] private Rigidbody Rigidbody;
-    [SerializeField] private CapsuleCollider capsuleCollider;
+    [SerializeField] private BoxCollider DashCollider;
 
     private PlayerModelState _currentState;
     private PcData CurrentData => _currentState == PlayerModelState.Knight ? _knightData : _mageData;
     
-
 
     #region Animation Hash
     private readonly int GroundHash = Animator.StringToHash("IsGround");
     private readonly int DashHash = Animator.StringToHash("IsDash");
     private readonly int DirectionYHash = Animator.StringToHash("DirectionY");
     private readonly int MoveHash = Animator.StringToHash("IsMove");
+    private readonly int RushSlashHash = Animator.StringToHash("IsAttack");
     #endregion
     
     
@@ -36,23 +36,31 @@ public class PlayerMovement : MonoBehaviour
     
     //[SerializeField] private float capsuleRadius = 0.5f;
     
+    private bool _isRushSlash = false;
     private bool _isDash = false;
     private float dashStartPositionX;
-    private float _colliderHeight;
-
     private float currentDashCooldown = 0f;
-    private float distanceTraveled;
+    private Vector2 rushStartPosition;
+
     public float stopDistance = 0.1f; // 멈출 때의 허용 오차
+    
+    public float _rushSlashDistance; // 돌진베기의 거리
+
+    public bool IsRushSlash => _isRushSlash;
+    public bool IsDash => _isDash;
+
+    private event Action RushSlashEndEvent;
 
     private void Awake()
     {
         _mageData = DataManager.Instance.GetGameData<PcData>("C101");
         _knightData = DataManager.Instance.GetGameData<PcData>("C102");
-        _colliderHeight = GetWorldHeight();
     }
     private void Update()
     {
-        if (_isDash)
+        if (IsRushSlash)
+            OnUpdateRushSlash();
+        else if (_isDash)
             OnUpdateDash();
         else
             OnUpdateMove();
@@ -73,22 +81,26 @@ public class PlayerMovement : MonoBehaviour
     #region OnInput
     public void OnInputSetDirection(Vector2 direction)
     {
-        if (_isDash == true)
-            return;
         _direction = direction;
+        /*if (_isDash == true)
+            return;
         if (direction != Vector2.zero) _lastDirection = direction;
-        RotationCharacter(direction);
+        RotationCharacter(direction);*/
     }
-    public void OnKeyDownJump()
+
+    public void OnInputJump(KeyType type)
     {
-        if(CharacterMediator.IsGround == true)
-            Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+        switch (type)
+        {
+            case KeyType.KeyDown:
+                StartJump();
+                break;
+            case KeyType.KeyUp:
+                EndJump();
+                break;
+        }
     }
-    public void OnKeyUpJump()
-    {
-        if(CharacterMediator.IsGround == true)
-            Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
-    }
+    
     public void OnInputDash()
     {
         if (currentDashCooldown <= 0f)
@@ -98,21 +110,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     #endregion
+    //캐릭터 
     private void RotationCharacter(Vector2 direction)
     {
         switch (direction.x)
         {
             case > 0:
-                transform.rotation = Quaternion.Euler(0, 90, 0);
+                DashCollider.center = new Vector3(0.3f, 1.2f, 0f);
                 break;
             case < 0:
-                transform.rotation = Quaternion.Euler(0, -90, 0);
+                DashCollider.center = new Vector3(-0.3f, 1.2f, 0f);
                 break;
         }
     }
     #region OnUpdate
     private void OnUpdateMove()
     {
+        if (_direction != Vector2.zero) 
+            _lastDirection = _direction;
+        RotationCharacter(_direction);
+        CharacterMediator.playerModelController.OnInputSetDirection(_direction);
         if (CharacterMediator.IsGround == true)
         {
             Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
@@ -127,15 +144,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnUpdateDash()
     {
-        // 이동한 거리 계산
-        distanceTraveled = Mathf.Abs(dashStartPositionX - transform.position.x);
-
+        float distanceTraveled = Mathf.Abs(dashStartPositionX - transform.position.x);
         if (distanceTraveled >= dashDistance - stopDistance)
-        {
-            // 설정한 거리를 이동했을 때 대쉬 중지
             EndDash();
-        }
     }
+    private void OnUpdateRushSlash()
+    {
+        float rushDistance = Vector2.Distance(rushStartPosition, transform.position);
+        if (rushDistance >= _rushSlashDistance - stopDistance)
+            RushSlashEndEvent?.Invoke();
+    }
+
     #endregion
     private void StartDash()
     {
@@ -143,7 +162,6 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody.useGravity = false;
         Rigidbody.velocity = Vector3.zero;
         CharacterMediator.PlayerAnimator.SetBool(DashHash, true);
-        distanceTraveled = 0;
         Rigidbody.AddForce(_lastDirection * dashForce, ForceMode.Impulse);
         dashStartPositionX = transform.position.x;
     }
@@ -153,6 +171,24 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody.useGravity = true;
         Rigidbody.velocity = Vector3.zero;
         CharacterMediator.PlayerAnimator.SetBool(DashHash, false);
+    }
+    public void StartRushSlash(Vector2 targetDirection, float rushForce, float distance, Action endEvent)
+    {
+        RushSlashEndEvent = endEvent;
+        rushStartPosition = transform.position;
+        _rushSlashDistance = distance;
+        _isRushSlash = true;
+        Rigidbody.useGravity = false;
+        Rigidbody.velocity = Vector3.zero;
+        CharacterMediator.PlayerAnimator.SetBool(RushSlashHash, true);
+        Rigidbody.AddForce(targetDirection * rushForce, ForceMode.Impulse);
+    }
+    public void EndRushSlash()
+    {
+        _isRushSlash = false;
+        Rigidbody.useGravity = true;
+        Rigidbody.velocity = Vector3.zero;
+        CharacterMediator.PlayerAnimator.SetBool(RushSlashHash, false);
     }
 
     private void OnTriggerStay(Collider other)
@@ -170,30 +206,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-    float GetWorldHeight()
-    {
-        float localHeight = capsuleCollider.height;
-        int direction = capsuleCollider.direction;
-        Vector3 scale = capsuleCollider.transform.lossyScale;
-
-        float worldHeight = 0f;
-        switch (direction)
-        {
-            case 0: // X축
-                worldHeight = localHeight * scale.x;
-                break;
-            case 1: // Y축
-                worldHeight = localHeight * scale.y;
-                break;
-            case 2: // Z축
-                worldHeight = localHeight * scale.z;
-                break;
-        }
-        return worldHeight;
-    }
-
-    #region Time
+    #region Update Action
     private void RefreshCooldown()
     {
         if (currentDashCooldown > 0f)
@@ -204,4 +217,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     #endregion
+    
+    public void StartJump()
+    {
+        if(CharacterMediator.IsGround == true)
+            Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+    }
+    public void EndJump()
+    {
+        if(CharacterMediator.IsGround == true)
+            Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+    }
 }
