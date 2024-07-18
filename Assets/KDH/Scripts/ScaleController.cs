@@ -10,11 +10,11 @@ public class ScaleController : OzMagic
     Animator[] allAnimators;
     NavMeshAgent[] allNavMeshAgents;
 
-    float ozTimestopDuration = 3f; //½Ã°£Á¤Áö ¿ÀÁî¸ÅÁ÷ Áö¼Ó½Ã°£
-    float ozTimestopRate = 0.1f; // ´À·ÁÁö´Â ¾Ö´Ï¸ÞÀÌ¼Ç ¹èÀ²
-    float gageGainOz; //½Ã°£Á¤Áö ¿ÀÁî¸ÅÁ÷ °ÔÀÌÁö È¹µæ·®
-    float ozSkillPercentage; //½Ã°£Á¤Áö ¿ÀÁî¸ÅÁ÷ ¹ßµ¿ È®·ü
-    //float ozTimestopTarget; Å¸°Ù ÇÊ¿ä¾ø¾îº¸ÀÌ´Â°É?
+    float ozTimestopDuration = 3f; //ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½
+    float ozTimestopRate = 0.1f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+    float gageGainOz; //ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½æ·®
+    float ozSkillPercentage; //ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ßµï¿½ È®ï¿½ï¿½
+    //float ozTimestopTarget; Å¸ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½îº¸ï¿½Ì´Â°ï¿½?
 
     private bool _isStop = false;
 
@@ -30,6 +30,23 @@ public class ScaleController : OzMagic
         allRigidbodies = FindObjectsOfType<Rigidbody>();
         allAnimators = FindObjectsOfType<Animator>();
         allNavMeshAgents = FindObjectsOfType<NavMeshAgent>();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        CancelInvoke(nameof(DestroyOzMagic));
+    }
+
+    public override void Excute()
+    {
+        Time.timeScale = ozTimestopRate;
+        Invoke(nameof(InitTimeScale), _lifeTime);
+    }
+    
+    void InitTimeScale()
+    {
+        Time.timeScale = 1f;
     }
 
     public void OnStop()
@@ -57,10 +74,10 @@ public class ScaleController : OzMagic
         Time.timeScale = 1f;
     }
 
-    //ÇØ´ç ¿ÀºêÁ§Æ®¸¦ Á¦¿ÜÇÑ °ÍµéÀÇ Á¤Áö.
+    //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Íµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
     private void PauseAllExceptPlayer(GameObject gameObject)
     {
-        // Rigidbody ÄÄÆ÷³ÍÆ®¸¦ ¸ØÃã
+        // Rigidbody ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         foreach (Rigidbody rb in allRigidbodies)
         {
             if (rb.gameObject != gameObject)
@@ -71,7 +88,7 @@ public class ScaleController : OzMagic
             }
         }
 
-        // Animator ÄÄÆ÷³ÍÆ®¸¦ ¸ØÃã
+        // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         foreach (Animator animator in allAnimators)
         {
             if (animator.gameObject != gameObject)
@@ -80,7 +97,7 @@ public class ScaleController : OzMagic
             }
         }
 
-        // NavMeshAgent ÄÄÆ÷³ÍÆ®¸¦ ¸ØÃã
+        // NavMeshAgent ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         foreach (NavMeshAgent agent in allNavMeshAgents)
         {
             if (agent.gameObject != gameObject)
@@ -92,7 +109,7 @@ public class ScaleController : OzMagic
 
     private void ResumeAll()
     {
-        // Rigidbody ÄÄÆ÷³ÍÆ®¸¦ ´Ù½Ã ½ÃÀÛ
+        // Rigidbody ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½
         foreach (Rigidbody rb in allRigidbodies)
         {
             rb.isKinematic = false;

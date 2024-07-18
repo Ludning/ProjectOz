@@ -27,7 +27,7 @@ public class FireballMove : BallMove
         _maxBounceCount = _fireballData_Projectile.projectileBounceCount;
 
         _damage = _fireballData_Skill.skillPowerRate;
-        _gravityValue = 5.81f;
+        _gravityValue = 40.81f;
         _gravity = new Vector3(0f, -_gravityValue, 0f);
     }
 
@@ -37,9 +37,14 @@ public class FireballMove : BallMove
         _bounceCount = 0;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void FixedUpdate()
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Wall"))
+        _rb.AddForce(_gravity, ForceMode.Acceleration);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Wall"))
         {
             _bounceCount++;
 
@@ -48,12 +53,40 @@ public class FireballMove : BallMove
                 DestroyBall();
             }
 
-            //if (other.gameObject.CompareTag("ground") || other.gameObject.CompareTag("platform"))
-            if (transform.position.y - other.gameObject.transform.position.y >= 0.25f)
-                _rb.velocity = new Vector3(_rb.velocity.x, 4.0f + _gravityValue, _rb.velocity.z) + _gravity;
+            _rb.velocity = _direction * _bulletSpeed;
+
+            Vector3 collisionNormal = collision.contacts[0].normal;
+            if (collisionNormal.y > 0.5f)
+            {
+                _rb.AddForce(0f, 8f, 0f, ForceMode.Impulse);
+            }
             else
                 _rb.velocity = new Vector3(-_rb.velocity.x, _rb.velocity.y, -_rb.velocity.z);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Wall"))
+        //{
+        //    _bounceCount++;
+
+        //    if (_bounceCount >= _maxBounceCount)
+        //    {
+        //        DestroyBall();
+        //    }
+
+        //    _rb.velocity = _direction * _bulletSpeed;
+
+        //    //if (other.gameObject.CompareTag("ground") || other.gameObject.CompareTag("platform"))
+        //    if (transform.position.y - other.gameObject.transform.position.y >= -0.05f)
+        //    {
+        //        _rb.AddForce(0f, 8f, 0f, ForceMode.Impulse);
+        //        //_rb.velocity = new Vector3(_rb.velocity.x, 4.0f + _gravityValue, _rb.velocity.z) + _gravity;
+        //    }
+        //    else
+        //        _rb.velocity = new Vector3(-_rb.velocity.x, _rb.velocity.y, -_rb.velocity.z);
+        //}
         if (other.CompareTag("Enemy"))
         {
             if (other.TryGetComponent(out Combat combat))

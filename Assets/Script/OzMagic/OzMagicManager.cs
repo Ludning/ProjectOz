@@ -16,11 +16,8 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
     private void Awake()
     {
         Prefab_OzMagic.Add(ResourceManager.Instance.LoadResource<GameObject>("Meteor"));
-        Prefab_OzMagic.Add(ResourceManager.Instance.LoadResource<GameObject>("TimeStop"));
 
         _ozMagic_weights = new List<float>(new float[Prefab_OzMagic.Count]);
-
-
 
         for (int i = 0; i < Prefab_OzMagic.Count; i++)
         {
@@ -30,21 +27,24 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         //_ozMagic_weights.Add(1f);
 
         _meteorPool = new ObjectPool<OzMagic>(() => CreateBall(Prefab_OzMagic[0], _meteorPool), OnGetBall, OnReleaseBall, OnDestroyBall);
-        _timeStop = new ObjectPool<OzMagic>(() => CreateBall(Prefab_OzMagic[1], _timeStop), OnGetBall, OnReleaseBall, OnDestroyBall);
+
+        //[todo]
+        _timeStop = new ObjectPool<OzMagic>(() => StopTime(Prefab_OzMagic[1], _timeStop));
     }
 
-    public void Execute()
+    public AttackType Execute()
     {
         RandomOzMagic();
         switch (_ozMagicIndex)
         {
             case 0:
                 OnExcute(_meteorPool);
-                break;
+                return AttackType.Meteor;
             case 1:
                 OnExcute(_timeStop);
-                break;
-        }      
+                return AttackType.TimeStop;
+        }
+        return AttackType.None;
     }
 
     private void RandomOzMagic()
@@ -88,6 +88,7 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         oz.SetManagedPool(ozPool);
         return oz;
     }
+
     private void OnGetBall(OzMagic oz)
     {
         oz.gameObject.SetActive(true);
@@ -100,4 +101,13 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
     {
         Destroy(oz.gameObject);
     }
+
+    #region TimeStop
+    private OzMagic StopTime(GameObject prefab, IObjectPool<OzMagic> ozPool)
+    {
+        var oz = Instantiate(prefab, transform.position, transform.rotation).GetComponent<OzMagic>();
+        oz.SetManagedPool(ozPool);
+        return oz;
+    }
+    #endregion
 }
