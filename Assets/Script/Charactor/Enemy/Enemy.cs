@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 public enum AIState
 {
@@ -65,6 +66,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyEditorData _editorData;
     [SerializeField] private Transform _rotateTarget;
 
+    [SerializeField] private GameObject _pooledHitVfxPrefab;
 
     private static float positionZ = 0;
 
@@ -88,6 +90,7 @@ public class Enemy : MonoBehaviour
     private Collider _characterCollider;
     private Collider _characterEnvCollider;
 
+    private IObjectPool<PooledVfx> _pooledHitVfx;
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -104,9 +107,29 @@ public class Enemy : MonoBehaviour
 
         _navMeshAgent.updateRotation = false;
 
+        _pooledHitVfxPrefab = ResourceManager.Instance.LoadResourceWithCaching<GameObject>("Hit_vfx");
+
         Init(_enemyData);
+
+        //_pooledHitVfx = new ObjectPool<PooledVfx>( CreatePool,OnGetPool, OnReleasePool, OnDestroyPool);
     }
 
+    public PooledVfx CreatePool()
+    {
+        return Instantiate(_pooledHitVfxPrefab).GetComponent<PooledVfx>();
+    }
+    public void OnGetPool(PooledVfx vfx)
+    {
+        vfx.gameObject.SetActive(true);
+    }
+    public void OnReleasePool(PooledVfx vfx)
+    {
+        vfx.gameObject.SetActive(false);
+    }
+    public void OnDestroyPool(PooledVfx vfx)
+    {
+        Destroy(vfx.gameObject);
+    }
     Quaternion look;
     private void Update()
     {
@@ -226,14 +249,14 @@ public class Enemy : MonoBehaviour
 
 
 
-    //ÀüÅõ °ü·Ã
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public Combat GetCombat()
     {
         return _combat;
     }
 
-    //°ø°Ý¸Þ¼­µå
-    //¾Ö´Ï¸ÞÀÌ¼Ç ½ÇÇà, ¿òÁ÷ÀÓ
+    //ï¿½ï¿½ï¿½Ý¸Þ¼ï¿½ï¿½ï¿½
+    //ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     float _attackCooldown = 1f;
     float _currentAttackTime = 0f;
 
@@ -343,7 +366,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // ÀÌº¥Æ®
+    // ï¿½Ìºï¿½Æ®
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -360,6 +383,14 @@ public class Enemy : MonoBehaviour
 
     private void OnDamaged()
     {
+        //PooledVfx pooled = _pooledHitVfx.Get();
+        //pooled.Play(transform.position);
+    }
+
+    private IEnumerator DeledRealease(PooledVfx vfx)
+    {
+        yield return new WaitForSeconds(2f);
+        _pooledHitVfx.Release(vfx);
     }
 
     private void OnDead()
@@ -512,7 +543,7 @@ public class Enemy : MonoBehaviour
     //}
 
     ///// <summary>
-    ///// Äð´Ù¿î °è»ê ¹× Å×µÎ¸® ¹ÛÀ» Æ¨°Ü ³ª°¬´ÂÁö °Ë»ç
+    ///// ï¿½ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½×µÎ¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¨ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
     ///// </summary>
     ///// <returns></returns>
     //private IEnumerator CheckKnockbackEnd()
