@@ -130,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
             _lastDirection = _direction;
         RotationCharacter(_direction);
         CharacterMediator.playerModelController.OnInputSetDirection(_direction);
+
         if (CharacterMediator.IsGround == true)
         {
             Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
