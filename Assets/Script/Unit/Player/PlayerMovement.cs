@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        _currentState = CharacterMediator.playerModelController.CurrentModelState;
+
         if (IsRushSlash)
             OnUpdateRushSlash();
         else if (_isDash)
@@ -130,14 +132,25 @@ public class PlayerMovement : MonoBehaviour
             _lastDirection = _direction;
         RotationCharacter(_direction);
         CharacterMediator.playerModelController.OnInputSetDirection(_direction);
+
+        float time;
+        if (_currentState == PlayerModelState.Knight)
+        {
+            time = Time.fixedUnscaledDeltaTime;
+        }
+        else
+        {
+            time = Time.fixedDeltaTime;
+        }
+        
         if (CharacterMediator.IsGround == true)
         {
-            Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
+            Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * time, Rigidbody.velocity.y, 0);
             Rigidbody.velocity = velocity;
         }
         else
         {
-            Vector3 velocity = new Vector3(_direction.x * airSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
+            Vector3 velocity = new Vector3(_direction.x * airSpeed * 100 * time, Rigidbody.velocity.y, 0);
             Rigidbody.velocity = velocity;
         }
     }
@@ -181,6 +194,7 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody.useGravity = false;
         Rigidbody.velocity = Vector3.zero;
         CharacterMediator.PlayerAnimator.SetBool(RushSlashHash, true);
+
         Rigidbody.AddForce(targetDirection * rushForce, ForceMode.Impulse);
     }
     public void EndRushSlash()
