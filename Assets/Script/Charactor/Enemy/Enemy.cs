@@ -109,6 +109,10 @@ public class Enemy : MonoBehaviour
     Quaternion look;
     private void Update()
     {
+        if(_combat.IsDead())
+        {
+            return;
+        }
         _currentStateTime += Time.deltaTime;
         if (_currentAttackTime > 0f)
         {
