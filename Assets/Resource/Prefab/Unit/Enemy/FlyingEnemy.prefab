@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 5900540646122249019}
   - component: {fileID: 441693816952508206}
   - component: {fileID: 8369665349676440822}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: Enemy Fly
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -105,13 +105,18 @@ MonoBehaviour:
   _editorData:
     AttackRange: 6
     AttackCooldown: 2
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 3
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 6
     EnemyAlramLimitTime: 2
-    EnemyChaseDistance: 9
     DetectThroughWall: 0
+    CanFireProjectile: 0
+    ProjectileFirePos: {fileID: 0}
+    ProjectilePrefab: {fileID: 0}
+    CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!135 &1158408487328004987
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -380,6 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9634d16cb935305418074b3e8b07c73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 2436297448786757211}
 --- !u!1 &8537793689398807008
 GameObject:
   m_ObjectHideFlags: 0

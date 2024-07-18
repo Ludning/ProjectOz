@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
     private Collider _characterCollider;
     private Collider _characterEnvCollider;
 
-    private IObjectPool<PooledVfx> _pooledHitVfx;
+    private IObjectPool<GameObject> _pooledHitVfx;
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -111,24 +111,25 @@ public class Enemy : MonoBehaviour
 
         Init(_enemyData);
 
-        //_pooledHitVfx = new ObjectPool<PooledVfx>( CreatePool,OnGetPool, OnReleasePool, OnDestroyPool);
+        _pooledHitVfx = new ObjectPool<GameObject>( CreatePool,OnGetPool, OnReleasePool, OnDestroyPool,true,100,200);
     }
 
-    public PooledVfx CreatePool()
+    public GameObject CreatePool()
     {
-        return Instantiate(_pooledHitVfxPrefab).GetComponent<PooledVfx>();
+        return Instantiate(_pooledHitVfxPrefab);
     }
-    public void OnGetPool(PooledVfx vfx)
+    public void OnGetPool(GameObject vfx)
     {
-        vfx.gameObject.SetActive(true);
+        gameObject.SetActive(true);
+        StartCoroutine(DelayedRealease(vfx));
     }
-    public void OnReleasePool(PooledVfx vfx)
+    public void OnReleasePool(GameObject vfx)
     {
-        vfx.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
-    public void OnDestroyPool(PooledVfx vfx)
+    public void OnDestroyPool(GameObject vfx)
     {
-        Destroy(vfx.gameObject);
+        Destroy(gameObject);
     }
     Quaternion look;
     private void Update()
@@ -383,11 +384,12 @@ public class Enemy : MonoBehaviour
 
     private void OnDamaged()
     {
-        //PooledVfx pooled = _pooledHitVfx.Get();
-        //pooled.Play(transform.position);
+        GameObject pooled = _pooledHitVfx.Get();
+        pooled.transform.position = transform.position;
+        pooled.GetComponent<ParticleSystem>().Play();
     }
 
-    private IEnumerator DeledRealease(PooledVfx vfx)
+    private IEnumerator DelayedRealease(GameObject vfx)
     {
         yield return new WaitForSeconds(2f);
         _pooledHitVfx.Release(vfx);
