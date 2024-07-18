@@ -144,7 +144,7 @@ public class MageControl : MonoBehaviour, IControl
         attackKeyDown = true;
         animator.SetBool(HashAttack, true);
         if(afterFire == false)
-            animator.SetFloat(AttackClipSpeed, 0.2f);
+            animator.SetFloat(AttackClipSpeed, _attackChargingSpeed);
     }
     private void EndAttack()
     {
@@ -154,7 +154,7 @@ public class MageControl : MonoBehaviour, IControl
         {
             //TODO
             //애니메이션 진행도를 활성화해야함, 약공격
-            animator.SetFloat(AttackClipSpeed, 1f);
+            animator.SetFloat(AttackClipSpeed, _attackFireSpeed);
         }
         _attackInputTimer = 0f;
     }
