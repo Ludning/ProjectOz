@@ -7,9 +7,14 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
     private IObjectPool<OzMagic> _meteorPool;
     private IObjectPool<OzMagic> _timeStop;
 
+    private IObjectPool<MeteorExplosion> _meteorExplosionPool;
+
     [SerializeField] private List<GameObject> Prefab_OzMagic = new List<GameObject>();
     [SerializeField] private List<float> _ozMagic_weights;
 
+    [SerializeField] private GameObject _meteorExplosion;
+    private MeteorExplosion meteorExplosion;
+    public MeteorExplosion MeteorExplosion => meteorExplosion;
 
     private int _ozMagicIndex;
 
@@ -31,6 +36,10 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
 
         //[todo]
         _timeStop = new ObjectPool<OzMagic>(() => CreateBall(Prefab_OzMagic[1], _timeStop), OnGetBall, OnReleaseBall, OnDestroyBall);
+
+        meteorExplosion = _meteorExplosion.GetComponent<MeteorExplosion>();
+
+        _meteorExplosionPool = new ObjectPool<MeteorExplosion>(() => CreateExplosion(_meteorExplosion, _meteorExplosionPool), OnGetExplosion, OnReleaseExplosion, OnDestroyExplosion);
     }
 
     public AttackType Execute()
@@ -101,5 +110,33 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
     private void OnDestroyBall(OzMagic oz)
     {
         Destroy(oz.gameObject);
+    }
+
+
+
+    private void OnExplosion(IObjectPool<MeteorExplosion> Pool)
+    {
+        var pool = Pool.Get();
+        pool.Explosion();
+    }
+
+    private MeteorExplosion CreateExplosion(GameObject prefab, IObjectPool<MeteorExplosion> Pool)
+    {
+        var pool = Instantiate(prefab, transform.position, transform.rotation).GetComponent<MeteorExplosion>();
+        pool.SetManagedPool(Pool);
+        return pool;
+    }
+
+    private void OnGetExplosion(MeteorExplosion Pool)
+    {
+        Pool.gameObject.SetActive(true);
+    }
+    private void OnReleaseExplosion(MeteorExplosion Pool)
+    {
+        Pool.gameObject.SetActive(false);
+    }
+    private void OnDestroyExplosion(MeteorExplosion Pool)
+    {
+        Destroy(Pool.gameObject);
     }
 }
