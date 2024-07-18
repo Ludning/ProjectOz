@@ -63,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 2940527936952318308}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.03, z: 0}
   m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -103,12 +103,12 @@ MonoBehaviour:
   _detector: {fileID: 13238077122672407}
   _isChargeAttack: 1
   _editorData:
-    AttackRange: 5
+    AttackRange: 10
     AttackCooldown: 2
     ChargeAttackForce: 80
     EnemyPatrolDistance: 2
     EnemyPatrolIdleDuration: 1
-    EnemyAlramDistance: 13.35
+    EnemyAlramDistance: 12
     EnemyAlramLimitTime: 2
     DetectThroughWall: 1
     CanFireProjectile: 0
