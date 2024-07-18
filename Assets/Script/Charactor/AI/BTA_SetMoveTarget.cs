@@ -5,6 +5,7 @@ namespace BehaviorDesigner.Runtime.Tasks
 {
     public class BTA_SetMoveTarget : Action
     {
+        public SharedVector3 targetPosition;
         public SharedTransform target;
         public Enemy owner;
         public bool isDynamicDestination = false;
@@ -21,6 +22,7 @@ namespace BehaviorDesigner.Runtime.Tasks
                 Debug.LogWarning("Unable to compare field - compare value is null");
                 return TaskStatus.Failure;
             }
+            targetPosition.Value = owner.GetTargetPosition();
             target.Value = owner.GetTarget();
             return TaskStatus.Success;
         }

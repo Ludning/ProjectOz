@@ -18,9 +18,8 @@ namespace BehaviorDesigner.Runtime.Tasks
 
         public override void OnStart()
         {
-            _lastTarget = enemy.GetLastTarget();
             SetMovable(agent, true);
-            MoveToTarget2D(agent, _lastTarget.position);
+            MoveToTarget2D(agent, enemy.GetLastTargetPosition());
         }
 
         public override TaskStatus OnUpdate()
@@ -35,6 +34,10 @@ namespace BehaviorDesigner.Runtime.Tasks
             if (isArrived)
             {
                 return TaskStatus.Success;
+            }
+            if(_lastTarget == null)
+            {
+                return TaskStatus.Failure;
             }
             MoveToTarget2D(agent, _lastTarget.position);
             return TaskStatus.Running;
