@@ -92,8 +92,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c2c8a64e05b08c94e98e808b694b8d3e
-    m_Address: Assets/Resource/VFX/PlayerVFX/Hit_vfx/Hit_vfx/Hit_vfx.prefab
+  - m_GUID: e190bf97c041e58448af6b043116cba0
+    m_Address: Assets/Resource/VFX/PlayerVFX/Hit_vfx/Hit_vfx/Holy hit.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
