@@ -4,7 +4,7 @@ namespace BehaviorDesigner.Runtime.Tasks
     {
         public SharedTransformList targetList;
         public SharedInt currentTargetIndex;
-        public SharedTransform currentTarget;
+        public SharedVector3 currentTargetPos;
 
         public override void OnStart()
         {
@@ -22,7 +22,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             {
                 currentTargetIndex.Value = currentTargetIndex.Value + 1;
             }
-            currentTarget.Value = targetList.Value[currentTargetIndex.Value];
+            currentTargetPos.Value = targetList.Value[currentTargetIndex.Value].position;
         }
     }
 

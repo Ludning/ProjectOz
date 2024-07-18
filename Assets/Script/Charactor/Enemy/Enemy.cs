@@ -44,7 +44,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform _leftPatrolPoint;
     [SerializeField] private Transform _rightPatrolPoint;
 
-
     [SerializeField] private string _enemyId;
     [SerializeField] private EnemyData _enemyData;
     [SerializeField] private bool _isMovable = true;
@@ -245,6 +244,7 @@ public class Enemy : MonoBehaviour
 
     public bool CharacterAttack()
     {
+        StartCoroutine(AttackEnd(.4f));
         if (_isChargeAttack)
         {
             ChargeAttack(_editorData.ChargeAttackForce);
@@ -298,8 +298,6 @@ public class Enemy : MonoBehaviour
     }
     private void Attack()
     {
-        StartCoroutine(AttackEnd(.4f));
-
         if (_attackCollider == null)
             return;
         _attackCollider.SetDamage(_attackDamage);
@@ -470,6 +468,11 @@ public class Enemy : MonoBehaviour
     public Transform GetLastTarget()
     {
         return _detector.GetLastTarget();
+    }
+
+    internal Vector3 GetTargetPosition()
+    {
+        return _detector.GetPosition();
     }
 
     /* Not Used

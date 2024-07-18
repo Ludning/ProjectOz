@@ -9,6 +9,7 @@ namespace BehaviorDesigner.Runtime.Tasks
     {
         public Enemy owner;
         public SharedTransform target;
+        public SharedVector3 targetPos;
         public SharedFloat detectRange;
 
         public override void OnAwake()
