@@ -138,12 +138,18 @@ public class Enemy : MonoBehaviour
         }
         else if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
         {
-            look = Quaternion.LookRotation(dir, Vector3.up);
+            Vector3 orig = transform.position;
+            Vector3 target = _navMeshAgent.destination;
+            if (!_isFlying)
+            {
+                orig.y = 0;
+                target.y = 0;
+            }
+            look = Quaternion.LookRotation(target - orig, Vector3.up);
             transform.rotation = look;
         }
         else
         {
-
             transform.rotation = look;
         }
 
