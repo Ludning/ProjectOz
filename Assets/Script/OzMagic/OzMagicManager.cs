@@ -39,8 +39,6 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         switch (_ozMagicIndex)
         {
             case 0:
-                OnExcute(_timeStop);
-                return AttackType.TimeStop;
                 OnExcute(_meteorPool);
                 return AttackType.Meteor;
             case 1:
