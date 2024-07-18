@@ -23,7 +23,7 @@ TagManager:
   - 
   - Terrain_Impassable
   - Terrain_Passable
-  - 
+  - Fireball
   - 
   - Character_Collider
   - Enemy_Env_Collider

@@ -5,6 +5,7 @@ using UnityEngine.Pool;
 public class OzMagicManager : SingleTonMono<OzMagicManager>
 {
     private IObjectPool<OzMagic> _meteorPool;
+    private IObjectPool<OzMagic> _timeStop;
 
     [SerializeField] private List<GameObject> Prefab_OzMagic = new List<GameObject>();
     [SerializeField] private List<float> _ozMagic_weights;
@@ -26,17 +27,24 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         //_ozMagic_weights.Add(1f);
 
         _meteorPool = new ObjectPool<OzMagic>(() => CreateBall(Prefab_OzMagic[0], _meteorPool), OnGetBall, OnReleaseBall, OnDestroyBall);
+
+        //[todo]
+        _timeStop = new ObjectPool<OzMagic>(() => StopTime(Prefab_OzMagic[1], _timeStop));
     }
 
-    public void Execute()
+    public AttackType Execute()
     {
         RandomOzMagic();
         switch (_ozMagicIndex)
         {
             case 0:
                 OnExcute(_meteorPool);
-                break;
-        }      
+                return AttackType.Meteor;
+            case 1:
+                OnExcute(_timeStop);
+                return AttackType.TimeStop;
+        }
+        return AttackType.None;
     }
 
     private void RandomOzMagic()
@@ -80,6 +88,7 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         oz.SetManagedPool(ozPool);
         return oz;
     }
+
     private void OnGetBall(OzMagic oz)
     {
         oz.gameObject.SetActive(true);
@@ -92,4 +101,13 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
     {
         Destroy(oz.gameObject);
     }
+
+    #region TimeStop
+    private OzMagic StopTime(GameObject prefab, IObjectPool<OzMagic> ozPool)
+    {
+        var oz = Instantiate(prefab, transform.position, transform.rotation).GetComponent<OzMagic>();
+        oz.SetManagedPool(ozPool);
+        return oz;
+    }
+    #endregion
 }
