@@ -103,10 +103,16 @@ public class PlayerStat : MonoBehaviour
     }
     public void ChangeTransformation()
     {
-        if (PlayerCurrentGage >= 100)
+        if (PlayerCurrentGage >= 100 && CharacterMediator.playerModelController.CurrentModelState == PlayerModelState.Mage)
         {
             _isGageReduce = true;
             CharacterMediator.playerModelController.OnInputSwitchModel(PlayerModelState.Knight);
+        }
+        else if (CharacterMediator.playerModelController.CurrentModelState == PlayerModelState.Knight)
+        {
+            _isGageReduce = false;
+            ChangeGage(AttackType.UndoTransformation);
+            CharacterMediator.playerModelController.OnInputSwitchModel(PlayerModelState.Mage);
         }
     }
     private void ReduceGage()
@@ -115,7 +121,7 @@ public class PlayerStat : MonoBehaviour
             return;
         if (PlayerCurrentGage != 0)
         {
-            PlayerCurrentGage -= Time.deltaTime;
+            PlayerCurrentGage -= Time.deltaTime * _resourceData.gageConsume;
             return;
         }
         _isGageReduce = false;

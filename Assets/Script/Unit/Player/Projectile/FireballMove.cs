@@ -12,7 +12,8 @@ public class FireballMove : BallMove
     private int _bounceCount;
 
     private float _damage;
-    private float _gravityValue;
+    [SerializeField] private float _gravityValue;
+    [SerializeField] private float _bouncePower;
 
     protected override void Awake()
     {
@@ -27,7 +28,6 @@ public class FireballMove : BallMove
         _maxBounceCount = _fireballData_Projectile.projectileBounceCount;
 
         _damage = _fireballData_Skill.skillPowerRate;
-        _gravityValue = 40.81f;
         _gravity = new Vector3(0f, -_gravityValue, 0f);
     }
 
@@ -58,7 +58,7 @@ public class FireballMove : BallMove
             Vector3 collisionNormal = collision.contacts[0].normal;
             if (collisionNormal.y > 0.5f)
             {
-                _rb.AddForce(0f, 8f, 0f, ForceMode.Impulse);
+                _rb.AddForce(0f, _bouncePower, 0f, ForceMode.Impulse);
             }
             else
                 _rb.velocity = new Vector3(-_rb.velocity.x, _rb.velocity.y, -_rb.velocity.z);
