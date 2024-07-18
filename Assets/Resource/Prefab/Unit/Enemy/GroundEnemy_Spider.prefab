@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 439805582821525968}
   - component: {fileID: 2894460151949784758}
   - component: {fileID: 7472365141265234094}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -73,13 +73,18 @@ MonoBehaviour:
   _editorData:
     AttackRange: 4.66
     AttackCooldown: 2
+    ChargeAttackForce: 80
     EnemyPatrolDistance: 10
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 20
     EnemyAlramLimitTime: 2
-    EnemyChaseDistance: 25
     DetectThroughWall: 1
+    CanFireProjectile: 0
+    ProjectileFirePos: {fileID: 0}
+    ProjectilePrefab: {fileID: 0}
+    CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!114 &273844554212174829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,8 +151,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!195 &9139807726154260487
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -391,6 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9634d16cb935305418074b3e8b07c73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 4016216618349255265}
 --- !u!1 &8770236801416950081
 GameObject:
   m_ObjectHideFlags: 0

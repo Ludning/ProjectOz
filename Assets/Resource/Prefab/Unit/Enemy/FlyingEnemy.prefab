@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 5900540646122249019}
   - component: {fileID: 441693816952508206}
   - component: {fileID: 8369665349676440822}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: Enemy Fly
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -114,7 +114,9 @@ MonoBehaviour:
     CanFireProjectile: 0
     ProjectileFirePos: {fileID: 0}
     ProjectilePrefab: {fileID: 0}
+    CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
+  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!135 &1158408487328004987
 SphereCollider:
   m_ObjectHideFlags: 0
