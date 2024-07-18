@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 4841650368340918}
   - component: {fileID: 198350395633284324}
   - component: {fileID: 199102593292438106}
-  - component: {fileID: 114958388781637224}
-  - component: {fileID: 114203430490536644}
   m_Layer: 0
   m_Name: Particle attractor
   m_TagString: Untagged
@@ -52,7 +50,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4737,35 +4735,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &114958388781637224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1438137212910624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 268fb4d91644e42409780f6594097609, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xRotation: 0
-  yRotation: 3.33
-  zRotation: 2.67
---- !u!114 &114203430490536644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1438137212910624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a26303925b48bc14e879db71eaf9773c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  speed: 5
 --- !u!1 &1973296089296758
 GameObject:
   m_ObjectHideFlags: 0
@@ -4777,8 +4746,9 @@ GameObject:
   - component: {fileID: 4459065192757390}
   - component: {fileID: 199637071102242522}
   - component: {fileID: 198172711250440700}
+  - component: {fileID: -8617618287239203905}
   m_Layer: 0
-  m_Name: Rushslash_VFX
+  m_Name: Rushslash_VFX 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4891,7 +4861,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -9609,3 +9579,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &-8617618287239203905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973296089296758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac46aca41c07a54986d580c67750696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifeTime: 0.4
+  ParticleSystems:
+  - {fileID: 198172711250440700}
+  - {fileID: 198350395633284324}

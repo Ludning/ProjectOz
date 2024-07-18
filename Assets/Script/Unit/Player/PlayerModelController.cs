@@ -15,6 +15,7 @@ public class PlayerModelController : MonoBehaviour
     [SerializeField, ReadOnly] private PlayerModelState _currentModelState;
     [SerializeField, ReadOnly] private Animator _currentAnimator;
     [SerializeField] private CharacterMediator CharacterMediator;
+    [SerializeField] private VfxControl transformdVfx;
 
     public PlayerModelState CurrentModelState => _currentModelState;
     public Animator CurrentAnimator => _currentAnimator;
@@ -37,6 +38,7 @@ public class PlayerModelController : MonoBehaviour
                 _mageModel.SetActive(false);
                 _currentModelState = PlayerModelState.Knight;
                 _currentAnimator = _knightAnimator;
+                transformdVfx.StartParticle();
                 ChangeUI_Icon();
                 break;
             case PlayerModelState.Mage:

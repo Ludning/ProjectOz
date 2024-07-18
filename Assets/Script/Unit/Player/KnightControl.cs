@@ -30,6 +30,8 @@ public class KnightControl : MonoBehaviour, IControl
     [SerializeField] private bool isRush = false;
     [SerializeField] private bool isOnCoolDown = false;
     [SerializeField] private Animator knightAnimator;
+    [SerializeField] private Transform rushSlashVfxRigger;
+    [SerializeField] private VfxControl rushSlashVfxControl;
     private static readonly int HashAttack = Animator.StringToHash("IsAttack");
 
     private void Awake()
@@ -80,7 +82,11 @@ public class KnightControl : MonoBehaviour, IControl
         _currentRushCoolDown = _rushCoolDown;
         isRush = true;
         isOnCoolDown = true;
-
+        
+        rushSlashVfxControl.transform.SetParent(rushSlashVfxRigger.transform);
+        rushSlashVfxControl.transform.localPosition = Vector3.zero;
+        rushSlashVfxControl.StartParticleNonLIfeTime();
+        
         player.PlayerMovement.StartRushSlash(_direction, _rushForce, _rushDistance, EndRushSlash);
     }
 
@@ -89,6 +95,10 @@ public class KnightControl : MonoBehaviour, IControl
         isRush = false;
         col.enabled = false;
         timer = 0f;
+        
+        rushSlashVfxControl.transform.parent = null;
+        rushSlashVfxControl.StopParticle();
+        
         player.PlayerMovement.EndRushSlash();
     }
 

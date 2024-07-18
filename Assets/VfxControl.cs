@@ -26,4 +26,19 @@ public class VfxControl : MonoBehaviour
             particle.Stop();
         }
     }
+    
+    public void StartParticleNonLIfeTime()
+    {
+        foreach (var particle in ParticleSystems)
+        {
+            particle.Play();
+        }
+    }
+    public void StopParticle()
+    {
+        foreach (var particle in ParticleSystems)
+        {
+            particle.Stop();
+        }
+    }
 }
