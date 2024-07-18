@@ -35,6 +35,10 @@ namespace BehaviorDesigner.Runtime.Tasks
             {
                 return TaskStatus.Success;
             }
+            if(_lastTarget == null)
+            {
+                return TaskStatus.Failure;
+            }
             MoveToTarget2D(agent, _lastTarget.position);
             return TaskStatus.Running;
         }
