@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 public enum AIState
 {
@@ -21,12 +22,17 @@ public class EnemyEditorData
 {
     public float AttackRange = 2f;
     public float AttackCooldown = 2f;
+    public float ChargeAttackForce = 80f;
     public float EnemyPatrolDistance = 4f;
     public float EnemyPatrolIdleDuration = 1f;
     public float EnemyAlramDistance = 6f;
     public float EnemyAlramLimitTime = 2f;
-    public float EnemyChaseDistance = 9f;
+    //public float EnemyChaseDistance = 9f;
     public bool DetectThroughWall = false;
+    public bool CanFireProjectile = false;
+    public Transform ProjectileFirePos;
+    public GameObject ProjectilePrefab;
+    public bool CustomPatrolPoint = false;
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -39,7 +45,6 @@ public class Enemy : MonoBehaviour
     [Header("AI_Patrol")]
     [SerializeField] private Transform _leftPatrolPoint;
     [SerializeField] private Transform _rightPatrolPoint;
-
 
     [SerializeField] private string _enemyId;
     [SerializeField] private EnemyData _enemyData;
@@ -60,6 +65,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private EnemyEditorData _editorData;
     [SerializeField] private Transform _rotateTarget;
+
+    [SerializeField] private GameObject _pooledHitVfxPrefab;
 
     private static float positionZ = 0;
 
@@ -83,6 +90,7 @@ public class Enemy : MonoBehaviour
     private Collider _characterCollider;
     private Collider _characterEnvCollider;
 
+    private IObjectPool<PooledVfx> _pooledHitVfx;
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -99,11 +107,37 @@ public class Enemy : MonoBehaviour
 
         _navMeshAgent.updateRotation = false;
 
+        _pooledHitVfxPrefab = ResourceManager.Instance.LoadResourceWithCaching<GameObject>("Hit_vfx");
+
         Init(_enemyData);
+
+        _pooledHitVfx = new ObjectPool<PooledVfx>( CreatePool,
+            OnGetPool, OnReleasePool, OnDestroyPool);
+    }
+
+    public PooledVfx CreatePool()
+    {
+        return Instantiate(_pooledHitVfxPrefab).GetComponent<PooledVfx>();
+    }
+    public void OnGetPool(PooledVfx vfx)
+    {
+        vfx.gameObject.SetActive(true);
+    }
+    public void OnReleasePool(PooledVfx vfx)
+    {
+        vfx.gameObject.SetActive(false);
+    }
+    public void OnDestroyPool(PooledVfx vfx)
+    {
+        Destroy(vfx.gameObject);
     }
     Quaternion look;
     private void Update()
     {
+        if(_combat.IsDead())
+        {
+            return;
+        }
         _currentStateTime += Time.deltaTime;
         if (_currentAttackTime > 0f)
         {
@@ -111,18 +145,39 @@ public class Enemy : MonoBehaviour
         }
         Vector3 dir = _navMeshAgent.destination - transform.position;
         dir = dir.normalized;
-        if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
+        if (_detector.GetTarget() != null && _aiState == AIState.Chase)
         {
-            look = Quaternion.LookRotation(dir, Vector3.up);
+            if (_isFlying)
+            {
+                transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
+            }
+            else
+            {
+                Vector3 orig = transform.position; 
+                Vector3 target = _detector.GetPosition();
+                orig.y = 0;
+                target.y = 0;
+                transform.rotation = Quaternion.LookRotation(target - orig, Vector3.up);
+            }
+        }
+        else if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
+        {
+            Vector3 orig = transform.position;
+            Vector3 target = _navMeshAgent.destination;
+            if (!_isFlying)
+            {
+                orig.y = 0;
+                target.y = 0;
+            }
+            look = Quaternion.LookRotation(target - orig, Vector3.up);
             transform.rotation = look;
         }
         else
         {
-
             transform.rotation = look;
         }
 
-        if(_navMeshAgent.velocity.magnitude > 0.1f)
+        if (_navMeshAgent.velocity.magnitude > 0.1f)
         {
             _animator.SetBool("IsMoving", true);
         }
@@ -145,12 +200,15 @@ public class Enemy : MonoBehaviour
         _attackDamage = enemyData.enemyBasePower;
         _attackCooldown = _editorData.AttackCooldown;
 
-        float moveRange = _editorData.EnemyPatrolDistance;
-        _leftPatrolPoint.position = transform.position + moveRange * Vector3.right;
-        _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
+        if(_editorData.CustomPatrolPoint == false)
+        {
+            float moveRange = _editorData.EnemyPatrolDistance;
+            _leftPatrolPoint.position = transform.position + moveRange * Vector3.right;
+            _rightPatrolPoint.position = transform.position - moveRange * Vector3.right;
+        }
 
-        _detector.Init("Player",
-            _editorData.EnemyChaseDistance,
+        _detector.Init(this, "Player",
+            _editorData.EnemyAlramDistance,
             _editorData.DetectThroughWall);
         SharedTransformList targetList = new SharedTransformList();
         targetList.Value = new List<Transform>();
@@ -166,7 +224,8 @@ public class Enemy : MonoBehaviour
         SharedFloat enemyPatrolIdleDuration = new SharedFloat();
         enemyPatrolIdleDuration.Value = _editorData.EnemyPatrolIdleDuration;
         SharedFloat enemyChaseDistance = new SharedFloat();
-        enemyChaseDistance.Value = _editorData.EnemyChaseDistance;
+        //enemyChaseDistance.Value = _editorData.EnemyChaseDistance;
+        enemyChaseDistance.Value = 9999f;
 
         _behaviorTree.SetVariable("TargetList", targetList);
         _behaviorTree.SetVariable("AttackRange", attackRange);
@@ -204,6 +263,7 @@ public class Enemy : MonoBehaviour
 
     public void StartAttackAnimation()
     {
+        transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
         IsMovable = false;
         _currentAttackTime = _attackCooldown;
         _animator.SetTrigger("Attack");
@@ -219,9 +279,14 @@ public class Enemy : MonoBehaviour
 
     public bool CharacterAttack()
     {
+        StartCoroutine(AttackEnd(.4f));
         if (_isChargeAttack)
         {
-            ChargeAttack(25f);
+            ChargeAttack(_editorData.ChargeAttackForce);
+        }
+        else if (_editorData.CanFireProjectile)
+        {
+            FireProjectile();
         }
         else
         {
@@ -229,6 +294,16 @@ public class Enemy : MonoBehaviour
         }
         return true;
     }
+
+    private void FireProjectile()
+    {
+
+        GameObject projectile = Instantiate(_editorData.ProjectilePrefab, _editorData.ProjectileFirePos.position, _editorData.ProjectileFirePos.rotation);
+        EnemyProjectile enemyProjectile = projectile.GetComponent<EnemyProjectile>();
+        enemyProjectile.Init(_editorData.ProjectileFirePos);
+        enemyProjectile.Fire();
+    }
+
     private void ChargeAttack(float force)
     {
         Vector3 dir = _detector.GetPosition() + Vector3.up - transform.position;
@@ -251,10 +326,13 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    private IEnumerator AttackEnd(float delay)
+    {
+        yield return new WaitForFixedUpdate();
+        IsMovable = true;
+    }
     private void Attack()
     {
-        IsMovable = false;
-        StartCoroutine(AttackEnd());
         if (_attackCollider == null)
             return;
         _attackCollider.SetDamage(_attackDamage);
@@ -275,7 +353,8 @@ public class Enemy : MonoBehaviour
         {
             return false;
         }
-        if (Vector3.Distance(target.position, transform.position) <= range)
+        float dist = Vector3.Distance(_detector.GetPosition(), transform.position);
+        if (dist <= range)
         {
             return true;
         }
@@ -302,24 +381,24 @@ public class Enemy : MonoBehaviour
             return;
         }
     }
-    private void OnAttack(GameObject taget, float damage)
-    {
-        if (!taget.TryGetComponent(out Combat targetCombat))
-        {
-            return;
-        }
-        targetCombat.Damaged(damage);
-    }
 
     private void OnDamaged()
     {
+        PooledVfx pooled = _pooledHitVfx.Get();
+        pooled.Play(transform.position);
+    }
+
+    private IEnumerator DeledRealease(PooledVfx vfx)
+    {
+        yield return new WaitForSeconds(2f);
+        _pooledHitVfx.Release(vfx);
     }
 
     private void OnDead()
     {
         SetEnableAllCollision(false);
         _animator.SetTrigger("Dead");
-        _animator.SetBool("IsDead",true);
+        _animator.SetBool("IsDead", true);
         _isMovable = false;
         StartCoroutine(DelayedDisable());
     }
@@ -341,11 +420,15 @@ public class Enemy : MonoBehaviour
     private void SetEnableRigidbody(bool condition)
     {
         _navMeshAgent.velocity = Vector3.zero;
-        _navMeshAgent.updatePosition = !condition;
         _rigidbody.isKinematic = !condition;
-        _rigidbody.useGravity = false;
-        if (!condition)
+
+        if (condition)
         {
+            _navMeshAgent.updatePosition = false;
+        }
+        else
+        {
+            _navMeshAgent.updatePosition = true;
             _navMeshAgent.nextPosition = transform.position;
         }
     }
@@ -359,28 +442,30 @@ public class Enemy : MonoBehaviour
         return _detector.IsTargetVisible();
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyChaseDistance);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _editorData.AttackRange);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
-
-
-        Gizmos.color = GetColorByState(_aiState);
-        Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
-    }
-
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyChaseDistance);
+        EnemyDebug();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_debug)
+        {
+            EnemyDebug();
+            _debug = false;
+        }
+    }
+    private bool _debug = false;
+    public void EnableDebug()
+    {
+        _debug = true;
+    }
+    private void EnemyDebug()
+    {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _editorData.AttackRange);
+        Gizmos.DrawWireSphere(_detector.transform.position, _editorData.AttackRange);
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _editorData.EnemyAlramDistance);
+        Gizmos.DrawWireSphere(_detector.transform.position, _editorData.EnemyAlramDistance);
 
         Gizmos.color = GetColorByState(_aiState);
         Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
@@ -392,7 +477,7 @@ public class Enemy : MonoBehaviour
 
     private Color GetColorByState(AIState state)
     {
-        if(_currentAttackTime > 0f)
+        if (_currentAttackTime > 0f)
         {
             return Color.red;
         }
@@ -426,6 +511,16 @@ public class Enemy : MonoBehaviour
     public Transform GetLastTarget()
     {
         return _detector.GetLastTarget();
+    }
+
+    internal Vector3 GetTargetPosition()
+    {
+        return _detector.GetPosition();
+    }
+
+    internal Vector3 GetLastTargetPosition()
+    {
+        return _detector.GetLastPosition();
     }
 
     /* Not Used

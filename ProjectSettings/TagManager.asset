@@ -29,7 +29,7 @@ TagManager:
   - Enemy_Env_Collider
   - Enemy_Combat_Collider
   - 
-  - 
+  - Enemy_Projectile
   - 
   - 
   - 

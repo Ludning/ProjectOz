@@ -5,7 +5,7 @@ namespace BehaviorDesigner.Runtime.Tasks
 {
     public class BTA_MoveTo : Action
     {
-        public SharedTransform targetPostion;
+        public SharedVector3 targetPostion;
         public NavMeshAgent agent;
         public bool isDynamicDestination = false;
 
@@ -17,7 +17,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         public override void OnStart()
         {
             SetMovable(agent, true);
-            MoveToTarget2D(agent, targetPostion.Value.position);
+            MoveToTarget2D(agent, targetPostion.Value);
         }
 
         public override TaskStatus OnUpdate()
@@ -33,7 +33,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             {
                 return TaskStatus.Success;
             }
-            MoveToTarget2D(agent, targetPostion.Value.position);
+            MoveToTarget2D(agent, targetPostion.Value);
             return TaskStatus.Running;
         }
         public override void OnEnd()
