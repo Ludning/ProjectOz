@@ -13,7 +13,7 @@
     "TimeStop": "Assets/Resource/Prefab/Projectile/TimeStop.prefab",
     "Game_Clear_UI": "Assets/Resource/Sprite/UISprite/Game_Clear_UI.png",
     "Game_Over_UI": "Assets/Resource/Sprite/UISprite/Game_Over_UI.png",
-    "136": "1247",
+    "Hit_vfx": "Assets/Resource/VFX/PlayerVFX/Hit_vfx/Hit_vfx/Hit_vfx.prefab",
     "137": "1248",
     "138": "1249",
     "139": "1250",

@@ -111,8 +111,7 @@ public class Enemy : MonoBehaviour
 
         Init(_enemyData);
 
-        _pooledHitVfx = new ObjectPool<PooledVfx>( CreatePool,
-            OnGetPool, OnReleasePool, OnDestroyPool);
+        //_pooledHitVfx = new ObjectPool<PooledVfx>( CreatePool,OnGetPool, OnReleasePool, OnDestroyPool);
     }
 
     public PooledVfx CreatePool()
@@ -250,14 +249,14 @@ public class Enemy : MonoBehaviour
 
 
 
-    //ÀüÅõ °ü·Ã
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public Combat GetCombat()
     {
         return _combat;
     }
 
-    //°ø°Ý¸Þ¼­µå
-    //¾Ö´Ï¸ÞÀÌ¼Ç ½ÇÇà, ¿òÁ÷ÀÓ
+    //ï¿½ï¿½ï¿½Ý¸Þ¼ï¿½ï¿½ï¿½
+    //ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     float _attackCooldown = 1f;
     float _currentAttackTime = 0f;
 
@@ -367,7 +366,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // ÀÌº¥Æ®
+    // ï¿½Ìºï¿½Æ®
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -384,8 +383,8 @@ public class Enemy : MonoBehaviour
 
     private void OnDamaged()
     {
-        PooledVfx pooled = _pooledHitVfx.Get();
-        pooled.Play(transform.position);
+        //PooledVfx pooled = _pooledHitVfx.Get();
+        //pooled.Play(transform.position);
     }
 
     private IEnumerator DeledRealease(PooledVfx vfx)
@@ -544,7 +543,7 @@ public class Enemy : MonoBehaviour
     //}
 
     ///// <summary>
-    ///// Äð´Ù¿î °è»ê ¹× Å×µÎ¸® ¹ÛÀ» Æ¨°Ü ³ª°¬´ÂÁö °Ë»ç
+    ///// ï¿½ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½×µÎ¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¨ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
     ///// </summary>
     ///// <returns></returns>
     //private IEnumerator CheckKnockbackEnd()

@@ -675,6 +675,24 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!54 &1982048776 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 2778836807577768356, guid: 4c6cc3ba48e50e84a81cfbb83f0de5cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2423541147188273256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1982048787 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 292335181016652611, guid: 4c6cc3ba48e50e84a81cfbb83f0de5cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2423541147188273256}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4166ca5ab2140d458c1a9f2e794d3b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2061212382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -797,9 +815,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackChargingSpeed: 0.2
+  _attackFireSpeed: 1
+  _jumpInputMaxTimer: 0
+  _flyMaxTimer: 0
+  flyValue: 1
   animator: {fileID: 0}
   firePosition: {fileID: 0}
-  CharacterMediator: {fileID: 0}
+  player: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!1001 &2423541147188273256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -813,6 +837,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Copy
       objectReference: {fileID: 0}
+    - target: {fileID: 2733651900553599304, guid: 4c6cc3ba48e50e84a81cfbb83f0de5cd,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1982048776}
+    - target: {fileID: 2733651900553599304, guid: 4c6cc3ba48e50e84a81cfbb83f0de5cd,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1982048787}
     - target: {fileID: 8309025242389305358, guid: 4c6cc3ba48e50e84a81cfbb83f0de5cd,
         type: 3}
       propertyPath: m_LocalPosition.x
