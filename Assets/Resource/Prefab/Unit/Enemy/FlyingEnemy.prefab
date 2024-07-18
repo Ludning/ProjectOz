@@ -106,7 +106,7 @@ MonoBehaviour:
     AttackRange: 5
     AttackCooldown: 2
     ChargeAttackForce: 80
-    EnemyPatrolDistance: 10
+    EnemyPatrolDistance: 2
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 10
     EnemyAlramLimitTime: 2
@@ -114,6 +114,7 @@ MonoBehaviour:
     CanFireProjectile: 0
     ProjectileFirePos: {fileID: 0}
     ProjectilePrefab: {fileID: 0}
+    CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
 --- !u!135 &1158408487328004987
 SphereCollider:

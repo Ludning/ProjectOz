@@ -123,7 +123,7 @@
       "skillPowerRate": 30.0,
       "skillCooltime": 0.0,
       "value1": 2.0,
-      "value2": 30.0,
+      "value2": 0.0,
       "projectileID": "P102"
     },
     "S103": {
