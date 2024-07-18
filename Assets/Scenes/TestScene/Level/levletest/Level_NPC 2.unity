@@ -294,7 +294,7 @@ PrefabInstance:
     - target: {fileID: 2333123253030120768, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
       propertyPath: boxSize.x
-      value: 1.1
+      value: 1.55
       objectReference: {fileID: 0}
     - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
