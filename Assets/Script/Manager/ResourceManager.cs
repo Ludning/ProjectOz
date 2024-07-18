@@ -11,6 +11,7 @@ public class ResourceManager : SingleTon<ResourceManager>
     
     public T LoadResource<T>(string resourceName) where T : UnityEngine.Object
     {
+        Debug.Log(resourceName);
         string resourcePath = DataManager.Instance.GetAssetAddress(resourceName);
         
         T resource = Addressables.LoadAssetAsync<T>(resourcePath).WaitForCompletion();

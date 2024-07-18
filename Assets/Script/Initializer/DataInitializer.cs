@@ -15,6 +15,8 @@ public static class DataInitializer
         GameData gameData = JsonConvert.DeserializeObject<GameData>(jsonFile.text);
         foreach(OzmagicData data in gameData.OzmagicDatas.Values)
         {
+            if(data.prefabName == "-")
+                continue;
             GameObject prefab = ResourceManager.Instance.LoadResource<GameObject>(data.prefabName);
             prefab.GetComponent<OzMagic>()._ozMagicPercentage = data.ozSkillPercentage;
         }

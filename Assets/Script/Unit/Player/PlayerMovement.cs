@@ -34,8 +34,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask dashLayerMask;     // 대시 경로에서 충돌을 감지할 레이어
     
     public float JumpForce = 10f;
+
+    [SerializeField] private GameObject _frictionCol;
+    private int _defaultLayerNum;
+    private int _rushSlashLayerNum;
+    [SerializeField] private LayerMask _defaultLayerMask;
+    [SerializeField] private LayerMask _rushSlashLayerMask;
+
     //[SerializeField] private float capsuleRadius = 0.5f;
-    
+
     private bool _isRushSlash = false;
     private bool _isDash = false;
     private float dashStartPositionX;
@@ -55,9 +62,14 @@ public class PlayerMovement : MonoBehaviour
     {
         _mageData = DataManager.Instance.GetGameData<PcData>("C101");
         _knightData = DataManager.Instance.GetGameData<PcData>("C102");
+
+        _defaultLayerNum = GetActiveLayerIndex(_defaultLayerMask);
+        _rushSlashLayerNum = GetActiveLayerIndex(_rushSlashLayerMask);
     }
     private void Update()
     {
+        _currentState = CharacterMediator.playerModelController.CurrentModelState;
+
         if (IsRushSlash)
             OnUpdateRushSlash();
         else if (_isDash)
@@ -130,14 +142,25 @@ public class PlayerMovement : MonoBehaviour
             _lastDirection = _direction;
         RotationCharacter(_direction);
         CharacterMediator.playerModelController.OnInputSetDirection(_direction);
+
+        float time;
+        if (_currentState == PlayerModelState.Knight)
+        {
+            time = Time.fixedUnscaledDeltaTime;
+        }
+        else
+        {
+            time = Time.fixedDeltaTime;
+        }
+        
         if (CharacterMediator.IsGround == true)
         {
-            Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
+            Vector3 velocity = new Vector3(_direction.x * CurrentData.pcMoveSpeed * 100 * time, Rigidbody.velocity.y, 0);
             Rigidbody.velocity = velocity;
         }
         else
         {
-            Vector3 velocity = new Vector3(_direction.x * airSpeed * 100 * Time.fixedUnscaledDeltaTime, Rigidbody.velocity.y, 0);
+            Vector3 velocity = new Vector3(_direction.x * airSpeed * 100 * time, Rigidbody.velocity.y, 0);
             Rigidbody.velocity = velocity;
         }
     }
@@ -180,7 +203,10 @@ public class PlayerMovement : MonoBehaviour
         _isRushSlash = true;
         Rigidbody.useGravity = false;
         Rigidbody.velocity = Vector3.zero;
+        gameObject.layer = _rushSlashLayerNum;
+        _frictionCol.layer = _rushSlashLayerNum;
         CharacterMediator.PlayerAnimator.SetBool(RushSlashHash, true);
+
         Rigidbody.AddForce(targetDirection * rushForce, ForceMode.Impulse);
     }
     public void EndRushSlash()
@@ -188,7 +214,26 @@ public class PlayerMovement : MonoBehaviour
         _isRushSlash = false;
         Rigidbody.useGravity = true;
         Rigidbody.velocity = Vector3.zero;
+        gameObject.layer = _defaultLayerNum;
+        _frictionCol.layer = _defaultLayerNum;
         CharacterMediator.PlayerAnimator.SetBool(RushSlashHash, false);
+    }
+    private int GetActiveLayerIndex(LayerMask mask)
+    {
+        int maskValue = mask.value;
+        if (maskValue == 0 || (maskValue & (maskValue - 1)) != 0)
+        {
+            return -1;
+        }
+
+        int index = 0;
+        while (maskValue > 1)
+        {
+            maskValue >>= 1;
+            index++;
+        }
+
+        return index;
     }
 
     private void OnTriggerStay(Collider other)

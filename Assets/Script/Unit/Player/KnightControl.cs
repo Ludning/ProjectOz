@@ -26,11 +26,7 @@ public class KnightControl : MonoBehaviour, IControl
     [SerializeField] private float _currentRushCoolDown;
     private float _damage;
     private float timer;
-
-    private int _defaultLayer;
-    private int _rushSlashLayer;
-    private int _jumpCount;
-
+	private int _jumpCount;
     [SerializeField] private bool isRush = false;
     [SerializeField] private bool isOnCoolDown = false;
     [SerializeField] private Animator knightAnimator;
@@ -105,9 +101,12 @@ public class KnightControl : MonoBehaviour, IControl
         }
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Wall"))
         {
-            //if (other.gameObject.layer == LayerMask.NameToLayer("Terrain_Impassable"))
-            isOnCoolDown = true;
-            EndRushSlash();
+            if (other.gameObject.layer == LayerMask.NameToLayer("Terrain_Impassable"))
+            {
+                isOnCoolDown = true;
+                EndRushSlash();
+                Debug.Log("�޷�");
+            }
         }
     }
 

@@ -24,7 +24,7 @@ TagManager:
   - Terrain_Impassable
   - Terrain_Passable
   - Fireball
-  - 
+  - Player_RushSlash
   - Character_Collider
   - Enemy_Env_Collider
   - Enemy_Combat_Collider
