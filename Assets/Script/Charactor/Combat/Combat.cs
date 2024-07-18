@@ -14,6 +14,8 @@ public class Combat : MonoBehaviour
     [SerializeField] private float _invincibleTimeOnHit = .1f;
     [SerializeField] private float _prevHitTime = 0f;
 
+    [SerializeField, ReadOnly] public bool IsInvincibility = false;
+
     public Func<bool> AdditionalDamageableCheck { get; set; }
     public Action OnDamaged;
     public Action OnHeal;
@@ -61,6 +63,9 @@ public class Combat : MonoBehaviour
     }
     public bool Damaged(float damage)
     {
+        if (IsInvincibility == true)
+            return false;
+        
         if (!IsDamageable())
             return false;
 

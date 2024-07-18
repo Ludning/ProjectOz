@@ -97,6 +97,7 @@ MonoBehaviour:
   knightControl: {fileID: 2181803010954681357}
   PlayerMovement: {fileID: 6777130721489702383}
   playerModelController: {fileID: 1622184637121969576}
+  playerCombat: {fileID: 212520457769849487}
 --- !u!114 &6777130721489702383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +378,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!65 &3265366612223112527
 BoxCollider:
   m_ObjectHideFlags: 0

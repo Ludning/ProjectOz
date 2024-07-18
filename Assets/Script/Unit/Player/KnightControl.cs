@@ -86,6 +86,8 @@ public class KnightControl : MonoBehaviour, IControl
         rushSlashVfxControl.transform.SetParent(rushSlashVfxRigger.transform);
         rushSlashVfxControl.transform.localPosition = Vector3.zero;
         rushSlashVfxControl.StartParticleNonLIfeTime();
+
+        player.playerCombat.IsInvincibility = true;
         
         player.PlayerMovement.StartRushSlash(_direction, _rushForce, _rushDistance, EndRushSlash);
     }
@@ -98,6 +100,8 @@ public class KnightControl : MonoBehaviour, IControl
         
         rushSlashVfxControl.transform.parent = null;
         rushSlashVfxControl.StopParticle();
+        
+        player.playerCombat.IsInvincibility = false;
         
         player.PlayerMovement.EndRushSlash();
     }

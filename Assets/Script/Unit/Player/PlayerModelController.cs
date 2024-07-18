@@ -39,6 +39,7 @@ public class PlayerModelController : MonoBehaviour
                 _currentModelState = PlayerModelState.Knight;
                 _currentAnimator = _knightAnimator;
                 transformdVfx.StartParticle();
+                CharacterMediator.playerCombat.IsInvincibility = false;
                 ChangeUI_Icon();
                 break;
             case PlayerModelState.Mage:
@@ -46,6 +47,9 @@ public class PlayerModelController : MonoBehaviour
                 _knightModel.SetActive(false);
                 _currentModelState = PlayerModelState.Mage;
                 _currentAnimator = _mageMAnimator;
+                CharacterMediator.playerCombat.IsInvincibility = false;
+                if(CharacterMediator.CurrentControl is KnightControl knightControl)
+                    knightControl.EndRushSlash();
                 ChangeUI_Icon();
                 break;
         }

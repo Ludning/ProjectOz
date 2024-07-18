@@ -160,6 +160,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fire_A
       objectReference: {fileID: 0}
+    - target: {fileID: 1271764609937064, guid: 9adace1de017fa04783890c1b95db21d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4717135665064498, guid: 9adace1de017fa04783890c1b95db21d, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.0117254

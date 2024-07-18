@@ -333,6 +333,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5016133849406154776, guid: 04e035dc20d97f540a0158227cd74cf1,
+        type: 3}
+      propertyPath: playerCombat
+      value: 
+      objectReference: {fileID: 1325170464}
     - target: {fileID: 7554309651453514861, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1152,6 +1157,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &177776728
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1473,6 +1479,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &200454106
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2684,6 +2691,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &481417622
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3215,6 +3223,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &562606220
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3508,6 +3517,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &598499465
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3864,6 +3874,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!1001 &629222779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8953,6 +8964,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &1114689610
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10463,6 +10475,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!1001 &1279743739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11273,6 +11286,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 36331814}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1325170464 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 212520457769849487, guid: 04e035dc20d97f540a0158227cd74cf1,
+    type: 3}
+  m_PrefabInstance: {fileID: 36331814}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab025109fbe1df94ca4a6313b6050a96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1331432999
 GameObject:
   m_ObjectHideFlags: 0
@@ -11554,6 +11579,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!1001 &1368045092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13333,6 +13359,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &1491309755
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13777,6 +13804,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!1001 &1507034660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14138,6 +14166,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &1554272203
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14495,6 +14524,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!1001 &1565275528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14945,6 +14975,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &1598822040
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15470,6 +15501,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!4 &1645852723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 261097855735366829, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
@@ -15859,6 +15891,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &1741143974
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16302,6 +16335,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &1780653131
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18954,6 +18988,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!54 &2068157484
 Rigidbody:
   m_ObjectHideFlags: 0
