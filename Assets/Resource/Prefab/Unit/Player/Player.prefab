@@ -82,13 +82,13 @@ MonoBehaviour:
   Rigidbody: {fileID: 5236318171550696614}
   DashCollider: {fileID: 5633290320481398914}
   airSpeed: 5
-  dashForce: 40
-  dashDistance: 10
+  dashForce: 100
+  dashDistance: 25
   dashCooldown: 1
-  jumpForce: 40
   dashLayerMask:
     serializedVersion: 2
     m_Bits: 3072
+  JumpForce: 25
   stopDistance: 0.1
   _rushSlashDistance: 0
 --- !u!114 &2333123253030120768
@@ -336,7 +336,7 @@ MonoBehaviour:
   _maxHp: 100
   _hp: 100
   _dead: 0
-  _invincibleTimeOnHit: 0.1
+  _invincibleTimeOnHit: 1
   _prevHitTime: 0
 --- !u!65 &3265366612223112527
 BoxCollider:
@@ -832,9 +832,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackChargingSpeed: 0.2
+  _attackFireSpeed: 1
+  _jumpInputMaxTimer: 0.5
+  _flyMaxTimer: 1
+  flyValue: 10
   animator: {fileID: 1235818208901131548}
   firePosition: {fileID: 7990062489203696157}
-  CharacterMediator: {fileID: 5016133849406154776}
+  player: {fileID: 5016133849406154776}
+  rb: {fileID: 5236318171550696614}
 --- !u!4 &1235818208893862554 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182,
