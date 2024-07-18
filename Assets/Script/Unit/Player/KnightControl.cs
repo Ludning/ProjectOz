@@ -109,9 +109,19 @@ public class KnightControl : MonoBehaviour, IControl
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Meteor") && isRush)
+        {
+            if (other.TryGetComponent(out Projectile_Meteor meteor))
+            {
+                meteor.DestroyOzMagic();
+                Debug.Log("Oz매직 발동");
+            }
+        }
         if (other.gameObject.CompareTag("Enemy") && isRush)
         {
             _currentRushCoolDown = _rushCoolDownHit;
+            if (other.TryGetComponent(out Combat combat))
+                combat.Damaged(_damage);
         }
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Wall"))
         {
