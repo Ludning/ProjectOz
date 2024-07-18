@@ -103,14 +103,17 @@ MonoBehaviour:
   _detector: {fileID: 13238077122672407}
   _isChargeAttack: 1
   _editorData:
-    AttackRange: 6
+    AttackRange: 5
     AttackCooldown: 2
-    EnemyPatrolDistance: 3
+    ChargeAttackForce: 80
+    EnemyPatrolDistance: 10
     EnemyPatrolIdleDuration: 1
-    EnemyAlramDistance: 6
+    EnemyAlramDistance: 10
     EnemyAlramLimitTime: 2
-    EnemyChaseDistance: 9
     DetectThroughWall: 0
+    CanFireProjectile: 0
+    ProjectileFirePos: {fileID: 0}
+    ProjectilePrefab: {fileID: 0}
   _rotateTarget: {fileID: 0}
 --- !u!135 &1158408487328004987
 SphereCollider:
@@ -131,7 +134,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.7
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7913477194828120235
 MonoBehaviour:
@@ -161,12 +164,7 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(64.81979,-36.15915)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(2.22499466,147.432373)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(2.87103081,201.204575)"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_GetNextTarget","NodeData":{"Offset":"(-116.176605,201.764832)"},"ID":3,"Name":"BTA  
-        Get Next Target","Instant":true,"SharedTransformListtargetList":{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[0,1]},"SharedIntcurrentTargetIndex":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"currenTargetIndex","IsShared":true,"Int32mValue":0},"SharedTransformcurrentTarget":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_MoveTo","NodeData":{"Offset":"(93.8233643,201.764832)"},"ID":4,"Name":"BTA  
-        Move To","Instant":true,"SharedTransformtargetPostion":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true},"NavMeshAgentagent":2,"BooleanisDynamicDestination":false}]}]},"DetachedTasks":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(-645.2533,315.1151)"},"ID":5,"Name":"Selector","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ComparePropertyValue","NodeData":{"Offset":"(-237.0351,136.582825)"},"ID":6,"Name":"Compare
-        Property Value","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":3},"SharedStringcomponentName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"Enemy"},"SharedStringpropertyName":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"IsStunned"},"SharedVariablecompareValue":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(140,140)"},"ID":7,"Name":"Sequence","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_GetNextTarget","NodeData":{"Offset":"(-116.035095,202.582825)"},"ID":8,"Name":"BTA  
-        Get Next Target","Instant":true,"SharedTransformListtargetList":{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[4,5]},"SharedIntcurrentTargetIndex":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"currenTargetIndex","IsShared":true,"Int32mValue":0},"SharedTransformcurrentTarget":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_MoveTo","NodeData":{"Offset":"(90,200)"},"ID":9,"Name":"BTA  
-        Move To","Instant":true,"SharedTransformtargetPostion":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true},"NavMeshAgentagent":6,"BooleanisDynamicDestination":false}]}]}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[7,8]},{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"CurrenTargetIndex","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AttackRange","IsShared":true,"SinglemValue":6},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DetectRange","IsShared":true,"SinglemValue":6},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnemyPatrolIdleDuration","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnemyAlramLimitTime","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"ChaseRange","IsShared":true,"SinglemValue":9},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"State","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"LostTimer","IsShared":true,"SinglemValue":0}]}'
+      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[0,1]},{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"CurrenTargetIndex","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AttackRange","IsShared":true,"SinglemValue":6},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DetectRange","IsShared":true,"SinglemValue":6},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnemyPatrolIdleDuration","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnemyAlramLimitTime","IsShared":true,"SinglemValue":34},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"ChaseRange","IsShared":true,"SinglemValue":9},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"State","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"LostTimer","IsShared":true,"SinglemValue":0}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
@@ -175,18 +173,11 @@ MonoBehaviour:
         unityObjects:
         - {fileID: 3963024630587359664}
         - {fileID: 8457559940111015293}
-        - {fileID: 4938495234725332169}
-        - {fileID: 2940527936952318308}
-        - {fileID: 3963024630587359664}
-        - {fileID: 8457559940111015293}
-        - {fileID: 4938495234725332169}
-        - {fileID: 3963024630587359664}
-        - {fileID: 8457559940111015293}
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!195 &4938495234725332169
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -380,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9634d16cb935305418074b3e8b07c73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 2436297448786757211}
 --- !u!1 &8537793689398807008
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,8 +398,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -18.91, y: 8.31, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8730620420472637584}
   - {fileID: 8457559940111015293}
