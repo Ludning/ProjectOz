@@ -82,6 +82,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e57c2b3d5ed54a94ea85a41aafa45f86
+    m_Address: Assets/Resource/Sprite/UISprite/Game_Clear_UI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bd21f3f9e2b2744fbc55b29ce9e4185
+    m_Address: Assets/Resource/Sprite/UISprite/Game_Over_UI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 440a990e58ac86b439090a3b4e6af67f, type: 2}
   m_SchemaSet:
