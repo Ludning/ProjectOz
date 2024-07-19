@@ -122,6 +122,7 @@ MonoBehaviour:
     m_Bits: 3072
   JumpForce: 25
   _frictionCol: {fileID: 3447393052553555546}
+  _rushSlashLayerNum: 0
   _defaultLayerMask:
     serializedVersion: 2
     m_Bits: 16384
@@ -1083,8 +1084,8 @@ MonoBehaviour:
   _attackChargingSpeed: 0.2
   _attackFireSpeed: 1
   _jumpInputMaxTimer: 0.5
-  _flyMaxTimer: 2
-  flyValue: 5
+  _flyMaxTimer: 1
+  flyValue: 10
   animator: {fileID: 1235818208901131548}
   firePosition: {fileID: 7990062489203696157}
   player: {fileID: 5016133849406154776}
