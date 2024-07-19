@@ -8,6 +8,7 @@ namespace BehaviorDesigner.Runtime.Tasks
     public class BTC_IsVisible : Conditional
     {
         public Enemy owner;
+        public bool isAttack;
 
         public override void OnAwake()
         {
@@ -20,7 +21,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             {
                 return TaskStatus.Failure;
             }
-            if(owner.IsTargetVisible())
+            if(owner.IsTargetVisible(isAttack))
             {
                 return TaskStatus.Success;
             }
