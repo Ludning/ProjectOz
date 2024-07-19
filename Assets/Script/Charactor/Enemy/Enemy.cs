@@ -31,11 +31,11 @@ public class EnemyEditorData
     public float EnemyAlramDistance = 6f;
     public float EnemyAlramLimitTime = 2f;
     public bool DetectThroughWall = false;
+    public bool CustomPatrolPoint = false;
     //public float EnemyChaseDistance = 9f;
     [Space(10)]
     [Header("특수 공격")]
     public float ChargeAttackForce = 80f;
-    public bool CustomPatrolPoint = false;
     [Space(10)]
     public bool CanFireProjectile = false;
     public Transform ProjectileFirePos;
@@ -451,8 +451,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public bool IsTargetVisible()
+    public bool IsTargetVisible(bool checkAbilitySeeThrough)
     {
+        if(checkAbilitySeeThrough == false)
+        {
+            return _detector.IsTargetVisible();
+        }
         if (_editorData.DetectThroughWall)
         {
             return true;
