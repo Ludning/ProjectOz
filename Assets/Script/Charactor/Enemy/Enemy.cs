@@ -437,6 +437,8 @@ public class Enemy : MonoBehaviour
         _animator.SetTrigger("Dead");
         _animator.SetBool("IsDead", true);
         _isMovable = false;
+        _behaviorTree.DisableBehavior();
+        _navMeshAgent.isStopped = true;
 
         if(_editorData.Shield != null)
         {
