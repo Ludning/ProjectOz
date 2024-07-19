@@ -34,7 +34,7 @@ public class MeteorExplosion : MonoBehaviour
 
     private void Update()
     {
-        transform.localScale += _upScale;
+        Explosion();
 
         if (transform.localScale.x >= _explosionRadius)
         {
@@ -43,8 +43,8 @@ public class MeteorExplosion : MonoBehaviour
     }
 
     public void Explosion()
-    { 
-        
+    {
+        transform.localScale += _upScale;
     }
 
     public void SetManagedPool(IObjectPool<MeteorExplosion> Pool)
