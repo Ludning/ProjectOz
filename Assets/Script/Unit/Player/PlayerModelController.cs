@@ -19,13 +19,23 @@ public class PlayerModelController : MonoBehaviour
 
     public PlayerModelState CurrentModelState => _currentModelState;
     public Animator CurrentAnimator => _currentAnimator;
-    
+
     private void Start()
     {
         _mageModel.SetActive(true);
         _knightModel.SetActive(false);
         _currentModelState = PlayerModelState.Mage;
         _currentAnimator = _mageMAnimator;
+
+        _mageRenderer = _mageModel.transform.GetChild(0).GetComponent<Renderer>();
+        _knightRenderer = _knightModel.transform.GetChild(0).GetComponent<Renderer>();
+        _blink = GetComponent<BlinkVfx>();
+
+        CharacterMediator.playerCombat.OnDamaged += OnDamaged;
+    }
+    private void OnDestroy()
+    {
+        CharacterMediator.playerCombat.OnDamaged -= OnDamaged;
     }
     public void OnInputSwitchModel(PlayerModelState modelState)
     {
@@ -84,5 +94,29 @@ public class PlayerModelController : MonoBehaviour
     public void Attack()
     {
         
+    }
+
+    public void OnDamaged()
+    {
+        BlinkCurrentCharacter();
+    }
+
+    private Renderer _mageRenderer;
+    private Renderer _knightRenderer;
+    private BlinkVfx _blink;
+    private void BlinkCurrentCharacter()
+    {
+        switch (CurrentModelState)
+        {
+            case PlayerModelState.Mage:
+                _blink.Set(_mageRenderer);
+                break;
+            case PlayerModelState.Knight:
+                _blink.Set(_knightRenderer);
+                break;
+            default:
+                break;
+        }
+        _blink.Play();
     }
 }
