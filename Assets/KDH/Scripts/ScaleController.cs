@@ -13,17 +13,21 @@ public class ScaleController : OzMagic
     PlayerModelController pmc;
     Rigidbody[] allRigidbodies;
     Animator[] allAnimators;
-    NavMeshAgent[] allNavMeshAgents;    
+    NavMeshAgent[] allNavMeshAgents;
+    BehaviorDesigner.Runtime.BehaviorTree[] allBTs; 
 
     [SerializeField] float ozTimestopDuration; //current
     [SerializeField] float ozTimestopRate;
     [SerializeField] float ozTimestopChainDuration;
     float _times = 0f;
 
-    private bool _isStop = false;
+    Material originalSkybox;
+    Material timeStopSkybox;
 
     private void Awake()
     {
+        originalSkybox = RenderSettings.skybox;
+        timeStopSkybox = ResourceManager.Instance.LoadResource<Material>("TimeStopSkybox");
         _timeStopData_OzMagic = DataManager.Instance.GetGameData<OzmagicData>("O201");
 
         _ozMagicPercentage = _timeStopData_OzMagic.ozSkillPercentage;
@@ -33,7 +37,7 @@ public class ScaleController : OzMagic
 
         SearchAllMovement();
     }
-    
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -44,6 +48,7 @@ public class ScaleController : OzMagic
     {
         if (gameObject.activeInHierarchy)
         {
+            ChangeSkybox(timeStopSkybox);
             StartCoroutine(CycleOfTimeStop());
         }
     }
@@ -53,6 +58,7 @@ public class ScaleController : OzMagic
         bool addTime = false;
         _times += ozTimestopDuration;
 
+        
         Time.timeScale = ozTimestopRate;
         while (_times > 0f)
         {
@@ -61,16 +67,16 @@ public class ScaleController : OzMagic
             _times -= Time.unscaledDeltaTime;
             if(pmc.CurrentModelState == PlayerModelState.Knight && !addTime)
             {
-                OnStop();
-                _isStop = true;
+                OnStop(true);
                 Time.timeScale = 1f;
                 _times += ozTimestopChainDuration;
                 addTime = true;
             }
         }
-        OnStop();
-        _isStop = false;
+
+        OnStop(false);
         Time.timeScale = 1f;
+        ChangeSkybox(originalSkybox);
         DestroyOzMagic();
         yield break;
     }
@@ -80,19 +86,18 @@ public class ScaleController : OzMagic
         allRigidbodies = FindObjectsOfType<Rigidbody>();
         allAnimators = FindObjectsOfType<Animator>();
         allNavMeshAgents = FindObjectsOfType<NavMeshAgent>();
+        allBTs = FindObjectsOfType<BehaviorDesigner.Runtime.BehaviorTree>();
     }
 
-     public void OnStop()
+     public void OnStop(bool isStop)
      {
-         if (!_isStop)
+         if (isStop)
          {
              PauseAllExceptPlayer(pmc.gameObject);
-             _isStop = !_isStop;
          }
          else
          {
              ResumeAll();
-             _isStop = !_isStop;
          }
      }
 
@@ -112,9 +117,9 @@ public class ScaleController : OzMagic
          // Animator 
          foreach (Animator animator in allAnimators)
          {
-            bool isPlayer = animator.gameObject != gameObject || 
-            animator.gameObject != gameObject.transform.GetChild(0) ||
-            animator.gameObject != gameObject.transform.GetChild(1);
+            bool isPlayer = animator.gameObject == gameObject || 
+            animator.gameObject == gameObject.transform.GetChild(0) ||
+            animator.gameObject == gameObject.transform.GetChild(1);
 
             if (!isPlayer)
             {
@@ -122,15 +127,23 @@ public class ScaleController : OzMagic
             }
          }
 
-         // NavMeshAgent 
-         foreach (NavMeshAgent agent in allNavMeshAgents)
-         {
-             if (agent.gameObject != gameObject)
-             {
-                 agent.isStopped = true;
-             }
-         }
-     }
+        foreach (BehaviorDesigner.Runtime.BehaviorTree bts in allBTs)
+        {
+            if (bts.gameObject != gameObject)
+            {
+                bts.enabled = false;
+            }
+        }
+
+        // NavMeshAgent 
+        foreach (NavMeshAgent agent in allNavMeshAgents)
+        {
+            if (agent.gameObject != gameObject)
+            {
+                agent.isStopped = true;
+            }
+        }
+    }
 
      private void ResumeAll()
      {
@@ -149,5 +162,19 @@ public class ScaleController : OzMagic
          {
              agent.isStopped = false;
          }
-     }
+
+         foreach (BehaviorDesigner.Runtime.BehaviorTree bts in allBTs)
+         {
+             bts.enabled = true;
+         }
+    }
+
+    void ChangeSkybox(Material skyboxMaterial)
+    {
+        if(skyboxMaterial != null)
+        {
+            RenderSettings.skybox = skyboxMaterial;
+            DynamicGI.UpdateEnvironment();
+        }   
+    }
 }
