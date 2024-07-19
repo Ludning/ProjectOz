@@ -2074,6 +2074,11 @@ PrefabInstance:
       propertyPath: _editorData.ShieldAttack
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4016216618349255265, guid: 4d237cffc00ad2e4cacda775183aa30e,
+        type: 3}
+      propertyPath: _editorData.AttackThroughWall
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6825606637689824437, guid: 4d237cffc00ad2e4cacda775183aa30e,
         type: 3}
       propertyPath: m_LocalPosition.x
