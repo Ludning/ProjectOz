@@ -106,7 +106,7 @@ MonoBehaviour:
   _maxHp: 100
   _hp: 100
   _dead: 0
-  _invincibleTimeOnHit: 0.1
+  _invincibleTimeOnHit: 0.3
   _prevHitTime: 0
   IsInvincibility: 0
 --- !u!114 &371661220133883007

@@ -73,16 +73,20 @@ MonoBehaviour:
   _editorData:
     AttackRange: 2
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    AttackThroughWall: 0
     EnemyPatrolDistance: 4
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 6
     EnemyAlramLimitTime: 2
     DetectThroughWall: 0
+    CustomPatrolPoint: 0
+    ChargeAttackForce: 80
     CanFireProjectile: 0
     ProjectileFirePos: {fileID: 0}
     ProjectilePrefab: {fileID: 0}
-    CustomPatrolPoint: 0
+    HardLockOn: 0
+    ShieldAttack: 0
+    Shield: {fileID: 0}
   _rotateTarget: {fileID: 0}
   _pooledHitVfxPrefab: {fileID: 0}
 --- !u!114 &7793254199882062861
@@ -100,8 +104,9 @@ MonoBehaviour:
   _maxHp: 100
   _hp: 100
   _dead: 0
-  _invincibleTimeOnHit: 0.1
+  _invincibleTimeOnHit: 0.3
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!114 &1342829694937434773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,8 +156,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.9
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!195 &7349377523316455853
 NavMeshAgent:
   m_ObjectHideFlags: 0
