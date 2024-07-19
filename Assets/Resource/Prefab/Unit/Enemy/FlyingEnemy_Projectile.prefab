@@ -136,17 +136,21 @@ MonoBehaviour:
   _editorData:
     AttackRange: 33.15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    AttackThroughWall: 0
     EnemyPatrolDistance: 3
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 45
     EnemyAlramLimitTime: 2
     DetectThroughWall: 1
+    CustomPatrolPoint: 0
+    ChargeAttackForce: 80
     CanFireProjectile: 1
     ProjectileFirePos: {fileID: 2864088680874731397}
     ProjectilePrefab: {fileID: 8431727877300358046, guid: 0432778c88527f64f8c765646d6017e7,
       type: 3}
-    CustomPatrolPoint: 0
+    HardLockOn: 0
+    ShieldAttack: 0
+    Shield: {fileID: 0}
   _rotateTarget: {fileID: 0}
   _pooledHitVfxPrefab: {fileID: 0}
 --- !u!135 &1158408487328004987
@@ -290,6 +294,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!95 &8369665349676440822
 Animator:
   serializedVersion: 5
