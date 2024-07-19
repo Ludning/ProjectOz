@@ -88,6 +88,7 @@ MonoBehaviour:
     HardLockOn: 0
     ShieldAttack: 1
     Shield: {fileID: 1184447055067835059}
+    ShieldEnableDelay: 2.5
   _rotateTarget: {fileID: 0}
   _pooledHitVfxPrefab: {fileID: 0}
 --- !u!114 &273844554212174829
@@ -244,7 +245,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 6d08a5993f0397544918fa5fcb69fe2e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
