@@ -24,6 +24,7 @@ public class EnemyEditorData
     [Header ("기본 공격")]
     public float AttackRange = 2f;
     public float AttackCooldown = 2f;
+    public float AttackMovableCooldown = 0.6f;
     public bool AttackThroughWall = false;
     [Space(10)]
     [Header("감지")]
@@ -307,7 +308,7 @@ public class Enemy : MonoBehaviour
 
     public bool CharacterAttack()
     {
-        StartCoroutine(AttackEnd(.4f));
+        StartCoroutine(AttackEnd(_editorData.AttackMovableCooldown));
         if (_isChargeAttack)
         {
             ChargeAttack(_editorData.ChargeAttackForce);
