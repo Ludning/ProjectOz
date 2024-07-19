@@ -65,15 +65,13 @@ public class Projectile_Meteor : OzMagic
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            OzMagicManager.Instance.MeteorExplosion.isPlayerHit = false;
-            OzMagicManager.Instance.OnExplosion(transform.position);
+            OzMagicManager.Instance.OnExplosion(transform.position, false);
             DestroyOzMagic();
             //OzMagicManager.Instance.MeteorExplosion.is
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("Player_RushSlash"))
         {
-            OzMagicManager.Instance.MeteorExplosion.isPlayerHit = true;
-            OzMagicManager.Instance.OnExplosion(transform.position);
+            OzMagicManager.Instance.OnExplosion(transform.position, true);
             DestroyOzMagic();
             return;
         }
