@@ -8,7 +8,7 @@ public class TimeManager : SingleTonMono<TimeManager>
     private event Action timeAction;
     private void Update()
     {
-        timeAction.Invoke();
+        timeAction?.Invoke();
     }
 
     public void RegistCooldownAction(Action action)

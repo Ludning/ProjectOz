@@ -30,6 +30,8 @@ public class KnightControl : MonoBehaviour, IControl
     [SerializeField] private bool isRush = false;
     [SerializeField] private bool isOnCoolDown = false;
     [SerializeField] private Animator knightAnimator;
+    [SerializeField] private Transform rushSlashVfxRigger;
+    [SerializeField] private VfxControl rushSlashVfxControl;
     private static readonly int HashAttack = Animator.StringToHash("IsAttack");
 
     private void Awake()
@@ -80,7 +82,13 @@ public class KnightControl : MonoBehaviour, IControl
         _currentRushCoolDown = _rushCoolDown;
         isRush = true;
         isOnCoolDown = true;
+        
+        rushSlashVfxControl.transform.SetParent(rushSlashVfxRigger.transform);
+        rushSlashVfxControl.transform.localPosition = Vector3.zero;
+        rushSlashVfxControl.StartParticleNonLIfeTime();
 
+        player.playerCombat.IsInvincibility = true;
+        
         player.PlayerMovement.StartRushSlash(_direction, _rushForce, _rushDistance, EndRushSlash);
     }
 
@@ -89,15 +97,33 @@ public class KnightControl : MonoBehaviour, IControl
         isRush = false;
         col.enabled = false;
         timer = 0f;
+        
+        rushSlashVfxControl.transform.parent = null;
+        rushSlashVfxControl.StopParticle();
+        
+        player.playerCombat.IsInvincibility = false;
+        
         player.PlayerMovement.EndRushSlash();
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Meteor") && isRush)
+        {
+            if (other.TryGetComponent(out Projectile_Meteor meteor))
+            {
+                meteor.DestroyOzMagic();
+                Debug.Log("Oz매직 발동");
+                //TODO
+                //메테오 연계기 오브젝트 생성
+            }
+        }
         if (other.gameObject.CompareTag("Enemy") && isRush)
         {
             _currentRushCoolDown = _rushCoolDownHit;
+            if (other.TryGetComponent(out Combat combat))
+                combat.Damaged(_damage);
         }
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Wall"))
         {

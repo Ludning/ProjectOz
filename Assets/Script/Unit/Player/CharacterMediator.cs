@@ -13,6 +13,7 @@ public class CharacterMediator : MonoBehaviour
     public KnightControl knightControl;
     public PlayerMovement PlayerMovement;
     public PlayerModelController playerModelController;
+    public Combat playerCombat;
     public IControl CurrentControl
     {
         get

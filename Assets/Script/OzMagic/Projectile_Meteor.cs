@@ -66,6 +66,8 @@ public class Projectile_Meteor : OzMagic
         if (other.gameObject.CompareTag("Ground"))
         {
             DestroyOzMagic();
+            //TODO
+            //Ground충돌기 폭발 이펙트 오브젝트 생성
         }
         if (other.CompareTag("Enemy")|| other.gameObject.CompareTag("Player"))
         {

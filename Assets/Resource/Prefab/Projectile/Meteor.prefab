@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8535550177927591235}
   m_Layer: 0
   m_Name: Meteor
-  m_TagString: Untagged
+  m_TagString: Meteor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,6 +159,10 @@ PrefabInstance:
     - target: {fileID: 1271764609937064, guid: 9adace1de017fa04783890c1b95db21d, type: 3}
       propertyPath: m_Name
       value: Fire_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 1271764609937064, guid: 9adace1de017fa04783890c1b95db21d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4717135665064498, guid: 9adace1de017fa04783890c1b95db21d, type: 3}
       propertyPath: m_LocalScale.x

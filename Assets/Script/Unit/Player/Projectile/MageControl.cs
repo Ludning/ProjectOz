@@ -12,6 +12,7 @@ public class MageControl : MonoBehaviour, IControl
     private IObjectPool<BallMove> _flameballPool;
     private GameObject _fireballPrefab;
     private GameObject _flameballPrefab;
+    private GameObject _ozMagicVfxPrefab;
     #endregion
     
     [Header("공격차징중 속도")]
@@ -44,6 +45,7 @@ public class MageControl : MonoBehaviour, IControl
     [SerializeField] private Transform firePosition;
     [SerializeField] private CharacterMediator player;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private VfxControl vfxControl;
     
     private readonly int HashAttack = Animator.StringToHash("IsAttack");
     private static readonly int AttackClipSpeed = Animator.StringToHash("AttackClipSpeed");
@@ -56,6 +58,7 @@ public class MageControl : MonoBehaviour, IControl
         _percentOzMagic = DataManager.Instance.GetGameData<SkillData>("S102").value2;
         _fireballPrefab = ResourceManager.Instance.LoadResource<GameObject>("Fireball");
         _flameballPrefab = ResourceManager.Instance.LoadResource<GameObject>("Flameball");
+        _ozMagicVfxPrefab = ResourceManager.Instance.LoadResourceWithCaching<GameObject>("Ozmagicmove_vfx");
         
         _fireballPool = new ObjectPool<BallMove>(() => CreateBall(_fireballPrefab, _fireballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
         _flameballPool = new ObjectPool<BallMove>(() => CreateBall(_flameballPrefab, _flameballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
@@ -81,6 +84,7 @@ public class MageControl : MonoBehaviour, IControl
     }
     public void OnAnimation_Fire()
     {
+        vfxControl.StartParticle();
         if(_attackInputTimer < _attackInputChargingTimer)
             NormalAttack();
         else
@@ -88,7 +92,6 @@ public class MageControl : MonoBehaviour, IControl
             _attackInputTimer = 0;
             ChargeAttack();
         }
-
         afterFire = true;
     }
     public void OnAnimation_Exit()
