@@ -10,6 +10,7 @@ TagManager:
   - Undefined
   - Enemy
   - Guts
+  - OzMaic_Projectile
   layers:
   - Default
   - TransparentFX
