@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356e9a140b288d3408dbfd23edec9539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upScaleValue: 30
+  _upScaleValue: 150
   isPlayerHit: 0
 --- !u!1 &5599636927029867729
 GameObject:
