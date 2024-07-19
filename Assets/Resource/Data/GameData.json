@@ -290,7 +290,7 @@
       "projectileLifeTime": 10.0,
       "projectileRemoveLandSet": "b",
       "projectileBounceCount": 1,
-      "projectileRemoveTrigger2": "enemyCollision",
+      "projectileRemoveTrigger2": "-",
       "projectileRemoveTrigger3": "-",
       "projectileTarget": "enemy",
       "childColliderCheck": false,

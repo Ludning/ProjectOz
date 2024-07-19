@@ -135,13 +135,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 3128f7a0ed3dbfd4f9865b180bc9ab46,
+      objectReference: {fileID: 23800000, guid: cf03938c9e11dfc4383e51b1527caf15,
         type: 2}
     - target: {fileID: 2204252103034471305, guid: a6c1159ed14d3294899d809e8a656a80,
         type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: bcb5d1aa43338524bb9c36f9e158b2f8,
+      objectReference: {fileID: 23800000, guid: 2d0891875d3135e478f029701e886841,
         type: 2}
     - target: {fileID: 2281105252123774760, guid: a6c1159ed14d3294899d809e8a656a80,
         type: 3}
@@ -244,16 +244,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2333123253030120768, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: boxSize.x
-      value: 1.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: dashDistance
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7554309651453514861, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
@@ -7428,7 +7418,7 @@ PrefabInstance:
     - target: {fileID: 340343623982832344, guid: 88d56bcf5560f48409f364fbfbfc0402,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -109.342926
+      value: -109.7504
       objectReference: {fileID: 0}
     - target: {fileID: 340343623982832344, guid: 88d56bcf5560f48409f364fbfbfc0402,
         type: 3}
