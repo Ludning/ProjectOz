@@ -120,11 +120,11 @@
       "ID": "R101",
       "description": "짜증 게이지",
       "gageMax": 100.0,
-      "gageConsume": 10.0,
+      "gageConsume": 7.0,
       "gagePenalty": 20.0,
       "gageGainRange": 0.0,
-      "gageGainNormal": 5.0,
-      "gageGainCharge": 10.0
+      "gageGainNormal": 10.0,
+      "gageGainCharge": 20.0
     }
   },
   "SkillDatas": {
