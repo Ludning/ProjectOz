@@ -112,6 +112,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 139b6a657edc6c94e8a3484ad308bfd9
+    m_Address: Assets/Resource/Prefab/Projectile/Explosion/MeteorExplosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 440a990e58ac86b439090a3b4e6af67f, type: 2}
   m_SchemaSet:
