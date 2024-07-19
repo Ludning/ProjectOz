@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -14,13 +10,13 @@ public class MageControl : MonoBehaviour, IControl
     private GameObject _flameballPrefab;
     private GameObject _ozMagicVfxPrefab;
     #endregion
-    
+
     [Header("공격차징중 속도")]
     [SerializeField] private float _attackChargingSpeed = 0.2f;
     [Header("공격발생시 속도")]
     [SerializeField] private float _attackFireSpeed = 1f;
     [Space]
-    
+
     [Header("상승까지의 점프 Press 요구시간")]
     [SerializeField] private float _jumpInputMaxTimer;
     [Header("상승상태의 지속시간")]
@@ -34,9 +30,9 @@ public class MageControl : MonoBehaviour, IControl
     private float _attackInputTimer = 0;
     private float _jumpInputTimer = 0;
     private float _flyInputTimer = 0;
-    
+
     private float _attackInputChargingTimer;
-    
+
     private bool attackKeyDown = false;
     private bool jumpKeyDown = false;
     private bool _isFly = false;
@@ -46,12 +42,12 @@ public class MageControl : MonoBehaviour, IControl
     [SerializeField] private CharacterMediator player;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private VfxControl vfxControl;
-    
+
     private readonly int HashAttack = Animator.StringToHash("IsAttack");
     private static readonly int AttackClipSpeed = Animator.StringToHash("AttackClipSpeed");
 
     private int _jumpCount;
-    
+
     private void Awake()
     {
         _attackInputChargingTimer = DataManager.Instance.GetGameData<SkillData>("S102").value1;
@@ -59,11 +55,11 @@ public class MageControl : MonoBehaviour, IControl
         _fireballPrefab = ResourceManager.Instance.LoadResource<GameObject>("Fireball");
         _flameballPrefab = ResourceManager.Instance.LoadResource<GameObject>("Flameball");
         _ozMagicVfxPrefab = ResourceManager.Instance.LoadResourceWithCaching<GameObject>("Ozmagicmove_vfx");
-        
+
         _fireballPool = new ObjectPool<BallMove>(() => CreateBall(_fireballPrefab, _fireballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
         _flameballPool = new ObjectPool<BallMove>(() => CreateBall(_flameballPrefab, _flameballPool), OnGetBall, OnReleaseBall, OnDestroyBall);
-        
-        
+
+
     }
     private void Update()
     {
@@ -78,14 +74,14 @@ public class MageControl : MonoBehaviour, IControl
     public void OnAnimation_Enter()
     {
         _attackInputTimer = 0;
-        if(attackKeyDown == true)
+        if (attackKeyDown == true)
             animator.SetFloat(AttackClipSpeed, _attackChargingSpeed);
         afterFire = false;
     }
     public void OnAnimation_Fire()
     {
         vfxControl.StartParticle();
-        if(_attackInputTimer < _attackInputChargingTimer)
+        if (_attackInputTimer < _attackInputChargingTimer)
             NormalAttack();
         else
         {
@@ -100,7 +96,7 @@ public class MageControl : MonoBehaviour, IControl
         animator.SetFloat(AttackClipSpeed, _attackFireSpeed);
         afterFire = false;
     }
-    
+
     public void OnInputAttack(KeyType type)
     {
         switch (type)
@@ -146,7 +142,7 @@ public class MageControl : MonoBehaviour, IControl
     {
         attackKeyDown = true;
         animator.SetBool(HashAttack, true);
-        if(afterFire == false)
+        if (afterFire == false)
             animator.SetFloat(AttackClipSpeed, 0.2f);
     }
     private void EndAttack()
@@ -181,7 +177,7 @@ public class MageControl : MonoBehaviour, IControl
         {
             AttackType type = OzMagicManager.Instance.Execute();
             player.playerStat.ChangeGage(type);
-            if(type == AttackType.TimeStop)
+            if (type == AttackType.TimeStop)
                 SpawnObject(_flameballPool);
             Debug.Log("OzMagic");
         }
@@ -227,7 +223,7 @@ public class MageControl : MonoBehaviour, IControl
         if (attackKeyDown == false)
             return;
         _attackInputTimer += Time.deltaTime;
-        
+
         if (_attackInputTimer >= _attackInputChargingTimer)
         {
             //TODO
