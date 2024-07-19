@@ -63,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 2940527936952318308}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.03, z: 0}
   m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -103,14 +103,14 @@ MonoBehaviour:
   _detector: {fileID: 13238077122672407}
   _isChargeAttack: 1
   _editorData:
-    AttackRange: 5
+    AttackRange: 10
     AttackCooldown: 2
     ChargeAttackForce: 80
-    EnemyPatrolDistance: 10
+    EnemyPatrolDistance: 2
     EnemyPatrolIdleDuration: 1
-    EnemyAlramDistance: 10
+    EnemyAlramDistance: 12
     EnemyAlramLimitTime: 2
-    DetectThroughWall: 0
+    DetectThroughWall: 1
     CanFireProjectile: 0
     ProjectileFirePos: {fileID: 0}
     ProjectilePrefab: {fileID: 0}
@@ -136,7 +136,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 1.1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7913477194828120235
 MonoBehaviour:
@@ -190,7 +190,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 8
   m_Acceleration: 9.77
   avoidancePriority: 50
   m_AngularSpeed: 900
@@ -246,6 +246,7 @@ MonoBehaviour:
   _dead: 0
   _invincibleTimeOnHit: 0.1
   _prevHitTime: 0
+  IsInvincibility: 0
 --- !u!95 &8369665349676440822
 Animator:
   serializedVersion: 5
