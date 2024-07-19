@@ -131,7 +131,14 @@ public class KnightControl : MonoBehaviour, IControl
             {
                 isOnCoolDown = true;
                 EndRushSlash();
-                Debug.Log("�޷�");
+            }
+        }
+        if (other.gameObject.CompareTag("OzMaic_Projectile"))
+        {
+            if (player.gameObject.layer == player.PlayerMovement._rushSlashLayerNum)
+            {
+                _currentRushCoolDown = _rushCoolDownHit;
+                EndRushSlash();
             }
         }
     }
