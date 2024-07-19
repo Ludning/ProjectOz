@@ -46,6 +46,7 @@ public class EnemyEditorData
     [Space(10)]
     public bool ShieldAttack = false;
     public GameObject Shield;
+    public float ShieldEnableDelay = .5f;
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -288,6 +289,7 @@ public class Enemy : MonoBehaviour
         if(_editorData.ShieldAttack)
         {
             _editorData.Shield.SetActive(false);
+            StartCoroutine(EnableShield());
         }
         transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
         IsMovable = false;
@@ -351,6 +353,14 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    private IEnumerator EnableShield()
+    {
+        if (_editorData.Shield != null)
+        {
+            yield return new WaitForSeconds(_editorData.ShieldEnableDelay);
+            _editorData.Shield.SetActive(true);
+        }
+    }
     private IEnumerator AttackEnd(float delay)
     {
         yield return new WaitForFixedUpdate();
@@ -358,10 +368,6 @@ public class Enemy : MonoBehaviour
     }
     private void Attack()
     {
-        if (_editorData.ShieldAttack)
-        {
-            _editorData.Shield.SetActive(true);
-        }
 
         if (_attackCollider == null)
             return;
@@ -436,7 +442,7 @@ public class Enemy : MonoBehaviour
         {
             _editorData.Shield.SetActive(false);
         }
-
+        StopAllCoroutines();
         StartCoroutine(DelayedDisable());
     }
     private void SetEnableAllCollision(bool condition)
