@@ -75,6 +75,7 @@ public class Projectile_Meteor : OzMagic
             OzMagicManager.Instance.MeteorExplosion.isPlayerHit = true;
             OzMagicManager.Instance.OnExplosion(transform.position);
             DestroyOzMagic();
+            return;
         }
         if (other.CompareTag("Enemy")|| other.gameObject.CompareTag("Player"))
         {
@@ -86,7 +87,9 @@ public class Projectile_Meteor : OzMagic
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player_RushSlash")) return;
+
+            if (other.gameObject.CompareTag("Player"))
         {
             _damageTimerPlayer += Time.deltaTime;
             if (_damageTimerPlayer >= _hitCycle)
