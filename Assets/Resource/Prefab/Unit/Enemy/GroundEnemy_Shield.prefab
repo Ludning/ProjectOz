@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 371661220133883007}
   - component: {fileID: 9139807726154260487}
   - component: {fileID: 439805582821525968}
-  - component: {fileID: 2894460151949784758}
+  - component: {fileID: 9220798588301337007}
   - component: {fileID: 7472365141265234094}
   m_Layer: 16
   m_Name: Enemy
@@ -72,8 +72,9 @@ MonoBehaviour:
   _detector: {fileID: 7108113485211713750}
   _isChargeAttack: 0
   _editorData:
-    AttackRange: 4.66
+    AttackRange: 5.41
     AttackCooldown: 2
+    AttackThroughWall: 1
     EnemyPatrolDistance: 10
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 20
@@ -85,6 +86,8 @@ MonoBehaviour:
     ProjectileFirePos: {fileID: 0}
     ProjectilePrefab: {fileID: 0}
     HardLockOn: 0
+    ShieldAttack: 1
+    Shield: {fileID: 1184447055067835059}
   _rotateTarget: {fileID: 0}
   _pooledHitVfxPrefab: {fileID: 0}
 --- !u!114 &273844554212174829
@@ -134,13 +137,13 @@ MonoBehaviour:
       startIndex: 
       variableStartIndex: 
       JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(145.4649,-68.41719)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(-0.626932144,117.378731)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(-2.05190086,106.897377)"},"ID":2,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-411.6116,156.9231)"},"ID":3,"Name":"Attack","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Inverter","NodeData":{"Offset":"(20,130)"},"ID":4,"Name":"Inverter","Instant":true,"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.BTC_IsMovable","NodeData":{"Offset":"(0,140)"},"ID":5,"Name":"BTC  
-        Is Movable","Instant":true,"Enemyowner":0}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-103.636436,167.2727)"},"ID":6,"Name":"Attack","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.BTC_IsTargetNear","NodeData":{"Offset":"(-116.508743,148.546616)","WatchedFields":["currentTarget"]},"ID":7,"Name":"BTC  
-        Is Target Near","Instant":true,"Enemyowner":1,"SharedFloatrange":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedTransformcurrentTarget":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_Attack","NodeData":{"Offset":"(38.4649048,148.582825)"},"ID":8,"Name":"BTA  
+        Is Movable","Instant":true,"Enemyowner":0}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-103.636436,167.2727)"},"ID":6,"Name":"Attack","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.BTC_IsTargetNear","NodeData":{"Offset":"(-116.508743,148.546616)"},"ID":7,"Name":"BTC  
+        Is Target Near","Instant":true,"Enemyowner":1,"SharedFloatrange":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_Attack","NodeData":{"Offset":"(38.4649048,148.582825)"},"ID":8,"Name":"BTA  
         Attack","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(246.167526,182.3137)"},"ID":9,"Name":"Chase","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.BTC_IsTargetNear","NodeData":{"Offset":"(-153.181885,150)"},"ID":10,"Name":"BTC  
-        Is Target Near","Instant":true,"Enemyowner":2,"SharedFloatrange":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedTransformcurrentTarget":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-4.53546143,143.536957)"},"ID":11,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.01},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_MoveTo","NodeData":{"Offset":"(111.635635,141.582825)"},"ID":12,"Name":"BTA  
-        Move To","Instant":true,"SharedTransformtargetPostion":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true},"NavMeshAgentagent":3,"BooleanisDynamicDestination":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(730,180)"},"ID":13,"Name":"Patrol","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-163.310059,177.221924)"},"ID":14,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.01},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_GetNextTarget","NodeData":{"Offset":"(48.250576,162.582825)"},"ID":15,"Name":"BTA  
-        Get Next Target","Instant":true,"SharedTransformListtargetList":{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[null,null]},"SharedIntcurrentTargetIndex":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"currenTargetIndex","IsShared":true,"Int32mValue":0},"SharedTransformcurrentTarget":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_MoveTo","NodeData":{"Offset":"(214.285645,160)"},"ID":16,"Name":"BTA  
-        Move To","Instant":true,"SharedTransformtargetPostion":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true},"BooleanisDynamicDestination":false}]}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[null,null]},{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"CurrenTargetIndex","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AttackRange","IsShared":true,"SinglemValue":1},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DetectRange","IsShared":true,"SinglemValue":6},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnemyPatrolIdleDuration","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnemyAlramLimitTime","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"ChaseRange","IsShared":true,"SinglemValue":9},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"State","IsShared":true,"Int32mValue":0}]}'
+        Is Target Near","Instant":true,"Enemyowner":2,"SharedFloatrange":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-4.53546143,143.536957)"},"ID":11,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.01},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_MoveTo","NodeData":{"Offset":"(111.635635,141.582825)"},"ID":12,"Name":"BTA  
+        Move To","Instant":true,"SharedVector3targetPostion":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"NavMeshAgentagent":3,"BooleanisDynamicDestination":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(730,180)"},"ID":13,"Name":"Patrol","Instant":true,"AbortTypeabortType":"Both","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-163.310059,177.221924)"},"ID":14,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.01},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_GetNextTarget","NodeData":{"Offset":"(48.250576,162.582825)"},"ID":15,"Name":"BTA  
+        Get Next Target","Instant":true,"SharedTransformListtargetList":{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[null,null]},"SharedIntcurrentTargetIndex":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"currenTargetIndex","IsShared":true,"Int32mValue":0},"SharedVector3currentTargetPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"}},{"Type":"BehaviorDesigner.Runtime.Tasks.BTA_MoveTo","NodeData":{"Offset":"(214.285645,160)"},"ID":16,"Name":"BTA  
+        Move To","Instant":true,"SharedVector3targetPostion":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"BooleanisDynamicDestination":false}]}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"TargetList","IsShared":true,"List`1mValue":[null,null]},{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"CurrentTarget","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"CurrenTargetIndex","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AttackRange","IsShared":true,"SinglemValue":1},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DetectRange","IsShared":true,"SinglemValue":6},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnemyPatrolIdleDuration","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnemyAlramLimitTime","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"ChaseRange","IsShared":true,"SinglemValue":9},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"State","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"LostTimer","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"TargetPosition","IsShared":true,"Vector3mValue":"(0,0,0)"}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
@@ -167,7 +170,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 22.31
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0.1
@@ -175,7 +178,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0.5
+  m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!54 &439805582821525968
@@ -202,11 +205,11 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!135 &2894460151949784758
-SphereCollider:
+--- !u!136 &9220798588301337007
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -223,9 +226,11 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.67
+  m_Height: 3.19
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.35, z: 0}
 --- !u!95 &7472365141265234094
 Animator:
   serializedVersion: 5
@@ -235,8 +240,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66796744020832237}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: c702044e8b7b7de4d96c5af2d585d4d4, type: 3}
-  m_Controller: {fileID: 9100000, guid: f79cb543ce17e5c4fa894edf78d67cbe, type: 2}
+  m_Avatar: {fileID: 9000000, guid: b3681b15fa0a0ad4e936d65ce5c2a0fb, type: 3}
+  m_Controller: {fileID: 9100000, guid: 6d08a5993f0397544918fa5fcb69fe2e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -273,7 +278,7 @@ Transform:
   m_GameObject: {fileID: 323076606982476425}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.23, z: 1.92}
+  m_LocalPosition: {x: 0, y: 1.47, z: 2.84}
   m_LocalScale: {x: 2.22, y: 2.22, z: 2.22}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -292,7 +297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _owner: {fileID: 0}
-  _halfSize: {x: 1, y: 1, z: 1}
+  _halfSize: {x: 1.9, y: 1, z: 1}
 --- !u!1 &711734291927148474
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,9 +341,9 @@ GameObject:
   - component: {fileID: 972877558476013325}
   - component: {fileID: 817542152219196051}
   - component: {fileID: 879899197033021492}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shield
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,8 +357,8 @@ Transform:
   m_GameObject: {fileID: 1184447055067835059}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.028172335, y: 0.2723458, z: 2.5511112}
-  m_LocalScale: {x: 2.8444445, y: 2.8444445, z: 0.8666667}
+  m_LocalPosition: {x: 0.028172335, y: 1.7, z: 2.13}
+  m_LocalScale: {x: 2.8444445, y: 2.8444445, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8234726306974131267}
