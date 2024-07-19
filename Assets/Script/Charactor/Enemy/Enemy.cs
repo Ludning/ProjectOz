@@ -24,6 +24,7 @@ public class EnemyEditorData
     [Header ("기본 공격")]
     public float AttackRange = 2f;
     public float AttackCooldown = 2f;
+    public float AttackMovableCooldown = 0.6f;
     public bool AttackThroughWall = false;
     [Space(10)]
     [Header("감지")]
@@ -105,6 +106,8 @@ public class Enemy : MonoBehaviour
     private Collider _characterEnvCollider;
 
     private IObjectPool<GameObject> _pooledHitVfx;
+
+    [SerializeField] private BlinkVfx[] _blinkVfxs;
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -307,7 +310,7 @@ public class Enemy : MonoBehaviour
 
     public bool CharacterAttack()
     {
-        StartCoroutine(AttackEnd(.4f));
+        StartCoroutine(AttackEnd(_editorData.AttackMovableCooldown));
         if (_isChargeAttack)
         {
             ChargeAttack(_editorData.ChargeAttackForce);
@@ -423,6 +426,11 @@ public class Enemy : MonoBehaviour
         GameObject pooled = _pooledHitVfx.Get();
         pooled.transform.position = transform.position;
         pooled.GetComponent<ParticleSystem>().Play();
+
+        foreach(var item in _blinkVfxs)
+        {
+            item.Play();
+        }
     }
 
     private IEnumerator DelayedRealease(GameObject vfx)
