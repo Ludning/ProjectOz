@@ -218,13 +218,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: f499c2a1d03f31b4486c486602dffea7,
+      objectReference: {fileID: 23800000, guid: f69c7e1d9656a7a42a672d52fb1a07b3,
         type: 2}
     - target: {fileID: 2204252103034471305, guid: a6c1159ed14d3294899d809e8a656a80,
         type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: cc3a4f52886f62940b85151088b57573,
+      objectReference: {fileID: 23800000, guid: 9f22376280c448049ae52d6bcf3b2d26,
         type: 2}
     - target: {fileID: 2281105252123774760, guid: a6c1159ed14d3294899d809e8a656a80,
         type: 3}
@@ -232,11 +232,6 @@ PrefabInstance:
       value: NavMesh Wall
       objectReference: {fileID: 0}
     - target: {fileID: 2281105252123774760, guid: a6c1159ed14d3294899d809e8a656a80,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301776185299646833, guid: a6c1159ed14d3294899d809e8a656a80,
         type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -333,45 +328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1235818208893837178, guid: 04e035dc20d97f540a0158227cd74cf1,
+    - target: {fileID: 6777130721489702383, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2499155618696776755, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2499155618696776759, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2499155618696776763, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2499155618696777165, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2499155618696777187, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2499155618696777211, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 4627436103112426785, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
+      propertyPath: dashDistance
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5200768494668992135, guid: 04e035dc20d97f540a0158227cd74cf1,
         type: 3}
@@ -442,11 +402,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8597989818601634072, guid: 04e035dc20d97f540a0158227cd74cf1,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -939,20 +894,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1973755461}
     m_Modifications:
-    - target: {fileID: 371661220133883007, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
-        type: 3}
-      propertyPath: gizmoViewMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 371661220133883007, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
-        type: 3}
-      propertyPath: showBehaviorDesignerGizmo
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3
+      value: -6.47
       objectReference: {fileID: 0}
     - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
         type: 3}
@@ -1167,7 +1112,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -1178,7 +1123,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &177776726
 Animator:
   serializedVersion: 5
@@ -1488,7 +1432,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -1499,7 +1443,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &200454104
 Animator:
   serializedVersion: 5
@@ -2699,7 +2642,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -2710,7 +2653,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &481417620
 Animator:
   serializedVersion: 5
@@ -3230,7 +3172,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -3241,7 +3183,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &562606218
 Animator:
   serializedVersion: 5
@@ -3523,7 +3464,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -3534,7 +3475,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &598499463
 Animator:
   serializedVersion: 5
@@ -3769,7 +3709,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &617656186
 Animator:
   serializedVersion: 5
@@ -7208,7 +7147,7 @@ PrefabInstance:
     - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.7
+      value: 27.05
       objectReference: {fileID: 0}
     - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
         type: 3}
@@ -8761,8 +8700,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2759483422481195636, guid: 7134f45220bab49468f697b38dfb8b9b,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 12.592492
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759483422481195636, guid: 7134f45220bab49468f697b38dfb8b9b,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35
+      value: -37.02
       objectReference: {fileID: 0}
     - target: {fileID: 2759483422481195636, guid: 7134f45220bab49468f697b38dfb8b9b,
         type: 3}
@@ -8968,7 +8912,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -8979,7 +8923,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1114689608
 Animator:
   serializedVersion: 5
@@ -9289,7 +9232,7 @@ PrefabInstance:
     - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.6
+      value: 22.03
       objectReference: {fileID: 0}
     - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
         type: 3}
@@ -10368,7 +10311,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1276769821
 Animator:
   serializedVersion: 5
@@ -11459,7 +11401,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1365875458
 Animator:
   serializedVersion: 5
@@ -13348,7 +13289,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -13359,7 +13300,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1491309753
 Animator:
   serializedVersion: 5
@@ -13682,7 +13622,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1506137166
 Animator:
   serializedVersion: 5
@@ -14153,7 +14092,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -14164,7 +14103,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1554272201
 Animator:
   serializedVersion: 5
@@ -14400,7 +14338,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1560492206
 Animator:
   serializedVersion: 5
@@ -14571,7 +14508,7 @@ PrefabInstance:
     - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.5
+      value: 25.03
       objectReference: {fileID: 0}
     - target: {fileID: 6825606637689824437, guid: 9d6121785cbc05b48bd6d7ebc82a5bc4,
         type: 3}
@@ -14960,7 +14897,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -14971,7 +14908,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1598822038
 Animator:
   serializedVersion: 5
@@ -15375,7 +15311,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1637108428
 Animator:
   serializedVersion: 5
@@ -15874,7 +15809,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -15885,7 +15820,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1741143972
 Animator:
   serializedVersion: 5
@@ -16329,7 +16263,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -16340,7 +16274,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &1780653129
 Animator:
   serializedVersion: 5
@@ -18981,7 +18914,7 @@ MonoBehaviour:
   _editorData:
     AttackRange: 15
     AttackCooldown: 2
-    ChargeAttackForce: 80
+    ChargeAttackForce: 80.05
     EnemyPatrolDistance: 10.03
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 18.4
@@ -18992,7 +18925,6 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
     CustomPatrolPoint: 0
   _rotateTarget: {fileID: 0}
-  _pooledHitVfxPrefab: {fileID: 0}
 --- !u!95 &2068157482
 Animator:
   serializedVersion: 5
@@ -20507,7 +20439,7 @@ PrefabInstance:
     - target: {fileID: 547216153497781872, guid: 93419133206b1424ca68098636523d04,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.07
+      value: -1.11
       objectReference: {fileID: 0}
     - target: {fileID: 547216153497781872, guid: 93419133206b1424ca68098636523d04,
         type: 3}
@@ -20583,13 +20515,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 534234661389091503, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -36.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 534234661389091503, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
+        type: 3}
       propertyPath: m_LocalPosition.y
       value: 13.36
       objectReference: {fileID: 0}
     - target: {fileID: 534234661389091503, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3015670786159913423, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
         type: 3}
@@ -20598,8 +20535,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3074651421589871857, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -50.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 3074651421589871857, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 16.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 3074651421589871857, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
+        type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5577122613844781889, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
         type: 3}
@@ -20668,18 +20615,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7484359085047078445, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -20.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484359085047078445, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
+        type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.14
+      value: 6.7
       objectReference: {fileID: 0}
     - target: {fileID: 7484359085047078445, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8012921001508423459, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 21.21
       objectReference: {fileID: 0}
     - target: {fileID: 8012921001508423459, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757869420367702112, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 17.117424
       objectReference: {fileID: 0}
     - target: {fileID: 8757869420367702112, guid: 3cfd623ed3e6b914ea659ada9cdf7b36,
         type: 3}

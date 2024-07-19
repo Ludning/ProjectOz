@@ -7,11 +7,13 @@ namespace BehaviorDesigner.Runtime.Tasks
     {
         public SharedVector3 targetPostion;
         public NavMeshAgent agent;
+        public Enemy enemy;
         public bool isDynamicDestination = false;
 
         public override void OnAwake()
         {
             agent = GetComponent<NavMeshAgent>();
+            enemy = GetComponent<Enemy>();
         }
 
         public override void OnStart()
@@ -22,6 +24,10 @@ namespace BehaviorDesigner.Runtime.Tasks
 
         public override TaskStatus OnUpdate()
         {
+            if(isDynamicDestination)
+            {
+                targetPostion.Value = enemy.GetTargetPosition();
+            }
             //네브메시가 경로 계산중인지 확인 해야함
             if (agent.pathPending == true)
             {

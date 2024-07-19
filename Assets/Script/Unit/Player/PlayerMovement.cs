@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private GameObject _frictionCol;
     private int _defaultLayerNum;
-    private int _rushSlashLayerNum;
+    [HideInInspector] public int _rushSlashLayerNum;
     [SerializeField] private LayerMask _defaultLayerMask;
     [SerializeField] private LayerMask _rushSlashLayerMask;
 
