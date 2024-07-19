@@ -20,19 +20,28 @@ public enum AIState
 [Serializable]
 public class EnemyEditorData
 {
+    [Space(10)]
+    [Header ("기본 공격")]
     public float AttackRange = 2f;
     public float AttackCooldown = 2f;
-    public float ChargeAttackForce = 80f;
+    [Space(10)]
+    [Header("감지")]
     public float EnemyPatrolDistance = 4f;
     public float EnemyPatrolIdleDuration = 1f;
     public float EnemyAlramDistance = 6f;
     public float EnemyAlramLimitTime = 2f;
-    //public float EnemyChaseDistance = 9f;
     public bool DetectThroughWall = false;
+    //public float EnemyChaseDistance = 9f;
+    [Space(10)]
+    [Header("특수 공격")]
+    public float ChargeAttackForce = 80f;
+    public bool CustomPatrolPoint = false;
+    [Space(10)]
     public bool CanFireProjectile = false;
     public Transform ProjectileFirePos;
     public GameObject ProjectilePrefab;
-    public bool CustomPatrolPoint = false;
+    [Space(10)]
+    public bool HardLockOn = false;
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -145,19 +154,29 @@ public class Enemy : MonoBehaviour
         }
         Vector3 dir = _navMeshAgent.destination - transform.position;
         dir = dir.normalized;
-        if (_detector.GetTarget() != null && _aiState == AIState.Chase)
+        if(_currentAttackTime > 0f)
+        {
+            if(_editorData.HardLockOn)
+            {
+                look = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
+            }
+            transform.rotation = look;
+        }
+        else if (_detector.GetTarget() != null && _aiState == AIState.Chase)
         {
             if (_isFlying)
             {
-                transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
+                look = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
+                transform.rotation = look;
             }
             else
             {
-                Vector3 orig = transform.position; 
+                Vector3 orig = transform.position;
                 Vector3 target = _detector.GetPosition();
                 orig.y = 0;
                 target.y = 0;
-                transform.rotation = Quaternion.LookRotation(target - orig, Vector3.up);
+                look = Quaternion.LookRotation(target - orig, Vector3.up);
+                transform.rotation = look;
             }
         }
         else if (Vector3.Distance(_navMeshAgent.destination, transform.position) > 2f)
@@ -176,7 +195,6 @@ public class Enemy : MonoBehaviour
         {
             transform.rotation = look;
         }
-
         if (_navMeshAgent.velocity.magnitude > 0.1f)
         {
             _animator.SetBool("IsMoving", true);
@@ -297,7 +315,6 @@ public class Enemy : MonoBehaviour
 
     private void FireProjectile()
     {
-
         GameObject projectile = Instantiate(_editorData.ProjectilePrefab, _editorData.ProjectileFirePos.position, _editorData.ProjectileFirePos.rotation);
         EnemyProjectile enemyProjectile = projectile.GetComponent<EnemyProjectile>();
         enemyProjectile.Init(_editorData.ProjectileFirePos);
@@ -306,7 +323,7 @@ public class Enemy : MonoBehaviour
 
     private void ChargeAttack(float force)
     {
-        Vector3 dir = _detector.GetPosition() + Vector3.up - transform.position;
+        Vector3 dir = transform.forward;
         SetEnableRigidbody(true);
         dir.z = 0f;
         dir = dir.normalized;
