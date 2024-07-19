@@ -65,18 +65,15 @@ public class Projectile_Meteor : OzMagic
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            OzMagicManager.Instance.MeteorExplosion.isPlayerHit = false;
-            OzMagicManager.Instance.OnExplosion(transform.position);
+            OzMagicManager.Instance.OnExplosion(transform.position, false);
             DestroyOzMagic();
             //OzMagicManager.Instance.MeteorExplosion.is
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("Player_RushSlash"))
         {
-            OzMagicManager.Instance.MeteorExplosion.isPlayerHit = true;
-            OzMagicManager.Instance.OnExplosion(transform.position);
+            OzMagicManager.Instance.OnExplosion(transform.position, true);
             DestroyOzMagic();
-            //TODO
-            //Ground충돌기 폭발 이펙트 오브젝트 생성
+            return;
         }
         if (other.CompareTag("Enemy")|| other.gameObject.CompareTag("Player"))
         {
@@ -88,7 +85,9 @@ public class Projectile_Meteor : OzMagic
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player_RushSlash")) return;
+
+            if (other.gameObject.CompareTag("Player"))
         {
             _damageTimerPlayer += Time.deltaTime;
             if (_damageTimerPlayer >= _hitCycle)

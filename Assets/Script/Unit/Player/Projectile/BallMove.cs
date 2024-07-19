@@ -26,6 +26,7 @@ public class BallMove : MonoBehaviour
     {
         _isDestroyed = false;
         CancelInvoke(nameof(DestroyBall)); 
+        _rb.isKinematic = false;
     }
 
     protected void OnDisable()
