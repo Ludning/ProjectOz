@@ -137,4 +137,10 @@ public class PlayerStat : MonoBehaviour
     {
         TimeManager.Instance.DeregistCooldownAction(ReduceGage);
     }
+
+    public void Respawn()
+    {
+        _playerCombat.ResetDead();
+        gameObject.SetActive(true);
+    }
 }
