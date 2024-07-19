@@ -39,7 +39,7 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
 
         meteorExplosion = _meteorExplosion.GetComponent<MeteorExplosion>();
 
-        _meteorExplosionPool = new ObjectPool<MeteorExplosion>(() => CreateExplosion(_meteorExplosion, _meteorExplosionPool), OnGetExplosion, OnReleaseExplosion, OnDestroyExplosion);
+        _meteorExplosionPool = new ObjectPool<MeteorExplosion>(CreateExplosion, OnGetExplosion, OnReleaseExplosion, OnDestroyExplosion);
     }
 
     public AttackType Execute()
@@ -114,16 +114,17 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
 
 
 
-    private void OnExplosion(IObjectPool<MeteorExplosion> Pool)
+    public void OnExplosion(Vector2 pos)
     {
-        var pool = Pool.Get();
+        var pool = _meteorExplosionPool.Get();
+        pool.transform.position = pos;
         pool.Explosion();
     }
 
-    private MeteorExplosion CreateExplosion(GameObject prefab, IObjectPool<MeteorExplosion> Pool)
+    private MeteorExplosion CreateExplosion()
     {
-        var pool = Instantiate(prefab, transform.position, transform.rotation).GetComponent<MeteorExplosion>();
-        pool.SetManagedPool(Pool);
+        var pool = Instantiate(_meteorExplosion, transform.position, transform.rotation).GetComponent<MeteorExplosion>();
+        pool.SetManagedPool(_meteorExplosionPool);
         return pool;
     }
 
