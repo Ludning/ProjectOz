@@ -24,6 +24,7 @@ public class EnemyEditorData
     [Header ("기본 공격")]
     public float AttackRange = 2f;
     public float AttackCooldown = 2f;
+    public bool AttackThroughWall = false;
     [Space(10)]
     [Header("감지")]
     public float EnemyPatrolDistance = 4f;
@@ -42,6 +43,9 @@ public class EnemyEditorData
     public GameObject ProjectilePrefab;
     [Space(10)]
     public bool HardLockOn = false;
+    [Space(10)]
+    public bool ShieldAttack = false;
+    public GameObject Shield;
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -281,6 +285,10 @@ public class Enemy : MonoBehaviour
 
     public void StartAttackAnimation()
     {
+        if(_editorData.ShieldAttack)
+        {
+            _editorData.Shield.SetActive(false);
+        }
         transform.rotation = Quaternion.LookRotation(_detector.GetPosition() - transform.position, Vector3.up);
         IsMovable = false;
         _currentAttackTime = _attackCooldown;
@@ -350,6 +358,11 @@ public class Enemy : MonoBehaviour
     }
     private void Attack()
     {
+        if (_editorData.ShieldAttack)
+        {
+            _editorData.Shield.SetActive(true);
+        }
+
         if (_attackCollider == null)
             return;
         _attackCollider.SetDamage(_attackDamage);
@@ -451,10 +464,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public bool IsTargetVisible(bool checkAbilitySeeThrough)
+    public bool IsTargetVisible(bool isAttack)
     {
-        if(checkAbilitySeeThrough == false)
+        if(isAttack)
         {
+            if (_editorData.AttackThroughWall)
+            {
+                return true;
+            }
             return _detector.IsTargetVisible();
         }
         if (_editorData.DetectThroughWall)
