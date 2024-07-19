@@ -1,10 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
-using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class ScaleController : OzMagic
 {
@@ -14,7 +10,7 @@ public class ScaleController : OzMagic
     Rigidbody[] allRigidbodies;
     Animator[] allAnimators;
     NavMeshAgent[] allNavMeshAgents;
-    BehaviorDesigner.Runtime.BehaviorTree[] allBTs; 
+    BehaviorDesigner.Runtime.BehaviorTree[] allBTs;
 
     [SerializeField] float ozTimestopDuration; //current
     [SerializeField] float ozTimestopRate;
@@ -58,14 +54,14 @@ public class ScaleController : OzMagic
         bool addTime = false;
         _times += ozTimestopDuration;
 
-        
+
         Time.timeScale = ozTimestopRate;
         while (_times > 0f)
         {
             yield return null;
 
             _times -= Time.unscaledDeltaTime;
-            if(pmc.CurrentModelState == PlayerModelState.Knight && !addTime)
+            if (pmc.CurrentModelState == PlayerModelState.Knight && !addTime)
             {
                 OnStop(true);
                 Time.timeScale = 1f;
@@ -89,35 +85,35 @@ public class ScaleController : OzMagic
         allBTs = FindObjectsOfType<BehaviorDesigner.Runtime.BehaviorTree>();
     }
 
-     public void OnStop(bool isStop)
-     {
-         if (isStop)
-         {
-             PauseAllExceptPlayer(pmc.gameObject);
-         }
-         else
-         {
-             ResumeAll();
-         }
-     }
+    public void OnStop(bool isStop)
+    {
+        if (isStop)
+        {
+            PauseAllExceptPlayer(pmc.gameObject);
+        }
+        else
+        {
+            ResumeAll();
+        }
+    }
 
-     private void PauseAllExceptPlayer(GameObject gameObject)
-     {
-         // Rigidbody 
-         foreach (Rigidbody rb in allRigidbodies)
-         {
-             if (rb.gameObject != gameObject)
-             {
-                 rb.velocity = Vector3.zero;
-                 rb.angularVelocity = Vector3.zero;
-                 rb.isKinematic = true;
-             }
-         }
+    private void PauseAllExceptPlayer(GameObject gameObject)
+    {
+        // Rigidbody 
+        foreach (Rigidbody rb in allRigidbodies)
+        {
+            if (rb.gameObject != gameObject)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                rb.isKinematic = true;
+            }
+        }
 
-         // Animator 
-         foreach (Animator animator in allAnimators)
-         {
-            bool isPlayer = animator.gameObject == gameObject || 
+        // Animator 
+        foreach (Animator animator in allAnimators)
+        {
+            bool isPlayer = animator.gameObject == gameObject ||
             animator.gameObject == gameObject.transform.GetChild(0) ||
             animator.gameObject == gameObject.transform.GetChild(1);
 
@@ -125,7 +121,7 @@ public class ScaleController : OzMagic
             {
                 animator.enabled = false;
             }
-         }
+        }
 
         foreach (BehaviorDesigner.Runtime.BehaviorTree bts in allBTs)
         {
@@ -145,36 +141,39 @@ public class ScaleController : OzMagic
         }
     }
 
-     private void ResumeAll()
-     {
-         // Rigidbody
-         foreach (Rigidbody rb in allRigidbodies)
-         {
-             rb.isKinematic = false;
-         }
+    private void ResumeAll()
+    {
+        // Rigidbody
+        foreach (Rigidbody rb in allRigidbodies)
+        {
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+            }
+        }
 
-         foreach (Animator animator in allAnimators)
-         {
-             animator.enabled = true;
-         }
+        foreach (Animator animator in allAnimators)
+        {
+            animator.enabled = true;
+        }
 
-         foreach (NavMeshAgent agent in allNavMeshAgents)
-         {
-             agent.isStopped = false;
-         }
+        foreach (NavMeshAgent agent in allNavMeshAgents)
+        {
+            agent.isStopped = false;
+        }
 
-         foreach (BehaviorDesigner.Runtime.BehaviorTree bts in allBTs)
-         {
-             bts.enabled = true;
-         }
+        foreach (BehaviorDesigner.Runtime.BehaviorTree bts in allBTs)
+        {
+            bts.enabled = true;
+        }
     }
 
     void ChangeSkybox(Material skyboxMaterial)
     {
-        if(skyboxMaterial != null)
+        if (skyboxMaterial != null)
         {
             RenderSettings.skybox = skyboxMaterial;
             DynamicGI.UpdateEnvironment();
-        }   
+        }
     }
 }
