@@ -824,11 +824,12 @@ MonoBehaviour:
   dashForce: 40
   dashDistance: 10
   dashCooldown: 1
-  jumpForce: 40
   dashLayerMask:
     serializedVersion: 2
     m_Bits: 3072
+  JumpForce: 10
   _frictionCol: {fileID: 955746907812325659}
+  _rushSlashLayerNum: 0
   _defaultLayerMask:
     serializedVersion: 2
     m_Bits: 16384
@@ -1051,9 +1052,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ozMagicPercentage: 0
-  playerMovement: {fileID: 6101184221984157194}
-  ozTimestopChainDuration: 5
+  ozTimestopDuration: 0
   ozTimestopRate: 0.1
+  ozTimestopChainDuration: 5
 --- !u!114 &4440221713221510503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2798,9 +2799,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a76dba3990d7ec8419b8bb78dae32909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackChargingSpeed: 0.2
+  _attackFireSpeed: 1
+  _jumpInputMaxTimer: 0
+  _flyMaxTimer: 0
+  flyValue: 1
   animator: {fileID: 7911957005701152639}
   firePosition: {fileID: 5503053835137849461}
-  CharacterMediator: {fileID: 292335181016652611}
+  player: {fileID: 292335181016652611}
+  rb: {fileID: 2778836807577768356}
 --- !u!1 &5008899635488627153
 GameObject:
   m_ObjectHideFlags: 0
