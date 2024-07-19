@@ -431,6 +431,12 @@ public class Enemy : MonoBehaviour
         _animator.SetTrigger("Dead");
         _animator.SetBool("IsDead", true);
         _isMovable = false;
+
+        if(_editorData.Shield != null)
+        {
+            _editorData.Shield.SetActive(false);
+        }
+
         StartCoroutine(DelayedDisable());
     }
     private void SetEnableAllCollision(bool condition)
