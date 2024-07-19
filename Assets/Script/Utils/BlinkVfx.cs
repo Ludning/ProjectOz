@@ -14,6 +14,11 @@ public class BlinkVfx : MonoBehaviour
 
     private Coroutine _blinkCoroutine;
 
+    private void Start()
+    {
+        _renderer = GetComponent<Renderer>();
+    }
+
     public void Play()
     {
         Blink();

@@ -106,6 +106,8 @@ public class Enemy : MonoBehaviour
     private Collider _characterEnvCollider;
 
     private IObjectPool<GameObject> _pooledHitVfx;
+
+    [SerializeField] private BlinkVfx[] _blinkVfxs;
     private void Awake()
     {
         _enemyData = DataManager.Instance.GetGameData<EnemyData>(_enemyId);
@@ -424,6 +426,11 @@ public class Enemy : MonoBehaviour
         GameObject pooled = _pooledHitVfx.Get();
         pooled.transform.position = transform.position;
         pooled.GetComponent<ParticleSystem>().Play();
+
+        foreach(var item in _blinkVfxs)
+        {
+            item.Play();
+        }
     }
 
     private IEnumerator DelayedRealease(GameObject vfx)
