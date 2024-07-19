@@ -51,6 +51,30 @@
       "moveSet": "",
       "skillSet": "c",
       "enemyColDamage": 1.0
+    },
+    "C1003": {
+      "ID": "C1003",
+      "description": "적C(보행)",
+      "enemyMoveType": "movetype_enemy_walking",
+      "enemyAttackType": "atttype_enemy_melee",
+      "enemyHp": 60.0,
+      "enemyBasePower": 1.0,
+      "enemyMoveSpeed": 1.0,
+      "moveSet": "-",
+      "skillSet": "d",
+      "enemyColDamage": 1.0
+    },
+    "C1004": {
+      "ID": "C1004",
+      "description": "적D(비행)",
+      "enemyMoveType": "movetype_enemy_flying",
+      "enemyAttackType": "atttype_enemy_ranged",
+      "enemyHp": 30.0,
+      "enemyBasePower": 1.0,
+      "enemyMoveSpeed": 1.0,
+      "moveSet": "-",
+      "skillSet": "e",
+      "enemyColDamage": 1.0
     }
   },
   "MovesetDatas": {
@@ -109,7 +133,7 @@
       "skillSet": "a1",
       "description": "기본공격",
       "skillRangeType": "ranged",
-      "skillPowerRate": 30.0,
+      "skillPowerRate": 10.0,
       "skillCooltime": 0.0,
       "value1": 0.0,
       "value2": 0.0,

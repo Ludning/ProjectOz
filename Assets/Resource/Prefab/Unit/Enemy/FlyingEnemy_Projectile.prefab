@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _leftPatrolPoint: {fileID: 8457559940111015293}
   _rightPatrolPoint: {fileID: 3963024630587359664}
-  _enemyId: C1002
+  _enemyId: C1004
   _enemyData:
     ID: 
     description: 
