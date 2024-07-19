@@ -181,6 +181,8 @@ public class MageControl : MonoBehaviour, IControl
         {
             AttackType type = OzMagicManager.Instance.Execute();
             player.playerStat.ChangeGage(type);
+            if(type == AttackType.TimeStop)
+                SpawnObject(_flameballPool);
             Debug.Log("OzMagic");
         }
     }

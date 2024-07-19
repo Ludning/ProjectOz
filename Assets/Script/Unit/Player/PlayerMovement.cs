@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     public float stopDistance = 0.1f; // 멈출 때의 허용 오차
     
     public float _rushSlashDistance; // 돌진베기의 거리
+    public float _invincibilityTime; // 대쉬 무적 시간
 
     public bool IsRushSlash => _isRushSlash;
     public bool IsDash => _isDash;
@@ -81,23 +82,39 @@ public class PlayerMovement : MonoBehaviour
         CharacterMediator.PlayerAnimator.SetBool(GroundHash, CharacterMediator.IsGround);
     }
 
+    private void RefreshInvincibility()
+    {
+        if (_invincibilityTime > 0f)
+        {
+            _invincibilityTime -= Time.deltaTime;
+        }
+        if (_invincibilityTime <= 0f)
+        {
+            CharacterMediator.playerCombat.IsInvincibility = false;
+        }
+    }
+
+    private void StartDashInvincibility()
+    {
+        _invincibilityTime = DataManager.Instance.GetGameData<MovesetData>("M103").value3;
+        CharacterMediator.playerCombat.IsInvincibility = true;
+    }
+
     private void OnEnable()
     {
         TimeManager.Instance.RegistCooldownAction(RefreshCooldown);
+        TimeManager.Instance.RegistCooldownAction(RefreshInvincibility);
     }
     private void OnDisable()
     {
         TimeManager.Instance.DeregistCooldownAction(RefreshCooldown);
+        TimeManager.Instance.DeregistCooldownAction(RefreshInvincibility);
     }
 
     #region OnInput
     public void OnInputSetDirection(Vector2 direction)
     {
         _direction = direction;
-        /*if (_isDash == true)
-            return;
-        if (direction != Vector2.zero) _lastDirection = direction;
-        RotationCharacter(direction);*/
     }
 
     public void OnInputJump(KeyType type)
@@ -118,6 +135,9 @@ public class PlayerMovement : MonoBehaviour
         if (currentDashCooldown <= 0f)
         {
             StartDash();
+            Debug.Log("a");
+            StartDashInvincibility();
+            Debug.Log("b");
             currentDashCooldown = dashCooldown;
         }
     }

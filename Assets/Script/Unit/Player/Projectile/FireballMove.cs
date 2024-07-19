@@ -67,31 +67,12 @@ public class FireballMove : BallMove
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Wall"))
-        //{
-        //    _bounceCount++;
-
-        //    if (_bounceCount >= _maxBounceCount)
-        //    {
-        //        DestroyBall();
-        //    }
-
-        //    _rb.velocity = _direction * _bulletSpeed;
-
-        //    //if (other.gameObject.CompareTag("ground") || other.gameObject.CompareTag("platform"))
-        //    if (transform.position.y - other.gameObject.transform.position.y >= -0.05f)
-        //    {
-        //        _rb.AddForce(0f, 8f, 0f, ForceMode.Impulse);
-        //        //_rb.velocity = new Vector3(_rb.velocity.x, 4.0f + _gravityValue, _rb.velocity.z) + _gravity;
-        //    }
-        //    else
-        //        _rb.velocity = new Vector3(-_rb.velocity.x, _rb.velocity.y, -_rb.velocity.z);
-        //}
         if (other.CompareTag("Enemy"))
         {
             if (other.TryGetComponent(out Combat combat))
             {
                 combat.Damaged(_damage);
+                DestroyBall();
             }
         }
     }
