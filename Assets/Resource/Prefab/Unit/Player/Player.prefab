@@ -115,12 +115,12 @@ MonoBehaviour:
   DashCollider: {fileID: 5633290320481398914}
   airSpeed: 5
   dashForce: 75
-  dashDistance: 20
+  dashDistance: 15
   dashCooldown: 1
   dashLayerMask:
     serializedVersion: 2
     m_Bits: 3072
-  JumpForce: 25
+  JumpForce: 50
   _frictionCol: {fileID: 3447393052553555546}
   _rushSlashLayerNum: 0
   _defaultLayerMask:
@@ -457,7 +457,7 @@ ConstantForce:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902790095006344572}
   m_Enabled: 1
-  m_Force: {x: 0, y: -30, z: 0}
+  m_Force: {x: 0, y: -100, z: 0}
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
