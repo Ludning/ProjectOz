@@ -136,21 +136,18 @@ MonoBehaviour:
   _editorData:
     AttackRange: 33.15
     AttackCooldown: 2
-    AttackThroughWall: 0
     EnemyPatrolDistance: 3
     EnemyPatrolIdleDuration: 1
     EnemyAlramDistance: 45
     EnemyAlramLimitTime: 2
     DetectThroughWall: 1
-    CustomPatrolPoint: 0
     ChargeAttackForce: 80
+    CustomPatrolPoint: 0
     CanFireProjectile: 1
     ProjectileFirePos: {fileID: 2864088680874731397}
     ProjectilePrefab: {fileID: 8431727877300358046, guid: 0432778c88527f64f8c765646d6017e7,
       type: 3}
     HardLockOn: 0
-    ShieldAttack: 0
-    Shield: {fileID: 0}
   _rotateTarget: {fileID: 0}
   _pooledHitVfxPrefab: {fileID: 0}
 --- !u!135 &1158408487328004987
@@ -1045,6 +1042,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 9dd406e9a9190bb418c7fb8af16123ed, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38017d8c2564ad54d830f937a83ff2bf, type: 2}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 9dd406e9a9190bb418c7fb8af16123ed, type: 3}
     m_RemovedGameObjects: []
