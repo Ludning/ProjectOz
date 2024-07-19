@@ -133,12 +133,12 @@ public class Enemy : MonoBehaviour
     }
     public void OnGetPool(GameObject vfx)
     {
-        gameObject.SetActive(true);
+        vfx.SetActive(true);
         StartCoroutine(DelayedRealease(vfx));
     }
     public void OnReleasePool(GameObject vfx)
     {
-        gameObject.SetActive(false);
+        vfx.SetActive(false);
     }
     public void OnDestroyPool(GameObject vfx)
     {
@@ -272,14 +272,14 @@ public class Enemy : MonoBehaviour
 
 
 
-    //���� ����
+    //         
     public Combat GetCombat()
     {
         return _combat;
     }
 
-    //���ݸ޼���
-    //�ִϸ��̼� ����, ������
+    //   ݸ޼   
+    // ִϸ  ̼      ,       
     float _attackCooldown = 1f;
     float _currentAttackTime = 0f;
 
@@ -397,7 +397,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // �̺�Ʈ
+    //  ̺ Ʈ
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -561,64 +561,4 @@ public class Enemy : MonoBehaviour
     {
         return _detector.GetLastPosition();
     }
-
-    /* Not Used
-    //public void KnockbackOnSurface(Vector3 direction, float force)
-    //{
-    //    if (IsStunned) return;
-
-    //    direction.y = 0f;
-    //    direction = direction.normalized;
-
-    //    _navMeshAgent.updatePosition = false;
-    //    _rigidbody.isKinematic = false;
-    //    _rigidbody.useGravity = true;
-    //    _rigidbody.velocity = Vector3.zero;
-
-    //    _rigidbody.AddForce(direction * force, ForceMode.Impulse);
-    //    _isStunned = true;
-
-
-    //    StartCoroutine(CheckKnockbackEnd());
-    //}
-
-    ///// <summary>
-    ///// ��ٿ� ��� �� �׵θ� ���� ƨ�� �������� �˻�
-    ///// </summary>
-    ///// <returns></returns>
-    //private IEnumerator CheckKnockbackEnd()
-    //{
-    //    float timeStamp = Time.time;
-    //    yield return new WaitForFixedUpdate();
-    //    while (true)
-    //    {
-    //        bool isOverTime = Time.time - timeStamp > 1f;
-
-
-    //        Vector3 vel = _rigidbody.velocity;
-    //        vel.y = 0f;
-    //        vel *= .3f;
-
-    //        bool isOnSurface = NavMesh.SamplePosition(transform.position + vel
-    //            , out NavMeshHit hit, _navMeshAgent.height / 2f, NavMesh.AllAreas);
-
-
-    //        if (_rigidbody.velocity.magnitude <= 0.05f || isOverTime || !isOnSurface)
-    //        {
-    //            _navMeshAgent.velocity = Vector3.zero;
-    //            _navMeshAgent.updatePosition = true;
-    //            _rigidbody.isKinematic = true;
-    //            _rigidbody.useGravity = false;
-
-    //            _isStunned = false;
-
-    //            _navMeshAgent.nextPosition = transform.position;
-
-    //            OnKnockbackEnd?.Invoke();
-    //            yield break;
-    //        }
-    //        yield return new WaitForFixedUpdate();
-    //    }
-    //}
-    */
 }
