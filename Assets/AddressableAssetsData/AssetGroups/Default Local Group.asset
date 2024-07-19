@@ -97,6 +97,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e8a319189c218a4fb22cbca70f95666
+    m_Address: Assets/Resource/Material
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c9058046c8f624e4ba1d55ffe8001190
+    m_Address: Assets/Resource/Material/TimeStopSkybox.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 440a990e58ac86b439090a3b4e6af67f, type: 2}
   m_SchemaSet:

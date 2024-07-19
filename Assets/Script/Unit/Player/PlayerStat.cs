@@ -23,6 +23,8 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] private CharacterMediator CharacterMediator;
     [SerializeField] private Combat _playerCombat;
 
+    public Combat PlayerCombat { get { return _playerCombat; } }
+
     private bool _isGageReduce = false;
 
     public float PlayerCurrentGage
