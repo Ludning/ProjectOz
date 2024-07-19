@@ -37,6 +37,8 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
         //[todo]
         _timeStop = new ObjectPool<OzMagic>(() => CreateBall(Prefab_OzMagic[1], _timeStop), OnGetBall, OnReleaseBall, OnDestroyBall);
 
+        _meteorExplosion = ResourceManager.Instance.LoadResource<GameObject>("MeteorExplosion");
+
         meteorExplosion = _meteorExplosion.GetComponent<MeteorExplosion>();
 
         _meteorExplosionPool = new ObjectPool<MeteorExplosion>(CreateExplosion, OnGetExplosion, OnReleaseExplosion, OnDestroyExplosion);
@@ -114,11 +116,11 @@ public class OzMagicManager : SingleTonMono<OzMagicManager>
 
 
 
-    public void OnExplosion(Vector2 pos)
+    public void OnExplosion(Vector2 pos, bool isHit)
     {
         var pool = _meteorExplosionPool.Get();
         pool.transform.position = pos;
-        pool.Explosion();
+        pool.RushHit(isHit);
     }
 
     private MeteorExplosion CreateExplosion()

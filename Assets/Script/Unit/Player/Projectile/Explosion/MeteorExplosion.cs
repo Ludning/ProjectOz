@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UIElements;
 
 public class MeteorExplosion : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class MeteorExplosion : MonoBehaviour
     IObjectPool<MeteorExplosion> pool;
 
     private Vector3 _upScale;
+    private Vector3 _defaultScale;
 
     private float _explosionRadius;
     private float _explosionDamage;
@@ -24,12 +26,14 @@ public class MeteorExplosion : MonoBehaviour
         _explosionRadius = _meteorData_OzMagic.value3;
         _explosionDamage = _meteorData_OzMagic.chainPowerRate;
 
-        _upScale = new Vector3(_upScaleValue, _upScaleValue, 0f) * Time.deltaTime;
+        _upScale = new Vector3(_upScaleValue, _upScaleValue, 0f);
+        _defaultScale = transform.localScale;
     }
 
     private  void OnEnable()
     {
         _isDestroyed = false;
+        transform.localScale = _defaultScale;
     }
 
     private void Update()
@@ -42,9 +46,14 @@ public class MeteorExplosion : MonoBehaviour
         }
     }
 
-    public void Explosion()
+    public void RushHit(bool isHit)
     {
-        transform.localScale += _upScale;
+        isPlayerHit = isHit;
+    }
+
+    private void Explosion()
+    {
+        transform.localScale += (_upScale * Time.deltaTime);
     }
 
     public void SetManagedPool(IObjectPool<MeteorExplosion> Pool)

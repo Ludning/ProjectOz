@@ -61,7 +61,7 @@ public class KnightControl : MonoBehaviour, IControl
     {  
         if(isRush)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             if (timer >= 0.1f)
             {
                 col.enabled = true;
@@ -109,16 +109,6 @@ public class KnightControl : MonoBehaviour, IControl
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Meteor") && isRush)
-        {
-            if (other.TryGetComponent(out Projectile_Meteor meteor))
-            {
-                meteor.DestroyOzMagic();
-                Debug.Log("Oz매직 발동");
-                //TODO
-                //메테오 연계기 오브젝트 생성
-            }
-        }
         if (other.gameObject.CompareTag("Enemy") && isRush)
         {
             _currentRushCoolDown = _rushCoolDownHit;
@@ -133,7 +123,7 @@ public class KnightControl : MonoBehaviour, IControl
                 EndRushSlash();
             }
         }
-        if (other.gameObject.CompareTag("OzMaic_Projectile"))
+        if (other.gameObject.CompareTag("Meteor"))
         {
             if (player.gameObject.layer == player.PlayerMovement._rushSlashLayerNum)
             {
