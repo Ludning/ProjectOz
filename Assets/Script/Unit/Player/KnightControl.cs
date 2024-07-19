@@ -34,6 +34,9 @@ public class KnightControl : MonoBehaviour, IControl
     [SerializeField] private VfxControl rushSlashVfxControl;
     private static readonly int HashAttack = Animator.StringToHash("IsAttack");
 
+    [Header("돌진베기 무적 시간")]
+    [SerializeField] private float _rushSlashInvincibleTime = .3f;
+
     private void Awake()
     {
         _rushSlashData_Skill = DataManager.Instance.GetGameData<SkillData>("S103");
@@ -90,6 +93,12 @@ public class KnightControl : MonoBehaviour, IControl
         player.playerCombat.IsInvincibility = true;
         
         player.PlayerMovement.StartRushSlash(_direction, _rushForce, _rushDistance, EndRushSlash);
+        StartCoroutine(DelayedEndRushSlashStop());
+    }
+    private IEnumerator DelayedEndRushSlashStop()
+    {
+        yield return new WaitForSeconds(_rushSlashInvincibleTime);
+        EndRushSlash();
     }
 
     public void EndRushSlash()
@@ -115,14 +124,14 @@ public class KnightControl : MonoBehaviour, IControl
             if (other.TryGetComponent(out Combat combat))
                 combat.Damaged(_damage);
         }
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Wall"))
-        {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Terrain_Impassable"))
-            {
-                isOnCoolDown = true;
-                EndRushSlash();
-            }
-        }
+        //if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Wall"))
+        //{
+        //    if (other.gameObject.layer == LayerMask.NameToLayer("Terrain_Impassable"))
+        //    {
+        //        isOnCoolDown = true;
+        //        EndRushSlash();
+        //    }
+        //}
         if (other.gameObject.CompareTag("Meteor"))
         {
             if (player.gameObject.layer == player.PlayerMovement._rushSlashLayerNum)
