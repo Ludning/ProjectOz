@@ -87,10 +87,10 @@ public class PlayerMovement : MonoBehaviour
         if (_invincibilityTime > 0f)
         {
             _invincibilityTime -= Time.deltaTime;
-        }
-        if (_invincibilityTime <= 0f)
-        {
-            CharacterMediator.playerCombat.IsInvincibility = false;
+            if (_invincibilityTime <= 0f)
+            {
+                CharacterMediator.playerCombat.IsInvincibility = false;
+            }
         }
     }
 

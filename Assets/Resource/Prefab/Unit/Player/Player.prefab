@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 5633290320481398914}
   - component: {fileID: 5236318171550696614}
   - component: {fileID: 3463290384698729047}
+  - component: {fileID: 4905538197612638933}
   m_Layer: 14
   m_Name: Player
   m_TagString: Player
@@ -115,12 +116,12 @@ MonoBehaviour:
   DashCollider: {fileID: 5633290320481398914}
   airSpeed: 5
   dashForce: 75
-  dashDistance: 15
+  dashDistance: 20
   dashCooldown: 1
   dashLayerMask:
     serializedVersion: 2
     m_Bits: 3072
-  JumpForce: 50
+  JumpForce: 35
   _frictionCol: {fileID: 3447393052553555546}
   _rushSlashLayerNum: 0
   _defaultLayerMask:
@@ -131,6 +132,7 @@ MonoBehaviour:
     m_Bits: 8192
   stopDistance: 0.1
   _rushSlashDistance: 0
+  _invincibilityTime: 0
 --- !u!114 &2333123253030120768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +298,9 @@ MonoBehaviour:
   _currentAnimator: {fileID: 0}
   CharacterMediator: {fileID: 5016133849406154776}
   transformdVfx: {fileID: 9050594220904229056}
+  _mageRenderer: {fileID: 1235818208905335764}
+  _knightRenderer: {fileID: 2089664507610768913}
+  _blink: {fileID: 4905538197612638933}
 --- !u!114 &7676777724143174206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,10 +462,25 @@ ConstantForce:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902790095006344572}
   m_Enabled: 1
-  m_Force: {x: 0, y: -100, z: 0}
+  m_Force: {x: 0, y: -50, z: 0}
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
+--- !u!114 &4905538197612638933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902790095006344572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a08206c267951f54c944e3cea7658974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.2
+  interval: 0.05
+  _renderer: {fileID: 0}
 --- !u!1 &3447393052553555546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,6 +1123,12 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 1235818208893737084}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &1235818208905335764 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700008, guid: 7c72ed3f90575084c9f3b5b585887182,
+    type: 3}
+  m_PrefabInstance: {fileID: 1235818208893737084}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2499155618696678193
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1415,6 +1441,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4779685223622324726}
   m_SourcePrefab: {fileID: 100100000, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
+--- !u!137 &2089664507610768913 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4490425309534350624, guid: 417a287abb2cab94889f1f1ddd91f928,
+    type: 3}
+  m_PrefabInstance: {fileID: 2499155618696678193}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &2499155618687270481 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: 417a287abb2cab94889f1f1ddd91f928,
@@ -1463,6 +1495,7 @@ MonoBehaviour:
   knightAnimator: {fileID: 2499155618687270481}
   rushSlashVfxRigger: {fileID: 4618019372031922361}
   rushSlashVfxControl: {fileID: 8409767565651071884}
+  _rushSlashInvincibleTime: 0.3
 --- !u!65 &4779685223622324726
 BoxCollider:
   m_ObjectHideFlags: 0
