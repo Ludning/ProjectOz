@@ -27,9 +27,6 @@ public class PlayerModelController : MonoBehaviour
         _currentModelState = PlayerModelState.Mage;
         _currentAnimator = _mageMAnimator;
 
-        _mageRenderer = _mageModel.transform.GetChild(0).GetComponent<Renderer>();
-        _knightRenderer = _knightModel.transform.GetChild(0).GetComponent<Renderer>();
-        _blink = GetComponent<BlinkVfx>();
 
         CharacterMediator.playerCombat.OnDamaged += OnDamaged;
     }
@@ -101,9 +98,9 @@ public class PlayerModelController : MonoBehaviour
         BlinkCurrentCharacter();
     }
 
-    private Renderer _mageRenderer;
-    private Renderer _knightRenderer;
-    private BlinkVfx _blink;
+    [SerializeField] private Renderer _mageRenderer;
+    [SerializeField] private Renderer _knightRenderer;
+    [SerializeField] private BlinkVfx _blink;
     private void BlinkCurrentCharacter()
     {
         switch (CurrentModelState)

@@ -67,5 +67,6 @@ public class GameManager : SingleTonMono<GameManager>
     void ResetGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        OzMagicManager.Instance.OnSceneLoaded();
     }
 }

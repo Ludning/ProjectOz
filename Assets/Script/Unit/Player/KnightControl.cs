@@ -34,7 +34,7 @@ public class KnightControl : MonoBehaviour, IControl
     [SerializeField] private VfxControl rushSlashVfxControl;
     private static readonly int HashAttack = Animator.StringToHash("IsAttack");
 
-    [Header("µ¹Áøº£±â ¹«Àû ½Ã°£")]
+    [Header("ëŒì§„ë² ê¸° ë¬´ì  ì‹œê°„")]
     [SerializeField] private float _rushSlashInvincibleTime = .3f;
 
     private void Awake()
