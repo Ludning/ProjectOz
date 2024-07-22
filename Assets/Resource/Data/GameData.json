@@ -146,7 +146,7 @@
       "skillRangeType": "ranged",
       "skillPowerRate": 30.0,
       "skillCooltime": 0.0,
-      "value1": 1.0,
+      "value1": 0.7,
       "value2": 30.0,
       "projectileID": "P102"
     },
@@ -302,7 +302,7 @@
       "description": "메테오",
       "projectileType": "Drop",
       "projectileSpeedRate": 10.0,
-      "projectileLifeTime": 10.0,
+      "projectileLifeTime": 7.0,
       "projectileRemoveLandSet": "c",
       "projectileBounceCount": 1,
       "projectileRemoveTrigger2": "-",
